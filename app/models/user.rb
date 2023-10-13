@@ -5,7 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :participations
-  enum role: %i[админ менеджер другой]
+  enum role: %i[бухгалтер менеджер работник другой]
   validates :name, uniqueness: true
 
   def self.devise_parameter_sanitizer

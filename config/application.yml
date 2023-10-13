@@ -1,6 +1,6 @@
 POSTGRES_USER: postgres
 POSTGRES_PASSWORD: "998915309764"
-POSTGRES_DB: rrf_development
+POSTGRES_DB: sam_nerj_development
 TELEGRAM_TOKEN: token
 TELEGRAM_CHAT_ID: chat_id
 HOST_URL: host url
