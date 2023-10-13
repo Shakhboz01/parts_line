@@ -1,0 +1,18 @@
+
+<%= simple_form_for(@service) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :name %>
+    <%= f.input :unit %>
+    <%= f.input :service_price %>
+    <%= f.input :active %>
+    <%= f.association :user %>
+    <%= f.input :team_fee_in_percent %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
