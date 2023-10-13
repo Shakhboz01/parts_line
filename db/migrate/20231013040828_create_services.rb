@@ -7,7 +7,6 @@ class CreateServices < ActiveRecord::Migration[7.0]
       t.boolean :active, default: true
       t.references :user, null: false, foreign_key: true
       t.integer :team_fee_in_percent
-      t.boolean :service_price_in_usd, default: false
 
       t.timestamps
     end

@@ -1,9 +1,10 @@
 class ServicesController < ApplicationController
-  before_action :set_service, only: %i[ show edit update destroy ]
+  before_action :set_service, only: %i[ show edit update destroy toggle_active]
 
   # GET /services or /services.json
   def index
-    @services = Service.all
+    @q = Service.ransack(params[:q])
+    @services = @q.result.order(active: :desc).page(params[:page]).per(40)
   end
 
   # GET /services/1 or /services/1.json
@@ -21,11 +22,11 @@ class ServicesController < ApplicationController
 
   # POST /services or /services.json
   def create
-    @service = Service.new(service_params)
+    @service = Service.new(service_params.merge(user_id: current_user.id))
 
     respond_to do |format|
       if @service.save
-        format.html { redirect_to service_url(@service), notice: "Service was successfully created." }
+        format.html { redirect_to services_url, notice: "Service was successfully created." }
         format.json { render :show, status: :created, location: @service }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -37,8 +38,8 @@ class ServicesController < ApplicationController
   # PATCH/PUT /services/1 or /services/1.json
   def update
     respond_to do |format|
-      if @service.update(service_params)
-        format.html { redirect_to service_url(@service), notice: "Service was successfully updated." }
+      if @service.update(service_params.merge(user_id: current_user.id))
+        format.html { redirect_to services_url, notice: "Service was successfully updated." }
         format.json { render :show, status: :ok, location: @service }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -55,6 +56,11 @@ class ServicesController < ApplicationController
       format.html { redirect_to services_url, notice: "Service was successfully destroyed." }
       format.json { head :no_content }
     end
+  end
+
+  def toggle_active
+    @service.toggle(:active).save
+    redirect_to services_url, notice: 'Successfully updated'
   end
 
   private

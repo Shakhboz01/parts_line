@@ -1,6 +1,8 @@
 class Service < ApplicationRecord
   belongs_to :user
+  validates_presence_of :name
   validates_uniqueness_of :name
-  validates_presence_of :name, :unit, :service_price, :team_fee_in_percent
   enum unit: %i[метр кв кг]
+
+  # TODO: while calculating price give an error if one of unrequired field is null and accaontant is not filled that field manually
 end

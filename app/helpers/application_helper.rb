@@ -1,8 +1,8 @@
 module ApplicationHelper
-  def clink_to(title, link, css_class = nil)
+  def clink_to(title, link, css_class = nil, method = :get)
     styled_title =
       css_class.nil? ? t(title) : raw("<i class=\"fa fa-fw #{css_class}\"></i>")
-    link_to styled_title, link, title: title
+    link_to styled_title, link, title: title, method: method
   end
 
   def cdlink_to(title, link, icon = 'fa-remove', confirm_text = 'вы уверены?')
@@ -48,5 +48,9 @@ module ApplicationHelper
     daily_payment = user.daily_payment
     number_of_active_days = participations.where(user_id: user_id).пришёл.count
     num_to_usd(number_of_active_days * daily_payment)
+  end
+
+  def active_tr(boolean)
+    'table-danger' unless boolean
   end
 end

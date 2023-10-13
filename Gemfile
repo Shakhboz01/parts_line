@@ -85,3 +85,4 @@ gem 'jquery-ui-rails'
 gem "pundit", "~> 2.3"
 gem 'telegram-bot-ruby'
 gem 'rack-attack'
+gem 'byebug'

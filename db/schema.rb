@@ -29,7 +29,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_13_040828) do
     t.boolean "active", default: true
     t.bigint "user_id", null: false
     t.integer "team_fee_in_percent"
-    t.boolean "service_price_in_usd", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_services_on_user_id"

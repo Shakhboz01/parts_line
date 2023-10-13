@@ -1,5 +1,10 @@
 Rails.application.routes.draw do
-  resources :services
+  resources :services do
+    member do
+      post :toggle_active
+    end
+  end
+
   resources :participations do
     collection do
       post 'accept_new_participation', action: :accept_new_participation, as: :accept_new_participation
