@@ -40,8 +40,17 @@
   </div>
   <ul class="text-center navbar-nav ml-auto">
     <% if user_signed_in? %>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <%= current_user.name %>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to "Выйти", destroy_user_session_url, method: :delete, data: { confirm: strip_tags('вы уверены?') }, class: "nav-link styled-delete-button" %>
+          <div class="dropdown-divider"></div>
+          <a class="nav-link disabled" href="#"><%= num_to_usd(CurrencyRate.last.rate) %>$</a>
+        </div>
+      </li>
       <li class="nav-item ml-auto">
-        <%= link_to "Выйти", destroy_user_session_url, method: :delete, data: { confirm: strip_tags('вы уверены?') }, class: "nav-link styled-delete-button" %>
       </li>
     <% else %>
       <li class="nav-item">
