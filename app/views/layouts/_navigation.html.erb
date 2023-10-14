@@ -23,6 +23,7 @@
           Посмотреть список:
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Товар/материалов', products_path, class: 'dropdown-item' %>
           <%= link_to 'Зарплат/Аванс', salaries_path, class: 'dropdown-item' %>
           <%= link_to 'Работников', users_path, class: 'dropdown-item' %>
           <%= link_to 'Бригад', teams_path, class: 'dropdown-item' %>
@@ -34,6 +35,7 @@
           Оформить:
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Товар/материал', new_product_path, class: 'dropdown-item' %>
           <%= link_to 'Зарплату/Аванс', new_salary_path, class: 'dropdown-item' %>
           <%= link_to 'Перекличку работников', new_participation_path, class: 'dropdown-item' %>
           <%= link_to 'Сервис', new_service_path, class: 'dropdown-item' %>

@@ -55,13 +55,13 @@ module ApplicationHelper
     'table-danger' unless boolean
   end
 
-  def strf_datetime(datteime, date = false)
+  def strf_datetime(datetime, date = false)
     return if datetime.nil?
 
     if date
       datetime.strftime('%Y-%m-%d')
     else
-      datetime.strftime('%Y-%m-%d %H:%M:%S')
+      datetime.strftime('%Y-%m-%d %H:%M')
     end
   end
 end

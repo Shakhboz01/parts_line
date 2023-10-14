@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  resources :products do
+    post :toggle_active, on: :member
+  end
+
   resources :salaries
   resources :teams do
     member do
