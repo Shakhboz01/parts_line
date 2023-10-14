@@ -25,6 +25,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <%= link_to 'Зарплат/Аванс', salaries_path, class: 'dropdown-item' %>
           <%= link_to 'Работников', users_path, class: 'dropdown-item' %>
+          <%= link_to 'Бригад', teams_path, class: 'dropdown-item' %>
           <%= link_to 'Переклички работников', participations_path, class: 'dropdown-item' %>
         </div>
       </li>
@@ -36,6 +37,7 @@
           <%= link_to 'Зарплату/Аванс', new_salary_path, class: 'dropdown-item' %>
           <%= link_to 'Перекличку работников', new_participation_path, class: 'dropdown-item' %>
           <%= link_to 'Сервис', new_service_path, class: 'dropdown-item' %>
+          <%= link_to 'Бригаду', new_team_path, class: 'dropdown-item' %>
         </div>
       </li>
     </ul>
