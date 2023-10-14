@@ -24,6 +24,7 @@ class SalariesController < ApplicationController
       team_id: params[:team_id],
       user_id: params[:user_id]
     )
+    @hidden = @salary.team_id.present? || @salary.user_id.present?
   end
 
   # GET /salaries/1/edit
@@ -39,7 +40,7 @@ class SalariesController < ApplicationController
         format.html { redirect_to salaries_url, notice: "Salary was successfully created." }
         format.json { render :show, status: :created, location: @salary }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, salary: @salary, status: :unprocessable_entity }
         format.json { render json: @salary.errors, status: :unprocessable_entity }
       end
     end

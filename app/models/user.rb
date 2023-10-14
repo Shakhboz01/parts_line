@@ -8,6 +8,8 @@ class User < ApplicationRecord
   enum role: %i[бухгалтер менеджер работник другой]
   validates :name, uniqueness: true
 
+  scope :active, -> { where(:active => true)}
+
   def self.devise_parameter_sanitizer
     super.tap do |sanitizer|
       sanitizer.permit(:sign_up, keys: [:name])
@@ -17,4 +19,5 @@ class User < ApplicationRecord
   def active_for_authentication?
     super && allowed_to_use?
   end
+
 end

@@ -3,8 +3,13 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :team, label: 'Выберить из бригад:' %>
-    <%= f.association :user, label: 'или выберите из работников:' %>
+    <% if @hidden || @salary.persisted? %>
+      <%= f.association :user, label: false, collection: User.active, label_method: :name, value_method: :id, as: :hidden %>
+      <%= f.association :team, label: false, collection: Team.active, label_method: :name, value_method: :id, as: :hidden %>
+    <% else %>
+      <%= f.association :team, label: 'Выберить из бригад', collection: Team.active, label_method: :name, value_method: :id %>
+      <%= f.association :user, label: 'или выберите из работников:', collection: User.active, label_method: :name, value_method: :id %>
+    <% end %>
     <%= f.input :month, label: 'Укажите год и месяц:' %>
     <%= f.input :paid_in_usd , label: 'Оплачен с $' %>
     <%= f.input :price, as: :numeric, label: 'Сумма:' %>

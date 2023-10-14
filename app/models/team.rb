@@ -5,4 +5,5 @@ class Team < ApplicationRecord
   validates_uniqueness_of :name
 
   before_destroy :protect_destroy
+  scope :active, -> { where(:active => true)}
 end

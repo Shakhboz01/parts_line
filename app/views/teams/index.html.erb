@@ -6,7 +6,7 @@
     </div>
 
     <div class="card-body">
-      <table class="table table-hover table-striped">
+      <table class="table table-hover table-bordered table-striped">
         <thead>
           <tr>
             <th><%= sort_link @q, :id, 'ID' %></th>
@@ -20,7 +20,8 @@
               <td><%= team.id %></td>
               <td><%= team.name %></td>
               <td>
-                <%= clink_to 'Посмотреть', team_path(team), 'fa-search' %>
+                <%= clink_to 'посмотреть историю зарплат/аванс', salaries_path(q: {team_id_eq: team.id}), 'fa-money' %>
+                <%= clink_to 'Оформить зарплату/аванс', new_salary_path(team_id: team.id), 'fa-plus' %>
                 <%= clink_to 'Редактировать', edit_team_path(team), 'fa-edit' %>
                 <% if team.active %>
                   <%= clink_to 'Деактивировать', toggle_active_team_path(team), 'fa-ban', :post %>
