@@ -7,7 +7,7 @@
           <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form' }) do |f| %>
             <%= f.error_notification %>
             <div class="form-group">
-              <%= f.input :name, autofocus: true, autocomplete: "name", label: 'имя', input_html: { autocomplete: "email", class: 'form-control' } %>
+              <%= f.input :name, autofocus: true, autocomplete: "name", label: 'Название', input_html: { autocomplete: "email", class: 'form-control' } %>
               <%= f.input :email,
                           required: true,
                           autofocus: true,

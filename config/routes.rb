@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  resources :teams do
+    member do
+      post :toggle_active
+    end
+  end
   resources :currency_rates
   resources :services do
     member do

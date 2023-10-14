@@ -1,4 +1,6 @@
 class Service < ApplicationRecord
+  include ProtectDestroyable
+
   belongs_to :user
   validates_presence_of :name
   validates_uniqueness_of :name
