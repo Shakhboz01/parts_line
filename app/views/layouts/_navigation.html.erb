@@ -9,32 +9,34 @@
       <li class="nav-item active">
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Работники
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <%= link_to 'Работники', users_path, class: 'dropdown-item' %>
-          <%= link_to 'переклички', participations_path, class: 'dropdown-item' %>
-          <%= link_to 'добавить новую перекличку', new_participation_path, class: 'dropdown-item' %>
-        </div>
-      </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Настройки
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <%= link_to 'Сервисы', services_path, class: 'dropdown-item' %>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
+          <%= link_to 'Настройки курса', currency_rates_path, class: 'dropdown-item' %>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Посмотреть список:
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Зарплат/Аванс', salaries_path, class: 'dropdown-item' %>
+          <%= link_to 'Работников', users_path, class: 'dropdown-item' %>
+          <%= link_to 'Переклички работников', participations_path, class: 'dropdown-item' %>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Оформить:
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Зарплату/Аванс', new_salary_path, class: 'dropdown-item' %>
+          <%= link_to 'Перекличку работников', new_participation_path, class: 'dropdown-item' %>
+          <%= link_to 'Сервис', new_service_path, class: 'dropdown-item' %>
+        </div>
       </li>
     </ul>
   </div>
@@ -42,7 +44,7 @@
     <% if user_signed_in? %>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%= current_user.name %>
+          <%= current_user.name&.capitalize %>
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <%= link_to "Выйти", destroy_user_session_url, method: :delete, data: { confirm: strip_tags('вы уверены?') }, class: "nav-link styled-delete-button" %>

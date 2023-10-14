@@ -1,4 +1,6 @@
 class CurrencyRate < ApplicationRecord
+  include ProtectDestroyable
+
   validates_presence_of :rate
 
   before_create :set_finished_at

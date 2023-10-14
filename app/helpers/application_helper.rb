@@ -13,8 +13,9 @@ module ApplicationHelper
   end
 
   def active_check(active)
+    style = active ? 'green' : 'red'
     status_class = active ? 'true fa-check' : 'false fa-remove'
-    "<i class=\"fa fa-fw active-check-#{status_class}\"></i>".html_safe
+    "<i style=\"color: #{style}\" class=\"fa fa-fw active-check-#{status_class}\"></i>".html_safe
   end
 
   def num_to_usd(price)
@@ -54,7 +55,7 @@ module ApplicationHelper
     'table-danger' unless boolean
   end
 
-  def strf_datetime(datetime, date = false)
+  def strf_datetime(datteime, date = false)
     return if datetime.nil?
 
     if date

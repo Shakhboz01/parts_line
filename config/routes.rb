@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :salaries
   resources :teams do
     member do
       post :toggle_active
@@ -19,7 +20,8 @@ Rails.application.routes.draw do
   root "pages#main_page"
   devise_for :users
 
-  resources :users do
+  resources :users, except: %i[update] do
+    post :update, on: :member
     get :toggle_active_user, on: :member
     get :new_user_form, on: :collection
     post :auto_user_creation, on: :collection

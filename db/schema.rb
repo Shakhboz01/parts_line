@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_14_045702) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_14_054523) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_14_045702) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_participations_on_user_id"
+  end
+
+  create_table "salaries", force: :cascade do |t|
+    t.boolean "prepayment"
+    t.date "month", default: "2023-10-14"
+    t.bigint "team_id"
+    t.bigint "user_id"
+    t.decimal "price_in_usd", precision: 10, scale: 2
+    t.decimal "price_in_uzs", precision: 25, scale: 2
+    t.boolean "paid_in_usd", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_salaries_on_team_id"
+    t.index ["user_id"], name: "index_salaries_on_user_id"
   end
 
   create_table "services", force: :cascade do |t|
@@ -66,5 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_14_045702) do
   end
 
   add_foreign_key "participations", "users"
+  add_foreign_key "salaries", "teams"
+  add_foreign_key "salaries", "users"
   add_foreign_key "services", "users"
 end
