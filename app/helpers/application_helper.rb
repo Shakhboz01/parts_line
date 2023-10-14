@@ -53,4 +53,14 @@ module ApplicationHelper
   def active_tr(boolean)
     'table-danger' unless boolean
   end
+
+  def strf_datetime(datetime, date = false)
+    return if datetime.nil?
+
+    if date
+      datetime.strftime('%Y-%m-%d')
+    else
+      datetime.strftime('%Y-%m-%d %H:%M:%S')
+    end
+  end
 end
