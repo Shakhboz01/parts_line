@@ -22,7 +22,7 @@ Rails.application.routes.draw do
     end
   end
   root "pages#main_page"
-  devise_for :users
+  devise_for :users, controllers: { sessions: 'sessions' }
 
   resources :users, except: %i[update] do
     post :update, on: :member
