@@ -35,6 +35,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_14_143054) do
     t.boolean "active", default: true
     t.decimal "sell_price", precision: 14, scale: 2
     t.decimal "buy_price", precision: 14, scale: 2
+    t.decimal "initial_remaining", precision: 15, scale: 2, default: "0.0"
     t.integer "unit"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
