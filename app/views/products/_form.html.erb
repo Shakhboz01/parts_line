@@ -6,7 +6,7 @@
   <i class="fa-solid fa-circle-info"></i> Собственный - товары которые производятся внутри организации!
 </span>
 <br><hr>
-<%= simple_form_for(@product) do |f| %>
+<%= simple_form_for(product) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -15,7 +15,8 @@
     <%= f.input :local, label: 'Собственный' %>
     <%= f.input :buy_price, label: 'Цена прихода' %>
     <%= f.input :sell_price, label: 'Цена продажи' %>
-      <%= f.input :unit, label: 'Единица измерение', collection: Product.units.keys.map { |unit| [Product.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
+    <%= f.association :product_category, label: 'Категория товара', include_blank: false %>
+    <%= f.input :unit, label: 'Единица измерение', collection: Product.units.keys.map { |unit| [Product.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
   </div>
 
   <div class="form-actions">

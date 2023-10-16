@@ -5,6 +5,7 @@ class ProductsController < ApplicationController
   def index
     @q = Product.ransack(params[:q])
     @products = @q.result.order(active: :desc).page(params[:page]).per(40)
+    @product_categories = ProductCategory.all
   end
 
   # GET /products/1 or /products/1.json
@@ -13,7 +14,7 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
-    @product = Product.new
+    @product = Product.new(product_category_id: params[:product_category_id])
   end
 
   # GET /products/1/edit
@@ -26,10 +27,10 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to products_url, notice: "Product was successfully created." }
+        format.html { redirect_to product_category_url(@product.product_category), notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, product: @product, status: :unprocessable_entity }
         format.json { render json: @product.errors, status: :unprocessable_entity }
       end
     end
@@ -72,6 +73,6 @@ class ProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_params
-      params.require(:product).permit(:name, :local, :sell_price, :buy_price, :unit)
+      params.require(:product).permit(:name, :local, :sell_price, :buy_price, :unit, :product_category_id)
     end
 end
