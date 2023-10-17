@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :buyers do
+    post :toggle_active, on: :member
+  end
   resources :providers
   resources :product_categories
   resources :products do
