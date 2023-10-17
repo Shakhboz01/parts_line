@@ -10,3 +10,4 @@ User.create(email: 'admin@gmail.com', password: 'admin222', role: 0, name: 'admi
 User.create(email: 'asad@gmail.com', password: 'asad111', role: 0, name: 'asad')
 CurrencyRate.create(rate: 12000.00, finished_at: nil)
 ProductCategory.create(name: 'Прочие')
+Provider.create(name: 'Клиент')
