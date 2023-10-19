@@ -1,0 +1,12 @@
+<div class='container m-5'>
+  <div class='row'>
+    <div class='col-sm-3'></div>
+    <%= link_to new_product_entry_path(local_entry: true), class: 'card shadow text-center col-sm-3 p-3 m-1', style: 'height: 130px; color: wheat; font-size: large; font-weight: bold; background: gray' do %>
+      <span>Product from local production</span>
+    <% end %>
+    <%= link_to new_product_entry_path(local_entry: false), class: 'card shadow col-sm-3 m-1 p-3 text-center', style: 'height: 130px; color: wheat; font-size: large; font-weight: bold; background: gray' do %>
+      <span>Product from provider</span>
+    <% end %>
+    <div class='col-sm-3'></div>
+  </div>
+</div>

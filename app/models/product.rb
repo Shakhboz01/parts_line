@@ -5,5 +5,7 @@ class Product < ApplicationRecord
   validates_presence_of :unit
   belongs_to :product_category
   enum unit: %i[ шт кг метр пачка ]
+  scope :active, -> { where(:active => true)}
+  scope :local, -> { where(:local => true)}
   # NOTE sell_price buy price might be null
 end

@@ -34,6 +34,7 @@
             <td><%= product.initial_remaining %></td>
             <td><%= strf_datetime(product.created_at) %></td>
             <td>
+              <td><%= clink_to 'show product entry histories translate', product_entries_path(q: {product_id_eq: product.id}), 'fa-edit' %></td>
               <%= clink_to 'Редактировать', edit_product_path(product), 'fa-edit' %>
               <% if product.active %>
                   <%= clink_to 'Деактивировать', toggle_active_product_path(product), 'fa-ban', :post %>

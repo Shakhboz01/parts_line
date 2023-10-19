@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_16_104011) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_18_032052) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "buyers", force: :cascade do |t|
+    t.string "name"
+    t.string "phone_number"
+    t.string "comment"
+    t.boolean "active", default: true
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "currency_rates", force: :cascade do |t|
     t.decimal "rate", precision: 12, scale: 2
@@ -33,6 +42,25 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_104011) do
     t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "product_entries", force: :cascade do |t|
+    t.boolean "local_entry", default: false
+    t.decimal "buy_price", precision: 10, scale: 2, default: "0.0"
+    t.decimal "sell_price", precision: 10, scale: 2, default: "0.0"
+    t.decimal "service_price", precision: 10, scale: 2, default: "0.0"
+    t.bigint "provider_id"
+    t.bigint "product_id", null: false
+    t.decimal "amount", precision: 18, scale: 2, default: "0.0"
+    t.decimal "amount_sold", precision: 18, scale: 2, default: "0.0"
+    t.decimal "total_paid", precision: 10, scale: 2
+    t.decimal "total_price", precision: 10, scale: 2, default: "0.0"
+    t.string "comment"
+    t.boolean "return", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_entries_on_product_id"
+    t.index ["provider_id"], name: "index_product_entries_on_provider_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -109,6 +137,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_16_104011) do
   end
 
   add_foreign_key "participations", "users"
+  add_foreign_key "product_entries", "products"
+  add_foreign_key "product_entries", "providers"
   add_foreign_key "products", "product_categories"
   add_foreign_key "salaries", "teams"
   add_foreign_key "salaries", "users"

@@ -23,6 +23,9 @@
           Посмотреть список
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Приход товаров', product_entries_path, class: 'dropdown-item' %>
+          <%= link_to 'Поставщиков', providers_path, class: 'dropdown-item' %>
+          <%= link_to 'Покупателей', buyers_path, class: 'dropdown-item' %>
           <%= link_to 'Товар/материалов', products_path, class: 'dropdown-item' %>
           <%= link_to 'Зарплат/Аванс', salaries_path, class: 'dropdown-item' %>
           <%= link_to 'Работников', users_path, class: 'dropdown-item' %>
@@ -35,6 +38,9 @@
           Оформить
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Приход товара', new_product_entry_path, class: 'dropdown-item' %>
+          <%= link_to 'Поставщика', new_provider_path, class: 'dropdown-item' %>
+          <%= link_to 'Покупателя', buyers_path, class: 'dropdown-item' %>
           <%= link_to 'Товар/материал', new_product_path, class: 'dropdown-item' %>
           <%= link_to 'Зарплату/Аванс', new_salary_path, class: 'dropdown-item' %>
           <%= link_to 'Перекличку работников', new_participation_path, class: 'dropdown-item' %>
