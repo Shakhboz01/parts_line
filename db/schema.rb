@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_18_032052) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_21_061113) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_032052) do
     t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "combination_of_local_products", force: :cascade do |t|
+    t.string "comment"
+    t.integer "status", default: 0
+    t.bigint "product_entry_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_entry_id"], name: "index_combination_of_local_products_on_product_entry_id"
   end
 
   create_table "currency_rates", force: :cascade do |t|
@@ -136,6 +145,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_18_032052) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "combination_of_local_products", "product_entries"
   add_foreign_key "participations", "users"
   add_foreign_key "product_entries", "products"
   add_foreign_key "product_entries", "providers"
