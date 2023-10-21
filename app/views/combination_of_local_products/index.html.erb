@@ -1,0 +1,33 @@
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="card-title font-weight-bold">Combination Of Local Products</h3>
+      <%= link_to 'Добавить новый', new_combination_of_local_product_path, class: "btn btn-success min-width-btn" %>
+    </div>
+
+    <div class="card-body">
+      <table class="table table-hover table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Comment</th>
+            <th>Status</th>
+            <th>Product</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @combination_of_local_products.each do |combination_of_local_product| %>
+            <tr>
+              <td><%= combination_of_local_product.comment %></td>
+              <td><%= combination_of_local_product.status %></td>
+              <td><%= combination_of_local_product.product_id %></td>
+              <td><%= clink_to 'Посмотреть', combination_of_local_product_path(combination_of_local_product), 'fa-search' %></td>
+              <td><%= clink_to 'Редактировать', edit_combination_of_local_product_path(combination_of_local_product), 'fa-edit' %></td>
+              <td><%= cdlink_to 'удалить', combination_of_local_product %></td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

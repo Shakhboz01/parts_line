@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @combination_of_local_product %>
+
+<div>
+  <%= link_to "Edit this combination of local product", edit_combination_of_local_product_path(@combination_of_local_product) %> |
+  <%= link_to "Back to combination of local products", combination_of_local_products_path %>
+
+  <%= button_to "Destroy this combination of local product", @combination_of_local_product, method: :delete %>
+</div>
