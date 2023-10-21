@@ -41,7 +41,11 @@ class ProductEntriesController < ApplicationController
 
     respond_to do |format|
       if @product_entry.save
-        format.html { redirect_to product_entries_url, notice: "Product entry was successfully created." }
+        if @product_entry.local_entry
+          format.html { redirect_to combination_of_local_product_path(@product_entry.combination_of_local_product), notice: "Пожалуйста, укажите любые расходы, которые используются для производства этого продукта." }
+        else
+          format.html { redirect_to product_entries_url, notice: "Product entry was successfully created." }
+        end
         format.json { render :show, status: :created, location: @product_entry }
       else
         format.html { render :new, product_entry: @product_entry, status: :unprocessable_entity }
@@ -49,6 +53,7 @@ class ProductEntriesController < ApplicationController
       end
     end
   end
+
 
   # PATCH/PUT /product_entries/1 or /product_entries/1.json
   def update

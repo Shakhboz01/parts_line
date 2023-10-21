@@ -9,10 +9,10 @@
       <%= f.association :provider, collection: Provider.active %>
       <%= f.input :buy_price, label: 'Цена прихода каждого товара' %>
       <%= f.input :total_paid, label: 'Оплачено', placeholder:  'Пропустите этот поле если клиент оплатил полностью' %>
+      <%= f.input :sell_price %>
+      <%= f.input :service_price %>
     <% end %>
 
-    <%= f.input :sell_price %>
-    <%= f.input :service_price %>
     <%= f.input :amount, id: 'inputs' %>
 
     <%= f.input :comment, label: 'Коммент', placeholder: 'Не обязательно' %>

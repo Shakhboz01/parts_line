@@ -1,10 +1,14 @@
-<p style="color: green"><%= notice %></p>
+<div class='container'>
+  <%= render 'layouts/progress', value: '72' %>
 
-<%= render @combination_of_local_product %>
+  <p style="color: green"><%= notice %></p>
 
-<div>
-  <%= link_to "Edit this combination of local product", edit_combination_of_local_product_path(@combination_of_local_product) %> |
-  <%= link_to "Back to combination of local products", combination_of_local_products_path %>
+  <%= render @combination_of_local_product %>
 
-  <%= button_to "Destroy this combination of local product", @combination_of_local_product, method: :delete %>
+  <div>
+    <%= link_to "Edit this combination of local product", edit_combination_of_local_product_path(@combination_of_local_product) %> |
+    <%= link_to "Back to combination of local products", combination_of_local_products_path %>
+
+    <%= button_to "Destroy this combination of local product", @combination_of_local_product, method: :delete %>
+  </div>
 </div>
