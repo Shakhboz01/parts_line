@@ -1,3 +1,5 @@
+# agar tovar prixod shavat i tovara xudamo burordagi boshem, prochiye rasxodi + uxod detalo mishud, badaz tovar prixod shudan, user haminoya medarorat
+
 class CombinationOfLocalProduct < ApplicationRecord
   belongs_to :product_entry
   validates_presence_of :status
