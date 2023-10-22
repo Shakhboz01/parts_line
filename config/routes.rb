@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :product_sells
   resources :expenditures
   resources :combination_of_local_products
   resources :product_entries do

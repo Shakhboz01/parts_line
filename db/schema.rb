@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_21_142351) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_22_104449) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -82,6 +82,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_142351) do
     t.datetime "updated_at", null: false
     t.index ["product_id"], name: "index_product_entries_on_product_id"
     t.index ["provider_id"], name: "index_product_entries_on_provider_id"
+  end
+
+  create_table "product_sells", force: :cascade do |t|
+    t.bigint "combination_of_local_product_id"
+    t.bigint "product_id", null: false
+    t.decimal "buy_price_in_uzs", precision: 16, scale: 2, default: "0.0"
+    t.decimal "buy_price_in_usd", precision: 16, scale: 2, default: "0.0"
+    t.decimal "sell_price_in_uzs", precision: 16, scale: 2, default: "0.0"
+    t.decimal "sell_price_in_usd", precision: 16, scale: 2, default: "0.0"
+    t.decimal "total_profit_in_uzs", default: "0.0"
+    t.decimal "total_profit_in_usd", default: "0.0"
+    t.boolean "paid_in_usd", default: false
+    t.jsonb "price_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["combination_of_local_product_id"], name: "index_product_sells_on_combination_of_local_product_id"
+    t.index ["product_id"], name: "index_product_sells_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -162,6 +179,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_142351) do
   add_foreign_key "participations", "users"
   add_foreign_key "product_entries", "products"
   add_foreign_key "product_entries", "providers"
+  add_foreign_key "product_sells", "combination_of_local_products"
+  add_foreign_key "product_sells", "products"
   add_foreign_key "products", "product_categories"
   add_foreign_key "salaries", "teams"
   add_foreign_key "salaries", "users"
