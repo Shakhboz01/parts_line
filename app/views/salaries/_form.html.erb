@@ -1,3 +1,5 @@
+<% rate = CurrencyRate.where(finished_at: nil).last.rate %>
+
 <%= simple_form_for(@salary) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -11,7 +13,8 @@
       <%= f.association :user, label: 'или выберите из работников:', collection: User.active, label_method: :name, value_method: :id %>
     <% end %>
     <%= f.input :month, label: 'Укажите год и месяц:' %>
-    <%= f.input :paid_in_usd , label: 'Оплачен с $' %>
+    <%= f.input :paid_in_usd, label: 'Оплачен с $' %>
+    <%= f.input :rate, input_html: { value: rate, disabled: true }, as: :numeric %>
     <%= f.input :price, as: :numeric, label: 'Сумма:' %>
     <%= f.input :prepayment , label: 'Аванс' %>
   </div>

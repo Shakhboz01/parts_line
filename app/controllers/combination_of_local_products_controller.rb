@@ -9,6 +9,8 @@ class CombinationOfLocalProductsController < ApplicationController
 
   # GET /combination_of_local_products/1 or /combination_of_local_products/1.json
   def show
+    @expenditures = @combination_of_local_product.expenditures
+    @expenditures_data = @combination_of_local_product.expenditures
   end
 
   # GET /combination_of_local_products/new

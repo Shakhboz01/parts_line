@@ -20,8 +20,8 @@ class ProductEntriesController < ApplicationController
       return: params[:return]
     )
     @products = Product.active
-    if params[:local_entry]
-      @products = @products.local
+    if params[:local_entry] == 'true'
+      @products = @products.where(local: true)
     else
       @products = @products.where(local: false)
     end

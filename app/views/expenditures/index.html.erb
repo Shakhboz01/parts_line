@@ -1,0 +1,7 @@
+<div class="container my-5">
+  <%= render 'filter_form', q: @q, url: request.path %>
+  <div class="card shadow">
+    <%= render 'expenditures', expenditures: @expenditures, expenditures_data: @expenditures_data %>
+    <%= paginate @expenditures %>
+  </div>
+</div>

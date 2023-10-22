@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_21_061113) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_21_142351) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,6 +37,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_061113) do
     t.datetime "finished_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "expenditures", force: :cascade do |t|
+    t.bigint "combination_of_local_product_id"
+    t.decimal "price_in_usd", default: "0.0"
+    t.decimal "price_in_uzs", default: "0.0"
+    t.boolean "paid_in_usd", default: false
+    t.decimal "total_paid"
+    t.integer "expenditure_type"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["combination_of_local_product_id"], name: "index_expenditures_on_combination_of_local_product_id"
   end
 
   create_table "participations", force: :cascade do |t|
@@ -146,6 +158,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_21_061113) do
   end
 
   add_foreign_key "combination_of_local_products", "product_entries"
+  add_foreign_key "expenditures", "combination_of_local_products"
   add_foreign_key "participations", "users"
   add_foreign_key "product_entries", "products"
   add_foreign_key "product_entries", "providers"

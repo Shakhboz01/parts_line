@@ -10,7 +10,7 @@ class ProductEntry < ApplicationRecord
 
   validate :amount_greater_than_amount_sold
   after_create :create_combination_for_local_entry
-  before_commit :set_total_price
+  before_save :set_total_price
 
   private
 

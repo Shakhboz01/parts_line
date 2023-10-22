@@ -1,6 +1,9 @@
 class Salary < ApplicationRecord
   include ProtectDestroyable
+  include HandleCurrency
+  include ProtectEditAfterDay
   attr_accessor :price
+  attr_accessor :rate
 
   belongs_to :team, optional: true
   belongs_to :user, optional: true
@@ -11,21 +14,4 @@ class Salary < ApplicationRecord
   validates_presence_of :user, if: -> { team.nil? }
   validates_absence_of :user, unless: -> { team.nil? }
   validates_absence_of :team, unless: -> { user.nil? }
-
-  before_create :set_prices
-  before_update :set_prices
-
-  private
-
-  def set_prices
-    rate = CurrencyRate.where(finished_at: nil).last.rate
-    self.price = price.to_f
-    if paid_in_usd
-      self.price_in_usd = price
-      self.price_in_uzs = price * rate
-    else
-      self.price_in_uzs = price
-      self.price_in_usd = price.to_f / rate
-    end
-  end
 end
