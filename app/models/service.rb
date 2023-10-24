@@ -1,8 +1,12 @@
 class Service < ApplicationRecord
   include ProtectDestroyable
+  include HandleCurrency
+
+  attr_accessor :price
 
   belongs_to :user
   validates_presence_of :name
+  validates_presence_of :price
   validates_uniqueness_of :name
   enum unit: %i[метр кв кг]
 

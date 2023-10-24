@@ -1,0 +1,311 @@
+[33mcommit d092851a4372e82762fb4be55f58ce22ea1e8908[m[33m ([m[1;36mHEAD -> [m[1;32mfirst_step[m[33m)[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sun Oct 22 16:44:16 2023 +0500
+
+    added product_sells
+
+[33mcommit e6dd3abcfb279e5b4830a646732c0909a09dce30[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sun Oct 22 13:36:19 2023 +0500
+
+    added product entry
+
+[33mcommit 0fa2f6f177c3985a199415ed83032f014c723355[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 21 18:58:06 2023 +0500
+
+    added combination
+
+[33mcommit b64d308a4d05e6dcb85f91c0613462ffaff09866[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 21 12:19:18 2023 +0500
+
+    added progress
+
+[33mcommit 18bd889bedcb1cff9c8e4f9f75d6d12b536bf49f[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 21 11:22:29 2023 +0500
+
+    added combination of local product #2
+
+[33mcommit d54364f9abfa564b2b2942b68f188fa6b190d9a3[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 21 11:20:45 2023 +0500
+
+    added combination of local product
+
+[33mcommit 1324bcd74662c841008595ab430a2c4d42e8b6bc[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 21 09:49:22 2023 +0500
+
+    added ransack and some naming fix
+
+[33mcommit 285f7ae428dd0bf0261129c9f59597b12ee41c29[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Thu Oct 19 16:35:16 2023 +0500
+
+    added product entries, only translation left
+
+[33mcommit be31547e2b0f376cdea135ac5f956fa005ca929a[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Tue Oct 17 15:18:16 2023 +0500
+
+    added buyer #2
+
+[33mcommit 028d70b70c9014c9180c20efac7c215df4a9c5c7[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Tue Oct 17 15:15:03 2023 +0500
+
+    added buyer
+
+[33mcommit e7e14c7ea4ab5f1e0ea0d3a85fc16fe9d5389c53[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Tue Oct 17 14:54:23 2023 +0500
+
+    added provider only translation left
+
+[33mcommit db0b1fbe9f0fa309ec5ff3cfb100580751d8ab84[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Mon Oct 16 15:36:37 2023 +0500
+
+    added category and product #2
+
+[33mcommit da5361e3060b7fc2f39f8821875667792c6e3652[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Mon Oct 16 15:35:31 2023 +0500
+
+    added category and product
+
+[33mcommit 0484f226320cfbaab7392c9a303da53a4d60df33[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Mon Oct 16 08:57:28 2023 +0500
+
+    added initial remaining
+
+[33mcommit c4e18e5e260b6f2de76d96a72ca0df5fb619593d[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sun Oct 15 10:12:45 2023 +0500
+
+    prevented inactive user from being signed in
+
+[33mcommit 3555f78e6508fc72ef24e594e554342bce9328a7[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 14 20:34:57 2023 +0500
+
+    added products #2
+
+[33mcommit 5ae3a411871d640165d6fbfc76751878b886afd5[m[33m ([m[1;31morigin/first_step[m[33m)[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 14 20:27:31 2023 +0500
+
+    added products
+
+[33mcommit 6608828225eebead727ddf15a6e63b730663426d[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 14 18:30:51 2023 +0500
+
+    minor change
+
+[33mcommit e563019975a5fa252ecbd5c26ea2df32e10eb26f[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 14 18:21:05 2023 +0500
+
+    salary is ready
+
+[33mcommit bf84d49b9d5953e91199164aa74a15fe9da5f223[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 14 17:41:52 2023 +0500
+
+    added salary, filter, info, corrected datepicker
+
+[33mcommit 56e87cd9b000711e1e5971351d427d55a36ca222[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 14 10:24:08 2023 +0500
+
+    added team
+
+[33mcommit b69b170e5203a9ae5d3536d12e2633a4afb85bee[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 14 09:55:00 2023 +0500
+
+    showed rate to navbar
+
+[33mcommit 56193dc8790800951b83aa61541fd7e4074dccbb[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 14 09:48:40 2023 +0500
+
+    added currencyRate
+
+[33mcommit 36c82ef09206618128db8d5422a595c642ab60b0[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Fri Oct 13 16:30:07 2023 +0500
+
+    added services
+
+[33mcommit d6efa2cd92107dc5c5c69d5d3a6be9fb983a7157[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Fri Oct 13 10:30:13 2023 +0500
+
+    server now reloads controllers
+
+[33mcommit 2d40fba2d164356eec497cdb44a1e143e163fd3a[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Fri Oct 13 10:00:08 2023 +0500
+
+    added service scaffold
+
+[33mcommit c7c7d09af344ec03a5a6c2cbcb1dbf399c566089[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Fri Oct 13 09:08:02 2023 +0500
+
+    added simple_form view
+
+[33mcommit 05dda0e8e9e55d872957dad94570c0521de9a331[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Fri Oct 13 08:49:14 2023 +0500
+
+    gitignore
+
+[33mcommit 5d6caa1f228eae902e6e5d8fd07aa8c1a9be893f[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Fri Oct 13 08:39:52 2023 +0500
+
+    initialized project
+
+[33mcommit 5b1b85f66ada98899a2958f01d4b7a1a704d9676[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 7 10:06:02 2023 +0500
+
+    added rack-attack
+
+[33mcommit 540e9e20b2035374a8a3d709f5a4ae2d6f7eee17[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Oct 7 09:18:24 2023 +0500
+
+    added timezone
+
+[33mcommit ff83429fafa9eeefd005fea2a1f5c0b43a6b8991[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Thu Oct 5 15:05:24 2023 +0500
+
+    added bootstrap datepicker
+
+[33mcommit 36d40a3d424ec337502f2e2f07b96c88d48bb534[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Thu Oct 5 14:52:14 2023 +0500
+
+    ransack config
+
+[33mcommit 906b9a9a55fb8bcaa2b6bb77f214dfff678057b2[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Thu Oct 5 14:52:06 2023 +0500
+
+    ransack config
+
+[33mcommit 9bb37dd5922fc6a4249bd4a5331e246c30ad8817[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Wed Sep 27 07:01:39 2023 +0500
+
+    added kaminary views
+
+[33mcommit 01a01ed75d958f1a6fe46ccc589b0cc8fa9c90ae[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 9 10:58:39 2023 +0500
+
+    added participation
+
+[33mcommit 77a7686e27ab1a7f37e7c28a110d2db81e0c1f0e[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 9 10:49:33 2023 +0500
+
+    added user crud
+
+[33mcommit 0229ebfd99408ae7d19994c122ef9fa6fe0729c1[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Wed Sep 6 18:58:27 2023 +0500
+
+    customized devise views
+
+[33mcommit 63836fa0d03cb453ba83335351ae1b59f180a193[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Wed Sep 6 18:35:51 2023 +0500
+
+    ready
+
+[33mcommit 916dfb5193c96697f3a6c5cfdea4abd3acb48fc6[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Wed Sep 6 18:22:24 2023 +0500
+
+    fixed js
+
+[33mcommit 62c716ce39c7fa8658dbe52ac9e6fe9d5105b03f[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 18:22:49 2023 +0500
+
+    added ransack and kaminary
+
+[33mcommit ea3f81cc438a4e03c6f2a1ce1fbe61b4c5341d37[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 18:21:54 2023 +0500
+
+    added a template.tt
+
+[33mcommit 4aad78bdbe42bab5be0fd6b1bf20e1e366aa243d[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 17:45:59 2023 +0500
+
+    added some fields to user
+
+[33mcommit 8bd0970ee73a44a83824f541acd84e7116555f89[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 13:09:27 2023 +0500
+
+    added a policy
+
+[33mcommit 6c91eb027dee81e7c0b1ce0c7bc0c013ed998178[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 13:09:16 2023 +0500
+
+    added a policy
+
+[33mcommit 935b4a5712a0911c8d7ef9396bd65f8eee946aa2[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 13:00:09 2023 +0500
+
+    added a fontawesome link
+
+[33mcommit 60bac050fe17cbf8f0a9ee2cf066fb3d0793c065[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 12:58:32 2023 +0500
+
+    added a user devise and navigation
+
+[33mcommit 437d31ce95349f8d92a4a848eeccad1635117dd0[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 12:30:28 2023 +0500
+
+    added a user devise
+
+[33mcommit c678909b24b2f059cb6d060453a4eeadcfedd2b7[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 11:23:46 2023 +0500
+
+    added a bootstrap
+
+[33mcommit 7f665acb87f584c7d316f37a9e3c0f8c0a5e4890[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 11:13:20 2023 +0500
+
+    added bootstrap #2
+
+[33mcommit 4e2b3eca839d60b975d30047ed5a95da938498a0[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 11:13:04 2023 +0500
+
+    added bootstrap
+
+[33mcommit 78bf06f62152c1e7e3a9dfedc2251f18d5801f60[m
+Author: Shakhboz <shfazliddinov1940@gmail.com>
+Date:   Sat Sep 2 11:05:48 2023 +0500
+
+    initialized an app

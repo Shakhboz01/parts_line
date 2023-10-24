@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :delivery_from_counterparties
   resources :product_sells
   resources :expenditures
   resources :combination_of_local_products

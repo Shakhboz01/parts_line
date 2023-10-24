@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_22_104449) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,10 +26,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_104449) do
   create_table "combination_of_local_products", force: :cascade do |t|
     t.string "comment"
     t.integer "status", default: 0
-    t.bigint "product_entry_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["product_entry_id"], name: "index_combination_of_local_products_on_product_entry_id"
   end
 
   create_table "currency_rates", force: :cascade do |t|
@@ -37,6 +35,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_104449) do
     t.datetime "finished_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "delivery_from_counterparties", force: :cascade do |t|
+    t.decimal "total_price", precision: 16, scale: 2, default: "0.0"
+    t.decimal "total_paid", precision: 16, scale: 2, default: "0.0"
+    t.boolean "paid_in_usd", default: false
+    t.string "comment"
+    t.integer "status", default: 0
+    t.bigint "provider_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["provider_id"], name: "index_delivery_from_counterparties_on_provider_id"
   end
 
   create_table "expenditures", force: :cascade do |t|
@@ -66,22 +76,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_104449) do
   end
 
   create_table "product_entries", force: :cascade do |t|
-    t.boolean "local_entry", default: false
-    t.decimal "buy_price", precision: 10, scale: 2, default: "0.0"
-    t.decimal "sell_price", precision: 10, scale: 2, default: "0.0"
-    t.decimal "service_price", precision: 10, scale: 2, default: "0.0"
-    t.bigint "provider_id"
+    t.decimal "buy_price_in_usd", precision: 10, scale: 2, default: "0.0"
+    t.decimal "buy_price_in_uzs", precision: 10, scale: 2, default: "0.0"
+    t.decimal "sell_price_in_usd", precision: 10, scale: 2, default: "0.0"
+    t.decimal "sell_price_in_uzs", precision: 10, scale: 2, default: "0.0"
+    t.boolean "paid_in_usd", default: false
+    t.decimal "service_price_in_usd", precision: 10, scale: 2, default: "0.0"
+    t.decimal "service_price_in_uzs", precision: 10, scale: 2, default: "0.0"
     t.bigint "product_id", null: false
     t.decimal "amount", precision: 18, scale: 2, default: "0.0"
     t.decimal "amount_sold", precision: 18, scale: 2, default: "0.0"
-    t.decimal "total_paid", precision: 10, scale: 2
-    t.decimal "total_price", precision: 10, scale: 2, default: "0.0"
     t.string "comment"
-    t.boolean "return", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "delivery_from_counterparties_id"
+    t.bigint "combination_of_local_product_id"
+    t.index ["combination_of_local_product_id"], name: "index_product_entries_on_combination_of_local_product_id"
+    t.index ["delivery_from_counterparties_id"], name: "index_product_entries_on_delivery_from_counterparties_id"
     t.index ["product_id"], name: "index_product_entries_on_product_id"
-    t.index ["provider_id"], name: "index_product_entries_on_provider_id"
   end
 
   create_table "product_sells", force: :cascade do |t|
@@ -105,8 +117,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_104449) do
     t.string "name"
     t.boolean "local", default: false
     t.boolean "active", default: true
-    t.decimal "sell_price", precision: 14, scale: 2
-    t.decimal "buy_price", precision: 14, scale: 2
+    t.decimal "sell_price_in_usd", precision: 14, scale: 2, default: "0.0"
+    t.decimal "sell_price_in_uzs", precision: 14, scale: 2, default: "0.0"
+    t.decimal "buy_price_in_usd", precision: 14, scale: 2, default: "0.0"
+    t.decimal "buy_price_in_uzs", precision: 14, scale: 2, default: "0.0"
+    t.boolean "price_in_usd", default: false
     t.decimal "initial_remaining", precision: 15, scale: 2, default: "0.0"
     t.integer "unit"
     t.datetime "created_at", null: false
@@ -126,7 +141,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_104449) do
 
   create_table "salaries", force: :cascade do |t|
     t.boolean "prepayment"
-    t.date "month", default: "2023-10-14"
+    t.date "month", default: "2023-10-22"
     t.bigint "team_id"
     t.bigint "user_id"
     t.decimal "price_in_usd", precision: 10, scale: 2
@@ -141,7 +156,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_104449) do
   create_table "services", force: :cascade do |t|
     t.string "name"
     t.integer "unit"
-    t.decimal "service_price", precision: 15, scale: 2
+    t.decimal "price_in_usd", precision: 15, scale: 2, default: "0.0"
+    t.decimal "price_in_uzs", precision: 15, scale: 2, default: "0.0"
     t.boolean "active", default: true
     t.bigint "user_id", null: false
     t.integer "team_fee_in_percent"
@@ -174,11 +190,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_104449) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "combination_of_local_products", "product_entries"
+  add_foreign_key "delivery_from_counterparties", "providers"
   add_foreign_key "expenditures", "combination_of_local_products"
   add_foreign_key "participations", "users"
+  add_foreign_key "product_entries", "combination_of_local_products"
+  add_foreign_key "product_entries", "delivery_from_counterparties", column: "delivery_from_counterparties_id"
   add_foreign_key "product_entries", "products"
-  add_foreign_key "product_entries", "providers"
   add_foreign_key "product_sells", "combination_of_local_products"
   add_foreign_key "product_sells", "products"
   add_foreign_key "products", "product_categories"

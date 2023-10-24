@@ -1,11 +1,11 @@
 # total paid might be null, it means provider paid fully at once
 class ProductEntry < ApplicationRecord
-  belongs_to :provider, optional: true
+  belongs_to :combination_of_local_product, optional: true
+  belongs_to :delivery_from_counterparty, optional: true
   belongs_to :product
   has_one :combination_of_local_product
   validates_presence_of :local_entry
   validates_presence_of :amount
-  validates_presence_of :provider, unless: -> { local_entry }
   validates_presence_of :buy_price, unless: -> { local_entry }
 
   validate :amount_greater_than_amount_sold

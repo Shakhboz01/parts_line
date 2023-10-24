@@ -9,10 +9,6 @@
         <%= f.label :unit_eq, 'Единица измерения:', class: 'control-label' %>
         <%= f.select :unit_eq, Service.units.keys.map { |key| [Service.human_attribute_name("unit.#{key}"), key] }, { include_blank: true }, class: 'form-control' %>
       </div>
-      <div class="form-group col-xs-12 col-sm-4">
-        <%= f.label :service_price_gteq, 'Цена услуги больше или равно:', class: 'control-label' %>
-        <%= f.number_field :service_price_gteq, class: 'form-control' %>
-      </div>
     </div>
 
     <div class="row">
