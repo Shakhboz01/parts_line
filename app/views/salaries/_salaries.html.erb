@@ -14,9 +14,8 @@
             <th><%= sort_link @q, :month, 'Дата' %></th>
             <th>Кому</th>
             <th><%= sort_link @q, :prepayment, 'Аванс' %></th>
-            <th><%= sort_link @q, :price_in_uzs, 'Цена' %></th>
-            <th><%= sort_link @q, :price_in_usd, 'Цена в $' %></th>
-            <th><%= sort_link @q, :paid_in_usd, 'оплачено в $' %></th>
+            <th><%= sort_link @q, :price, 'Цена' %></th>
+            <th><%= sort_link @q, :payment_type, 'тип оплаты' %></th>
             <th colspan="3"></th>
           </tr>
         </thead>
@@ -27,9 +26,8 @@
               <td><%= salary.month %></td>
               <td><%= salary.team&.name || salary.user&.name %></td>
               <td><%= active_check(salary.prepayment) %></td>
-              <td><%= num_to_usd(salary.price_in_uzs) %></td>
-              <td><%= number_to_currency(salary.price_in_usd) %></td>
-              <td><%= active_check(salary.paid_in_usd) %></td>
+              <td><%= number_to_currency(salary.price) %></td>
+              <td><%= salary.payment_type %></td>
               <th><%= clink_to 'Редактировать', edit_salary_url(salary), 'fa-edit' %></th>
             </tr>
           <% end %>

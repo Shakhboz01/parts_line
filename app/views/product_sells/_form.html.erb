@@ -6,13 +6,13 @@
   <div class="form-inputs">
     <%= f.association :combination_of_local_product %>
     <%= f.association :product %>
-    <%= f.input :sell_price_in_usd %>
-    <%= f.input :sell_price_in_uzs %>
-    <%= f.input :buy_price_in_usd %>
-    <%= f.input :buy_price_in_uzs %>
+    <%= f.input :price %>
+    <%= f.input :price %>
+    <%= f.input :price %>
+    <%= f.input :price %>
     <%= f.input :total_profit_in_usd %>
     <%= f.input :total_profit_in_uzs %>
-    <%= f.input :paid_in_usd %>
+    <%= f.input :payment_type, ProductSell.payment_types %>
   </div>
 
   <div class="form-actions">

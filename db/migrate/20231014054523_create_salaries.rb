@@ -5,9 +5,8 @@ class CreateSalaries < ActiveRecord::Migration[7.0]
       t.date :month, default: Date.current
       t.references :team, null: true, foreign_key: true
       t.references :user, null: true, foreign_key: true
-      t.decimal :price_in_usd, precision: 10, scale: 2
-      t.decimal :price_in_uzs, precision: 25, scale: 2
-      t.boolean :paid_in_usd, default: false
+      t.decimal :price, precision: 10, scale: 2
+      t.integer :payment_type, default: 0
 
       t.timestamps
     end

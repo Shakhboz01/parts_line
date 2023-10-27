@@ -58,13 +58,13 @@ class ProductSellsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product_sell
-      @product_sell = ProductSell.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product_sell
+    @product_sell = ProductSell.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def product_sell_params
-      params.require(:product_sell).permit(:combination_of_local_product_id, :product_id, :sell_price_in_usd, :sell_price_in_uzs, :buy_price_in_usd, :buy_price_in_uzs, :total_profit_in_usd, :total_profit_in_uzs, :paid_in_usd)
-    end
+  # Only allow a list of trusted parameters through.
+  def product_sell_params
+    params.require(:product_sell).permit(:combination_of_local_product_id, :product_id, :price, :price, :total_profit, :payment_type)
+  end
 end

@@ -9,9 +9,6 @@
     <%= f.input :unit, label: 'Измерение', collection: Service.units.keys.map { |unit| [Service.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
   </div>
   <div class="form-inputs">
-    <%= f.input :paid_in_usd, label: 'цена в $' %>
-  </div>
-  <div class="form-inputs">
     <%= f.input :price, label: 'цена услуги' %>
   </div>
   <div class="form-inputs">

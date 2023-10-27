@@ -40,7 +40,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
   create_table "delivery_from_counterparties", force: :cascade do |t|
     t.decimal "total_price", precision: 16, scale: 2, default: "0.0"
     t.decimal "total_paid", precision: 16, scale: 2, default: "0.0"
-    t.boolean "paid_in_usd", default: false
+    t.integer "payment_type", default: 0
     t.string "comment"
     t.integer "status", default: 0
     t.bigint "provider_id"
@@ -51,11 +51,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
 
   create_table "expenditures", force: :cascade do |t|
     t.bigint "combination_of_local_product_id"
-    t.decimal "price_in_usd", default: "0.0"
-    t.decimal "price_in_uzs", default: "0.0"
-    t.boolean "paid_in_usd", default: false
+    t.decimal "price", default: "0.0"
     t.decimal "total_paid"
     t.integer "expenditure_type"
+    t.integer "payment_type", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["combination_of_local_product_id"], name: "index_expenditures_on_combination_of_local_product_id"
@@ -76,17 +75,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
   end
 
   create_table "product_entries", force: :cascade do |t|
-    t.decimal "buy_price_in_usd", precision: 10, scale: 2, default: "0.0"
-    t.decimal "buy_price_in_uzs", precision: 10, scale: 2, default: "0.0"
-    t.decimal "sell_price_in_usd", precision: 10, scale: 2, default: "0.0"
-    t.decimal "sell_price_in_uzs", precision: 10, scale: 2, default: "0.0"
+    t.decimal "buy_price", precision: 10, scale: 2, default: "0.0"
+    t.decimal "sell_price", precision: 10, scale: 2, default: "0.0"
     t.boolean "paid_in_usd", default: false
-    t.decimal "service_price_in_usd", precision: 10, scale: 2, default: "0.0"
-    t.decimal "service_price_in_uzs", precision: 10, scale: 2, default: "0.0"
+    t.decimal "service_price", precision: 10, scale: 2, default: "0.0"
     t.bigint "product_id", null: false
     t.decimal "amount", precision: 18, scale: 2, default: "0.0"
     t.decimal "amount_sold", precision: 18, scale: 2, default: "0.0"
     t.string "comment"
+    t.integer "payment_type", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "delivery_from_counterparties_id"
@@ -99,13 +96,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
   create_table "product_sells", force: :cascade do |t|
     t.bigint "combination_of_local_product_id"
     t.bigint "product_id", null: false
-    t.decimal "buy_price_in_uzs", precision: 16, scale: 2, default: "0.0"
-    t.decimal "buy_price_in_usd", precision: 16, scale: 2, default: "0.0"
-    t.decimal "sell_price_in_uzs", precision: 16, scale: 2, default: "0.0"
-    t.decimal "sell_price_in_usd", precision: 16, scale: 2, default: "0.0"
-    t.decimal "total_profit_in_uzs", default: "0.0"
-    t.decimal "total_profit_in_usd", default: "0.0"
-    t.boolean "paid_in_usd", default: false
+    t.decimal "buy_price", precision: 16, scale: 2, default: "0.0"
+    t.decimal "sell_price", precision: 16, scale: 2, default: "0.0"
+    t.decimal "total_profit", default: "0.0"
     t.jsonb "price_data"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -117,11 +110,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
     t.string "name"
     t.boolean "local", default: false
     t.boolean "active", default: true
-    t.decimal "sell_price_in_usd", precision: 14, scale: 2, default: "0.0"
-    t.decimal "sell_price_in_uzs", precision: 14, scale: 2, default: "0.0"
-    t.decimal "buy_price_in_usd", precision: 14, scale: 2, default: "0.0"
-    t.decimal "buy_price_in_uzs", precision: 14, scale: 2, default: "0.0"
-    t.boolean "price_in_usd", default: false
+    t.decimal "sell_price", precision: 14, scale: 2, default: "0.0"
+    t.decimal "buy_price", precision: 14, scale: 2, default: "0.0"
     t.decimal "initial_remaining", precision: 15, scale: 2, default: "0.0"
     t.integer "unit"
     t.datetime "created_at", null: false
@@ -141,12 +131,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
 
   create_table "salaries", force: :cascade do |t|
     t.boolean "prepayment"
-    t.date "month", default: "2023-10-22"
+    t.date "month", default: "2023-10-26"
     t.bigint "team_id"
     t.bigint "user_id"
-    t.decimal "price_in_usd", precision: 10, scale: 2
-    t.decimal "price_in_uzs", precision: 25, scale: 2
-    t.boolean "paid_in_usd", default: false
+    t.decimal "price", precision: 10, scale: 2
+    t.integer "payment_type", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["team_id"], name: "index_salaries_on_team_id"
@@ -156,8 +145,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
   create_table "services", force: :cascade do |t|
     t.string "name"
     t.integer "unit"
-    t.decimal "price_in_usd", precision: 15, scale: 2, default: "0.0"
-    t.decimal "price_in_uzs", precision: 15, scale: 2, default: "0.0"
+    t.decimal "price", precision: 15, scale: 2, default: "0.0"
     t.boolean "active", default: true
     t.bigint "user_id", null: false
     t.integer "team_fee_in_percent"

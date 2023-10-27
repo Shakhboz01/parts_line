@@ -64,4 +64,14 @@ module ApplicationHelper
       datetime.strftime('%Y-%m-%d %H:%M')
     end
   end
+
+  def detect_danger_row(price, total_paid)
+    return if price == total_paid
+
+    if price > total_paid
+      'table-danger'
+    else
+      'table-success'
+    end
+  end
 end

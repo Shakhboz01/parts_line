@@ -15,8 +15,8 @@ module HandleSellAndBuyPrice
     if price_in_usd
       self.sell_price_in_usd = sell_price
       self.sell_price_in_uzs = sell_price * rate
-      self.buy_price_in_uzs = sell_price * rate
-      self.buy_price_in_usd = sell_price
+      self.price = sell_price * rate
+      self.price = sell_price
 
       if self.attributes.keys.includes?('service_price')
         self.service_price = service_price.to_f
@@ -28,8 +28,8 @@ module HandleSellAndBuyPrice
       self.sell_price_in_uzs = sell_price
       self.sell_price_in_usd = sell_price.to_f / rate
 
-      self.buy_price_in_uzs = buy_price
-      self.buy_price_in_usd = buy_price.to_f / rate
+      self.price = buy_price
+      self.price = buy_price.to_f / rate
 
       if self.attributes.keys.includes?('service_price')
         self.service_price = service_price.to_f

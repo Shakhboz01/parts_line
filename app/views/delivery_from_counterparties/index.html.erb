@@ -11,7 +11,7 @@
           <tr>
                         <th>Total price</th>
                         <th>Total paid</th>
-                        <th>Paid in usd</th>
+                        <th>payment_type</th>
                         <th>Comment</th>
                         <th>Provider</th>
                         <th colspan="3"></th>
@@ -22,7 +22,7 @@
             <tr>
                               <td><%= delivery_from_counterparty.total_price %></td>
                               <td><%= delivery_from_counterparty.total_paid %></td>
-                              <td><%= delivery_from_counterparty.paid_in_usd %></td>
+                              <td><%= delivery_from_counterparty.payment_type %></td>
                               <td><%= delivery_from_counterparty.comment %></td>
                               <td><%= delivery_from_counterparty.provider_id %></td>
                             <td><%= clink_to 'Посмотреть', delivery_from_counterparty_path(delivery_from_counterparty), 'fa-search' %></td>

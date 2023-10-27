@@ -65,6 +65,6 @@ class DeliveryFromCounterpartiesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def delivery_from_counterparty_params
-      params.require(:delivery_from_counterparty).permit(:total_price, :total_paid, :paid_in_usd, :comment, :provider_id)
+      params.require(:delivery_from_counterparty).permit(:total_price, :total_paid, :payment_type, :comment, :provider_id)
     end
 end

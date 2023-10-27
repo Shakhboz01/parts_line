@@ -3,8 +3,7 @@ class CreateServices < ActiveRecord::Migration[7.0]
     create_table :services do |t|
       t.string :name
       t.integer :unit
-      t.decimal :price_in_usd, precision: 15, scale: 2, default: 0
-      t.decimal :price_in_uzs, precision: 15, scale: 2, default: 0
+      t.decimal :price, precision: 15, scale: 2, default: 0
       t.boolean :active, default: true
       t.references :user, null: false, foreign_key: true
       t.integer :team_fee_in_percent

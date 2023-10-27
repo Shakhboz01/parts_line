@@ -6,7 +6,7 @@
   <div class="form-inputs">
     <%= f.input :total_price %>
     <%= f.input :total_paid %>
-    <%= f.input :paid_in_usd %>
+    <%= f.input :payment_type, DeliveryFromCounterparty.payment_types %>
     <%= f.input :comment %>
     <%= f.association :provider %>
   </div>

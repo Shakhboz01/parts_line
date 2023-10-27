@@ -17,7 +17,7 @@
                         <th>Buy price in uzs</th>
                         <th>Total profit in usd</th>
                         <th>Total profit in uzs</th>
-                        <th>Paid in usd</th>
+                        <th>payment_type</th>
                         <th colspan="3"></th>
           </tr>
         </thead>
@@ -28,11 +28,11 @@
                               <td><%= product_sell.product_id %></td>
                               <td><%= product_sell.sell_price_in_usd %></td>
                               <td><%= product_sell.sell_price_in_uzs %></td>
-                              <td><%= product_sell.buy_price_in_usd %></td>
-                              <td><%= product_sell.buy_price_in_uzs %></td>
+                              <td><%= product_sell.price %></td>
+                              <td><%= product_sell.price %></td>
                               <td><%= product_sell.total_profit_in_usd %></td>
                               <td><%= product_sell.total_profit_in_uzs %></td>
-                              <td><%= product_sell.paid_in_usd %></td>
+                              <td><%= product_sell.payment_type %></td>
                             <td><%= clink_to 'Посмотреть', product_sell_path(product_sell), 'fa-search' %></td>
               <td><%= clink_to 'Редактировать', edit_product_sell_path(product_sell), 'fa-edit' %></td>
               <td><%= cdlink_to 'удалить', product_sell %></td>

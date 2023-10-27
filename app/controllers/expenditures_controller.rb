@@ -4,7 +4,8 @@ class ExpendituresController < ApplicationController
   # GET /expenditures or /expenditures.json
   def index
     @q = Expenditure.ransack(params[:q])
-    @expenditures = @q.result.order(id: :desc)
+    @expenditures = @q.result.filter_by_total_paid_less_than_price(params.dig(:q_other, :total_paid_less_than_price))
+                      .page(params[:page]).order(id: :desc)
     @expenditures_data = @expenditures
     @expenditures = @expenditures.page(params[:page]).per(40)
   end
@@ -76,6 +77,6 @@ class ExpendituresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def expenditure_params
-      params.require(:expenditure).permit(:combination_of_local_product_id, :price, :price_in_usd, :price_in_uzs, :paid_in_usd, :total_paid, :expenditure_type)
+      params.require(:expenditure).permit(:combination_of_local_product_id, :price, :price_in_usd, :price_in_uzs, :payment_type, :total_paid, :expenditure_type)
     end
 end

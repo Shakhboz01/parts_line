@@ -1,8 +1,6 @@
 class Salary < ApplicationRecord
   include ProtectDestroyable
-  include HandleCurrency
   include ProtectEditAfterDay
-  attr_accessor :price
   attr_accessor :rate
 
   belongs_to :team, optional: true

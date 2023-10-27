@@ -77,6 +77,6 @@ class SalariesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def salary_params
-      params.require(:salary).permit(:prepayment, :month, :team_id, :user_id, :price_in_usd, :price_in_uzs, :paid_in_usd, :price)
+      params.require(:salary).permit(:prepayment, :month, :team_id, :user_id, :price_in_usd, :price_in_uzs, :payment_type, :price)
     end
 end
