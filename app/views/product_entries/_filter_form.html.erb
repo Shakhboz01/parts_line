@@ -17,6 +17,10 @@
         </div>
       </div>
       <div class='row card-body'>
+        <div class="form-group col-xs-12 col-sm-3">
+          <%= f.label :storage_id_eq, 'склад:', class: 'control-label' %>
+          <%= f.select :storage_id_eq, Storage.pluck(:name, :id), { include_blank: true }, class: 'form-control' %>
+        </div>
         <div class="form-group col-xs-12 col-sm-4">
           <%= f.label :created_at_gteq, 'Дата от:', class: 'control-label' %>
           <%= f.text_field :created_at_gteq, value: @q.created_at_gteq, class: 'datepicker form-control', autocomplete: :off %>

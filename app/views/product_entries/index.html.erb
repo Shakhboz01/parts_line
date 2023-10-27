@@ -19,6 +19,7 @@
           <th>Товар</th>
           <th><%= sort_link @q, :amount, 'Количество' %></th>
           <th><%= sort_link @q, :amount_sold, 'Продано' %></th>
+          <th>склад</th>
           <th><%= sort_link @q, :comment, 'Коммент' %></th>
           <th>
             <%= sort_link @q, :return, 'Возврат' %>
@@ -39,6 +40,7 @@
             <td><%= product_entry.product.name %></td>
             <td><%= product_entry.amount %></td>
             <td><%= product_entry.amount_sold %></td>
+            <td><%= product_entry.storage.name %></td>
             <td><%= product_entry.comment %></td>
             <td><%= active_check(product_entry.return) %></td>
             <td><%= strf_datetime(product_entry.created_at) %></td>

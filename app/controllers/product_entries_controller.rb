@@ -86,6 +86,6 @@ class ProductEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_entry_params
-      params.require(:product_entry).permit(:local_entry, :buy_price, :sell_price, :service_price, :provider_id, :product_id, :amount, :amount_sold, :total_paid, :total_price, :comment, :return)
+      params.require(:product_entry).permit(:local_entry, :buy_price, :sell_price, :storage_id, :service_price, :provider_id, :product_id, :amount, :amount_sold, :total_paid, :total_price, :comment, :return)
     end
 end

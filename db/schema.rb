@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_040715) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_091358) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,9 +90,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_040715) do
     t.bigint "combination_of_local_product_id"
     t.boolean "local_entry", default: false
     t.boolean "return", default: false
+    t.bigint "storage_id", null: false
     t.index ["combination_of_local_product_id"], name: "index_product_entries_on_combination_of_local_product_id"
     t.index ["delivery_from_counterparties_id"], name: "index_product_entries_on_delivery_from_counterparties_id"
     t.index ["product_id"], name: "index_product_entries_on_product_id"
+    t.index ["storage_id"], name: "index_product_entries_on_storage_id"
   end
 
   create_table "product_sells", force: :cascade do |t|
@@ -156,6 +158,12 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_040715) do
     t.index ["user_id"], name: "index_services_on_user_id"
   end
 
+  create_table "storages", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.boolean "active", default: true
@@ -186,6 +194,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_040715) do
   add_foreign_key "product_entries", "combination_of_local_products"
   add_foreign_key "product_entries", "delivery_from_counterparties", column: "delivery_from_counterparties_id"
   add_foreign_key "product_entries", "products"
+  add_foreign_key "product_entries", "storages"
   add_foreign_key "product_sells", "combination_of_local_products"
   add_foreign_key "product_sells", "products"
   add_foreign_key "products", "product_categories"

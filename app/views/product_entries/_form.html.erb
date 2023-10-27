@@ -5,6 +5,7 @@
 
   <div class="form-inputs">
     <%= f.association :product, label: 'Товар', collection: @products %>
+    <%= f.association :storage, label: 'Склад', collection: Storage.pluck(:name, :id), include_blank: false %>
     <% unless @product_entry.local_entry %>
       <%= f.input :buy_price, label: 'Цена прихода каждого товара' %>
       <%= f.input :sell_price, label: 'Цена продажи каждого товара' %>

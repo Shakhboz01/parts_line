@@ -3,6 +3,7 @@ class ProductEntry < ApplicationRecord
   belongs_to :combination_of_local_product, optional: true
   belongs_to :delivery_from_counterparty, optional: true
   belongs_to :product
+  belongs_to :storage
   validates_presence_of :local_entry
   validates_presence_of :amount
   validates_presence_of :buy_price, unless: -> { local_entry }
