@@ -1,6 +1,6 @@
 <div class="card shadow">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h3 class="card-title font-weight-bold">Product Entries</h3>
+    <h3 class="card-title font-weight-bold">Приход товаров</h3>
     <%= link_to 'Добавить новый', new_product_entry_path, class: "btn btn-success min-width-btn" %>
   </div>
   <%= render 'filter_form', q: @q, url: request.path %>
@@ -9,25 +9,22 @@
       <thead>
         <tr>
           <th><%= sort_link @q, :id, 'ID' %></th>
-          <th><%= sort_link @q, :local_entry, 'local_entry' %></th>
-          <th><%= sort_link @q, :buy_price, 'buy_price' %></th>
-          <th><%= sort_link @q, :sell_price, 'sell_price' %></th>
+          <th><%= sort_link @q, :local_entry, 'От производство' %></th>
+          <th><%= sort_link @q, :buy_price, 'Цена прихода' %></th>
+          <th><%= sort_link @q, :sell_price, 'Цена продажи' %></th>
           <th>
-            <%= sort_link @q, :service_price, 'service_price' %>
-            <i title='add comment' class="fa-solid fa-circle-info"></i>
+            <%= sort_link @q, :service_price, 'Цена услуги' %>
+            <i title='Цена продажи при оказании услуги или при обьекте' class="fa-solid fa-circle-info"></i>
           </th>
-          <th>Provider</th>
-          <th>Product</th>
-          <th><%= sort_link @q, :amount, 'amount' %></th>
-          <th><%= sort_link @q, :amount_sold, 'Amount sold' %></th>
-          <th><%= sort_link @q, :total_paid, 'total paid' %></th>
-          <th><%= sort_link @q, :total_price, 'total price' %></th>
-          <th><%= sort_link @q, :comment, 'comment' %></th>
+          <th>Товар</th>
+          <th><%= sort_link @q, :amount, 'Количество' %></th>
+          <th><%= sort_link @q, :amount_sold, 'Продано' %></th>
+          <th><%= sort_link @q, :comment, 'Коммент' %></th>
           <th>
-            <%= sort_link @q, :return, 'Return' %>
-            <i title='add comment' class="fa-solid fa-circle-info"></i>
+            <%= sort_link @q, :return, 'Возврат' %>
+            <i title='При оформлении возврата, оно учитывается как приход' class="fa-solid fa-circle-info"></i>
           </th>
-          <th><%= sort_link @q, :created_at, 'Created at' %></th>
+          <th><%= sort_link @q, :created_at, 'Оформлено в' %></th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -39,12 +36,9 @@
             <td><%= number_to_currency(product_entry.buy_price) %></td>
             <td><%= number_to_currency(product_entry.sell_price) %></td>
             <td><%= number_to_currency(product_entry.service_price) %></td>
-            <td><%= product_entry&.provider&.name %></td>
             <td><%= product_entry.product.name %></td>
-            <td><%= number_to_currency(product_entry.amount) %></td>
+            <td><%= product_entry.amount %></td>
             <td><%= product_entry.amount_sold %></td>
-            <td><%= number_to_currency(product_entry.total_paid) %></td>
-            <td><%= number_to_currency(product_entry.total_price) %></td>
             <td><%= product_entry.comment %></td>
             <td><%= active_check(product_entry.return) %></td>
             <td><%= strf_datetime(product_entry.created_at) %></td>

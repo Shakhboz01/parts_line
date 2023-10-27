@@ -35,6 +35,8 @@ class Expenditure < ApplicationRecord
 
   def set_type
     return errors.add(:base, 'invalid expenditure type') if combination_of_local_product.nil? && expenditure_type == 'на_производство'
-    errors.add(:base, 'cannot be edited/created') if !combination_of_local_product.nil? && combination_of_local_product.closed?
+    return errors.add(:base, 'cannot be edited/created') if !combination_of_local_product.nil? && combination_of_local_product.closed?
+
+    self.expenditure_type = 'на_производство'
   end
 end

@@ -1,8 +1,5 @@
 class Product < ApplicationRecord
   include ProtectDestroyable
-  include HandleSellAndBuyPrice
-
-  attr_accessor :sell_price, :buy_price
 
   validates_presence_of :sell_price
   validates_presence_of :buy_price

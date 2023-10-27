@@ -1,9 +1,10 @@
 <div class='container'>
   <%= render 'layouts/progress', value: '72' %>
+  <%= render 'product_entries/product_entry', product_entry: @combination_of_local_product.product_entry %>
 
   <%= link_to 'Добавить расход', new_expenditure_path(expenditure_type: 'на_производство', combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-success min-width-btn" %>
 
   <% unless @expenditures.count.zero? %>
-    <%= render 'expenditures/expenditures', expenditures: @expenditures %>
+    <%= render 'expenditures/expenditures', expenditures: @expenditures, expenditures_data: @expenditures_data %>
   <% end %>
 </div>

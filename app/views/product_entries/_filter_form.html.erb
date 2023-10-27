@@ -4,19 +4,15 @@
     <div class="card shadow">
       <div class="row card-body">
         <div class="form-group col-xs-12 col-sm-3">
-          <%= f.label :provider_id_eq, 'Provider id:', class: 'control-label' %>
-          <%= f.select :provider_id_eq, Provider.active.pluck(:name, :id), { include_blank: true }, class: 'form-control' %>
-        </div>
-        <div class="form-group col-xs-12 col-sm-3">
-          <%= f.label :product_id_eq, 'product id:', class: 'control-label' %>
+          <%= f.label :product_id_eq, 'товар:', class: 'control-label' %>
           <%= f.select :product_id_eq, Product.active.pluck(:name, :id), { include_blank: true }, class: 'form-control' %>
         </div>
         <div class="form-group col-xs-12 col-sm-3">
-          <%= f.label :local_entry, 'local entry:', class: ' form-control' %>
+          <%= f.label :local_entry, 'От производство:', class: ' form-control' %>
           <%= f.check_box :local_entry, {}, 1, nil %>
         </div>
         <div class="form-group col-xs-12 col-sm-3">
-          <%= f.label :return, 'return', class: ' form-control' %>
+          <%= f.label :return, 'Возврат', class: ' form-control' %>
           <%= f.check_box :return, {}, 1, nil %>
         </div>
       </div>

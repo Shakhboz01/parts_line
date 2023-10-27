@@ -4,19 +4,16 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :product, collection: @products %>
+    <%= f.association :product, label: 'Товар', collection: @products %>
     <% unless @product_entry.local_entry %>
-      <%= f.association :provider, collection: Provider.active %>
       <%= f.input :buy_price, label: 'Цена прихода каждого товара' %>
-      <%= f.input :total_paid, label: 'Оплачено', placeholder:  'Пропустите этот поле если клиент оплатил полностью' %>
-      <%= f.input :sell_price %>
-      <%= f.input :service_price %>
+      <%= f.input :sell_price, label: 'Цена продажи каждого товара' %>
+      <%= f.input :service_price, label: 'Цена сервиса', placeholder: 'Будет равен к цену продажи если не заполняете эту полю' %>
     <% end %>
 
     <%= f.input :amount, id: 'inputs' %>
 
     <%= f.input :comment, label: 'Коммент', placeholder: 'Не обязательно' %>
-    <%= f.input :total_price, as: :hidden %>
     <%= f.input :return, as: :hidden %>
     <%= f.input :amount_sold, as: :hidden %>
     <%= f.input :local_entry, as: :hidden %>

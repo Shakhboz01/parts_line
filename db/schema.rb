@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
+ActiveRecord::Schema[7.0].define(version: 2023_10_27_040715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,6 +88,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_22_120224) do
     t.datetime "updated_at", null: false
     t.bigint "delivery_from_counterparties_id"
     t.bigint "combination_of_local_product_id"
+    t.boolean "local_entry", default: false
+    t.boolean "return", default: false
     t.index ["combination_of_local_product_id"], name: "index_product_entries_on_combination_of_local_product_id"
     t.index ["delivery_from_counterparties_id"], name: "index_product_entries_on_delivery_from_counterparties_id"
     t.index ["product_id"], name: "index_product_entries_on_product_id"
