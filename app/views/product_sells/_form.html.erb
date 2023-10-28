@@ -4,18 +4,25 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :combination_of_local_product %>
-    <%= f.association :product %>
-    <%= f.input :price %>
-    <%= f.input :price %>
-    <%= f.input :price %>
-    <%= f.input :price %>
-    <%= f.input :total_profit_in_usd %>
-    <%= f.input :total_profit_in_uzs %>
-    <%= f.input :payment_type, ProductSell.payment_types %>
-  </div>
+    <%= f.association :combination_of_local_product, as: :hidden %>
+    <%= f.association :product, collection: Product.active %>
+    <%= f.input :amount %>
+    <a style='cursor: pointer; color: blue' id='manual-price'>set price manually</a>
+    <br><br>
+    <div style='display: none' id='price-fields'>
+      <%= f.input :sell_price %>
+    </div>
+  </a>
 
   <div class="form-actions">
     <%= f.button :submit, 'Завершить' %>
   </div>
 <% end %>
+
+<script>
+  $(document).ready(function() {
+    $('#manual-price').click(function() {
+      $('#price-fields').css('display', 'block');
+    });
+  });
+</script>

@@ -64,6 +64,10 @@ class ExpendituresController < ApplicationController
     @expenditure.destroy
 
     respond_to do |format|
+      if @expenditure.combination_of_local_product_id.present?
+        format.html { redirect_to combination_of_local_product_url(@expenditure.combination_of_local_product), notice: "expenditure was successfully destroyed." }
+      end
+
       format.html { redirect_to expenditures_url, notice: "Expenditure was successfully destroyed." }
       format.json { head :no_content }
     end

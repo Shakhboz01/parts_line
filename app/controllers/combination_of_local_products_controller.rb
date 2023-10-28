@@ -11,6 +11,7 @@ class CombinationOfLocalProductsController < ApplicationController
   def show
     @expenditures = @combination_of_local_product.expenditures
     @expenditures_data = @combination_of_local_product.expenditures
+    @product_sells = @combination_of_local_product.product_sells
   end
 
   # GET /combination_of_local_products/new

@@ -44,6 +44,9 @@
             <td><%= product_entry.comment %></td>
             <td><%= active_check(product_entry.return) %></td>
             <td><%= strf_datetime(product_entry.created_at) %></td>
+            <% if product_entry.combination_of_local_product %>
+              <td><%= clink_to 'посмотреть', combination_of_local_product_path(product_entry.combination_of_local_product), 'fa-search' %></td>
+            <% end %>
           </tr>
         <% end %>
       </tbody>

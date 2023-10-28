@@ -3,7 +3,8 @@ class ProductSellsController < ApplicationController
 
   # GET /product_sells or /product_sells.json
   def index
-    @product_sells = ProductSell.all
+    @q = ProductSell.ransack(params[:q])
+    @product_sells = @q.result.order(id: :desc).page(params[:page]).per(40)
   end
 
   # GET /product_sells/1 or /product_sells/1.json
@@ -12,7 +13,7 @@ class ProductSellsController < ApplicationController
 
   # GET /product_sells/new
   def new
-    @product_sell = ProductSell.new
+    @product_sell = ProductSell.new(combination_of_local_product_id: params[:combination_of_local_product_id])
   end
 
   # GET /product_sells/1/edit
@@ -25,10 +26,14 @@ class ProductSellsController < ApplicationController
 
     respond_to do |format|
       if @product_sell.save
-        format.html { redirect_to product_sell_url(@product_sell), notice: "Product sell was successfully created." }
+        if @product_sell.combination_of_local_product_id.present?
+          format.html { redirect_to combination_of_local_product_url(@product_sell.combination_of_local_product), notice: "Product sell was successfully created." }
+        end
+
+        format.html { redirect_to product_sells_url, notice: "Product sell was successfully created." }
         format.json { render :show, status: :created, location: @product_sell }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { render :new, product_sell: @product_sell, status: :unprocessable_entity }
         format.json { render json: @product_sell.errors, status: :unprocessable_entity }
       end
     end
@@ -41,7 +46,7 @@ class ProductSellsController < ApplicationController
         format.html { redirect_to product_sell_url(@product_sell), notice: "Product sell was successfully updated." }
         format.json { render :show, status: :ok, location: @product_sell }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { render :edit, product_sell: @product_sell, status: :unprocessable_entity }
         format.json { render json: @product_sell.errors, status: :unprocessable_entity }
       end
     end
@@ -52,6 +57,10 @@ class ProductSellsController < ApplicationController
     @product_sell.destroy
 
     respond_to do |format|
+      if @product_sell.combination_of_local_product_id.present?
+        format.html { redirect_to combination_of_local_product_url(@product_sell.combination_of_local_product), notice: "Product sell was successfully destroyed." }
+      end
+
       format.html { redirect_to product_sells_url, notice: "Product sell was successfully destroyed." }
       format.json { head :no_content }
     end
@@ -65,6 +74,6 @@ class ProductSellsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_sell_params
-    params.require(:product_sell).permit(:combination_of_local_product_id, :product_id, :price, :price, :total_profit, :payment_type)
+    params.require(:product_sell).permit(:combination_of_local_product_id, :product_id, :total_profit, :amount, :payment_type)
   end
 end

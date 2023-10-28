@@ -26,7 +26,7 @@
           <td><%= expenditure.payment_type %></td>
           <td><%= expenditure.expenditure_type %></td>
           <td><%= strf_datetime(expenditure.created_at) %></td>
-          <td><%= clink_to 'Редактировать', edit_expenditure_path(expenditure), 'fa-edit' %></td>
+          <td><%= cdlink_to 'Удалить', expenditure %></td>
         </tr>
       <% end %>
     </tbody>

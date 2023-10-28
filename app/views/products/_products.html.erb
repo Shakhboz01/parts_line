@@ -31,7 +31,7 @@
             <td><%= number_to_currency(product.buy_price) %></td>
             <td><%= number_to_currency(product.sell_price) %></td>
             <td><%= product.unit %></td>
-            <td><%= product.initial_remaining %></td>
+            <td><%= calculate_product_remaining(product) %></td>
             <td><%= strf_datetime(product.created_at) %></td>
             <td>
               <%= clink_to 'История приход товара', product_entries_path(q: {product_id_eq: product.id}), 'fa-search' %>

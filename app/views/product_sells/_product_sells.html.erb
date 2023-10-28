@@ -1,0 +1,23 @@
+<table class="table table-hover table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Товар</th>
+      <th>Количество</th>
+      <th>Цена</th>
+      <th>Доход</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% product_sells.each do |product_sell| %>
+      <tr>
+        <td><%= product_sell.product.name %></td>
+        <td><%= product_sell.amount %></td>
+        <td><%= product_sell.sell_price %></td>
+        <td><%= product_sell.total_profit %></td>
+        <td><%= clink_to 'Посмотреть', product_sell_path(product_sell), 'fa-search' %></td>
+        <td><%= cdlink_to 'Удалить', product_sell %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
