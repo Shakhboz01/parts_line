@@ -1,3 +1,5 @@
+# initial remaining is changable, it can also be negative, but warn if it is a negative
+# NOTE sell_price buy price might be 0
 class Product < ApplicationRecord
   include ProtectDestroyable
 
@@ -11,5 +13,13 @@ class Product < ApplicationRecord
   enum unit: %i[ шт кг метр пачка ]
   scope :active, -> { where(:active => true)}
   scope :local, -> { where(:local => true)}
-  # NOTE sell_price buy price might be null
+  after_save :process_initial_remaining_change, if: :saved_change_to_initial_remaining?
+
+  private
+
+  def process_initial_remaining_change
+    return if initial_remaining.positive? && !self.product_entries.count.zero?
+
+    SendMessage.run(message: "Остаток товара(#{product.name}) = #{initial_remaining}")
+  end
 end
