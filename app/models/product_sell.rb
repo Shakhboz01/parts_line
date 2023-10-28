@@ -12,7 +12,7 @@ class ProductSell < ApplicationRecord
   private
 
   def decrease_amount_sold
-    CalculateSellAndBuyPrice.run(product_sell: self)
+    ProductSells::CalculateSellAndBuyPrice.run(product_sell: self)
     # DecreaseAmountSoldFromProductEntry.run(product_sell: self)
   end
 
