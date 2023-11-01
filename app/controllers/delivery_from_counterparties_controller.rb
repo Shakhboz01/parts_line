@@ -3,11 +3,16 @@ class DeliveryFromCounterpartiesController < ApplicationController
 
   # GET /delivery_from_counterparties or /delivery_from_counterparties.json
   def index
-    @delivery_from_counterparties = DeliveryFromCounterparty.all
+    @q = DeliveryFromCounterparty.ransack(params[:q])
+    @delivery_from_counterparties = @q.result.page(params[:page]).per(40)
   end
 
   # GET /delivery_from_counterparties/1 or /delivery_from_counterparties/1.json
   def show
+    @expenditures = @delivery_from_counterparty.expenditures
+    @expenditures_data = @delivery_from_counterparty.expenditures
+    @q = @delivery_from_counterparty.product_entries.ransack(params[:q])
+    @product_entries = @q.result
   end
 
   # GET /delivery_from_counterparties/new
@@ -17,6 +22,10 @@ class DeliveryFromCounterpartiesController < ApplicationController
 
   # GET /delivery_from_counterparties/1/edit
   def edit
+    if params[:status]
+      @delivery_from_counterparty.status = params[:status].to_i
+      @delivery_from_counterparty.total_price = @total_price
+    end
   end
 
   # POST /delivery_from_counterparties or /delivery_from_counterparties.json
@@ -36,12 +45,14 @@ class DeliveryFromCounterpartiesController < ApplicationController
 
   # PATCH/PUT /delivery_from_counterparties/1 or /delivery_from_counterparties/1.json
   def update
+    byebug
     respond_to do |format|
-      if @delivery_from_counterparty.update(delivery_from_counterparty_params)
-        format.html { redirect_to delivery_from_counterparty_url(@delivery_from_counterparty), notice: "Delivery from counterparty was successfully updated." }
+      if @delivery_from_counterparty.update(delivery_from_counterparty_params.merge(status: delivery_from_counterparty_params[:status].to_i))
+        format.html { redirect_to delivery_from_counterparties_url, notice: "Delivery from counterparty was successfully updated." }
         format.json { render :show, status: :ok, location: @delivery_from_counterparty }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        byebug
+        format.html { redirect_to request.referrer }
         format.json { render json: @delivery_from_counterparty.errors, status: :unprocessable_entity }
       end
     end
@@ -58,13 +69,13 @@ class DeliveryFromCounterpartiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_delivery_from_counterparty
-      @delivery_from_counterparty = DeliveryFromCounterparty.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_delivery_from_counterparty
+    @delivery_from_counterparty = DeliveryFromCounterparty.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def delivery_from_counterparty_params
-      params.require(:delivery_from_counterparty).permit(:total_price, :total_paid, :payment_type, :comment, :provider_id)
-    end
+  # Only allow a list of trusted parameters through.
+  def delivery_from_counterparty_params
+    params.require(:delivery_from_counterparty).permit(:total_price, :status, :total_paid, :payment_type, :comment, :provider_id)
+  end
 end

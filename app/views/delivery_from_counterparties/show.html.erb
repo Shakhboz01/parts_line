@@ -1,10 +1,28 @@
-<p style="color: green"><%= notice %></p>
+<div class='container'>
+  <%= render 'layouts/progress', value: '72' %>
 
-<%= render @delivery_from_counterparty %>
+  <% unless @delivery_from_counterparty.closed? %>
+    <%= link_to 'Добавить приход товара', new_product_entry_path(delivery_from_counterparty_id: @delivery_from_counterparty.id, local_entry: false), class: "btn btn-primary min-width-btn" %>
+    <%= link_to 'Добавить расход', new_expenditure_path(expenditure_type: 'на_покупку_товаров', delivery_from_counterparty_id: @delivery_from_counterparty.id), class: "btn btn-primary min-width-btn" %>
+  <% end %>
+  <br><br>
 
-<div>
-  <%= link_to "Edit this delivery from counterparty", edit_delivery_from_counterparty_path(@delivery_from_counterparty) %> |
-  <%= link_to "Back to delivery from counterparties", delivery_from_counterparties_path %>
+  <% unless @delivery_from_counterparty.product_entries.count.zero? %>
+    <%= render 'product_entries/product_entries', product_entries: @product_entries, q: @q, deletable: true %>
+  <% end %>
 
-  <%= button_to "Destroy this delivery from counterparty", @delivery_from_counterparty, method: :delete %>
+  <% unless @expenditures.count.zero? %>
+    <%= render 'expenditures/expenditures', expenditures: @expenditures, expenditures_data: @expenditures_data %>
+  <% end %>
+  <br><hr>
+
+  <% unless @delivery_from_counterparty.closed? %>
+    <%= simple_form_for(@delivery_from_counterparty) do |f| %>
+      <%= f.input :status, as: :hidden, input_html: { value: 'closed' } %>
+      <div class="form-actions">
+        <%= f.button :submit, 'Завершить операцию', class: 'btn-success', title:'После завершении вы не сможете добавить или удалить товаров' %>
+      </div>
+    <% end %>
+  <% end %>
+  <br>
 </div>

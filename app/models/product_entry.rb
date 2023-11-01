@@ -4,14 +4,15 @@ class ProductEntry < ApplicationRecord
   belongs_to :delivery_from_counterparty, optional: true
   belongs_to :product
   belongs_to :storage
-  validates_presence_of :local_entry
   validates_presence_of :amount
   validates_presence_of :buy_price, unless: -> { local_entry }
 
   validate :amount_greater_than_amount_sold
+  before_validation :varify_delivery_from_counterparty_is_not_closed
   before_save :set_service_price
   before_update :amount_sold_is_not_greater_than_amount
   before_create :create_combination_for_local_entry
+  before_destroy :varify_delivery_from_counterparty_is_not_closed
   # before_save :set_total_price
 
   private
@@ -35,6 +36,10 @@ class ProductEntry < ApplicationRecord
 
   def amount_sold_is_not_greater_than_amount
     return errors.add(:base, 'amount sold cannot be greater than amount') if amount_sold > amount
+  end
+
+  def varify_delivery_from_counterparty_is_not_closed
+    throw(:abort) if !delivery_from_counterparty.nil? && delivery_from_counterparty.closed?
   end
 
   # def set_total_price

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_27_103422) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_01_033327) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -39,7 +39,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_103422) do
 
   create_table "delivery_from_counterparties", force: :cascade do |t|
     t.decimal "total_price", precision: 16, scale: 2, default: "0.0"
-    t.decimal "total_paid", precision: 16, scale: 2, default: "0.0"
+    t.decimal "total_paid"
     t.integer "payment_type", default: 0
     t.string "comment"
     t.integer "status", default: 0
@@ -57,7 +57,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_103422) do
     t.integer "payment_type", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "delivery_from_counterparty_id"
     t.index ["combination_of_local_product_id"], name: "index_expenditures_on_combination_of_local_product_id"
+    t.index ["delivery_from_counterparty_id"], name: "index_expenditures_on_delivery_from_counterparty_id"
   end
 
   create_table "participations", force: :cascade do |t|
@@ -86,13 +88,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_103422) do
     t.integer "payment_type", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "delivery_from_counterparties_id"
+    t.bigint "delivery_from_counterparty_id"
     t.bigint "combination_of_local_product_id"
     t.boolean "local_entry", default: false
     t.boolean "return", default: false
     t.bigint "storage_id", null: false
     t.index ["combination_of_local_product_id"], name: "index_product_entries_on_combination_of_local_product_id"
-    t.index ["delivery_from_counterparties_id"], name: "index_product_entries_on_delivery_from_counterparties_id"
+    t.index ["delivery_from_counterparty_id"], name: "index_product_entries_on_delivery_from_counterparty_id"
     t.index ["product_id"], name: "index_product_entries_on_product_id"
     t.index ["storage_id"], name: "index_product_entries_on_storage_id"
   end
@@ -107,6 +109,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_103422) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.decimal "amount", precision: 15, scale: 2, default: "0.0"
+    t.jsonb "average_prices"
     t.index ["combination_of_local_product_id"], name: "index_product_sells_on_combination_of_local_product_id"
     t.index ["product_id"], name: "index_product_sells_on_product_id"
   end
@@ -191,9 +194,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_27_103422) do
 
   add_foreign_key "delivery_from_counterparties", "providers"
   add_foreign_key "expenditures", "combination_of_local_products"
+  add_foreign_key "expenditures", "delivery_from_counterparties"
   add_foreign_key "participations", "users"
   add_foreign_key "product_entries", "combination_of_local_products"
-  add_foreign_key "product_entries", "delivery_from_counterparties", column: "delivery_from_counterparties_id"
+  add_foreign_key "product_entries", "delivery_from_counterparties"
   add_foreign_key "product_entries", "products"
   add_foreign_key "product_entries", "storages"
   add_foreign_key "product_sells", "combination_of_local_products"

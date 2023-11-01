@@ -19,6 +19,7 @@ class ExpendituresController < ApplicationController
     @expenditure_types = Expenditure.expenditure_types.reject { |key, v| v == 1 }.keys
     @expenditure = Expenditure.new(
       combination_of_local_product_id: params[:combination_of_local_product_id],
+      delivery_from_counterparty_id: params[:delivery_from_counterparty_id],
       expenditure_type: params[:expenditure_type]
     )
   end
@@ -35,6 +36,10 @@ class ExpendituresController < ApplicationController
       if @expenditure.save
         if @expenditure.combination_of_local_product_id.present?
           format.html { redirect_to combination_of_local_product_path(@expenditure.combination_of_local_product), notice: "Expenditure was successfully created." }
+        end
+
+        if @expenditure.delivery_from_counterparty_id.present?
+          format.html { redirect_to delivery_from_counterparty_path(@expenditure.delivery_from_counterparty), notice: "Expenditure was successfully created." }
         end
 
         format.html { redirect_to expenditures_url, notice: "Expenditure was successfully created." }
@@ -68,6 +73,10 @@ class ExpendituresController < ApplicationController
         format.html { redirect_to combination_of_local_product_url(@expenditure.combination_of_local_product), notice: "expenditure was successfully destroyed." }
       end
 
+      if @expenditure.delivery_from_counterparty_id.present?
+        format.html { redirect_to delivery_from_counterparty_path(@expenditure.delivery_from_counterparty), notice: "Expenditure was successfully created." }
+      end
+
       format.html { redirect_to expenditures_url, notice: "Expenditure was successfully destroyed." }
       format.json { head :no_content }
     end
@@ -81,6 +90,6 @@ class ExpendituresController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def expenditure_params
-      params.require(:expenditure).permit(:combination_of_local_product_id, :price, :price_in_usd, :price_in_uzs, :payment_type, :total_paid, :expenditure_type)
+      params.require(:expenditure).permit(:combination_of_local_product_id, :delivery_from_counterparty_id, :price, :price_in_usd, :price_in_uzs, :payment_type, :total_paid, :expenditure_type)
     end
 end

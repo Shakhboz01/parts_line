@@ -17,7 +17,8 @@ class ProductEntriesController < ApplicationController
 
     @product_entry = ProductEntry.new(
       local_entry: params[:local_entry],
-      return: params[:return]
+      return: params[:return],
+      delivery_from_counterparty_id: params[:delivery_from_counterparty_id]
     )
     @products = Product.active
     if params[:local_entry] == 'true'
@@ -25,8 +26,6 @@ class ProductEntriesController < ApplicationController
     else
       @products = @products.where(local: false)
     end
-
-    @products = @products
   end
 
   def define_product_destination; end
@@ -41,6 +40,10 @@ class ProductEntriesController < ApplicationController
 
     respond_to do |format|
       if @product_entry.save
+        if @product_entry.delivery_from_counterparty_id.present?
+          format.html { redirect_to delivery_from_counterparty_url(@product_entry.delivery_from_counterparty), notice: "Product entry was successfully destroyed." }
+        end
+
         if @product_entry.local_entry
           format.html { redirect_to combination_of_local_product_path(CombinationOfLocalProduct.last), notice: "Пожалуйста, укажите любые расходы, которые используются для производства этого продукта." }
         else
@@ -73,6 +76,10 @@ class ProductEntriesController < ApplicationController
     @product_entry.destroy
 
     respond_to do |format|
+      if @product_entry.delivery_from_counterparty_id.present?
+        format.html { redirect_to delivery_from_counterparty_url(@product_entry.delivery_from_counterparty), notice: "Product entry was successfully destroyed." }
+      end
+
       format.html { redirect_to product_entries_url, notice: "Product entry was successfully destroyed." }
       format.json { head :no_content }
     end
@@ -86,6 +93,6 @@ class ProductEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def product_entry_params
-      params.require(:product_entry).permit(:local_entry, :buy_price, :sell_price, :storage_id, :service_price, :provider_id, :product_id, :amount, :amount_sold, :total_paid, :total_price, :comment, :return)
+      params.require(:product_entry).permit(:local_entry, :buy_price, :sell_price, :delivery_from_counterparty_id, :storage_id, :service_price, :provider_id, :product_id, :amount, :amount_sold, :total_paid, :total_price, :comment, :return)
     end
 end

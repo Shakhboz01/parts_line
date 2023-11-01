@@ -1,8 +1,10 @@
 <div class='container'>
   <%= render 'layouts/progress', value: '72' %>
 
-  <%= link_to 'Добавить затрат товара', new_product_sell_path(combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-success min-width-btn" %>
-  <%= link_to 'Добавить расход', new_expenditure_path(expenditure_type: 'на_производство', combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-success min-width-btn" %>
+  <% unless @combination_of_local_product.closed? %>
+    <%= link_to 'Добавить затрат товара', new_product_sell_path(combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-success min-width-btn" %>
+    <%= link_to 'Добавить расход', new_expenditure_path(expenditure_type: 'на_производство', combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-success min-width-btn" %>
+  <% end %>
   <br><br>
 
   <%= render 'product_entries/product_entry', product_entry: @combination_of_local_product.product_entry %>

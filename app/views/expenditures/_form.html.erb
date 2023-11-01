@@ -4,6 +4,7 @@
 
   <div class="form-inputs">
     <%= f.association :combination_of_local_product, as: :hidden %>
+    <%= f.association :delivery_from_counterparty, as: :hidden %>
     <%= f.input :payment_type, label: 'Тип оплаты', collection: Expenditure.payment_types.keys.map { |unit| [Expenditure.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
     <%= f.input :price, as: :numeric, label: 'Сумма $:' %>
     <%= f.input :total_paid, label: 'Оплачено', placeholder: 'Пропустите этот поле если вы оплатили полностью' %>
