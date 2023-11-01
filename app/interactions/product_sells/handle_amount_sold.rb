@@ -45,7 +45,6 @@ module ProductSells
         end
       end
 
-      byebug
       if remaining_amount.positive?
         price_data.merge!({ "#{product_entries.last&.id&.to_f}": {
             amount: remaining_amount,
@@ -55,7 +54,7 @@ module ProductSells
           }
         })
       end
-      byebug
+
       ProductSells::FindAverageSellAndBuyPrice.run!(price_data: price_data.to_h)
     end
   end
