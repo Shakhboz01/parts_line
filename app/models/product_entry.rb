@@ -1,4 +1,5 @@
 # total paid might be null, it means provider paid fully at once
+# ignored service_price
 class ProductEntry < ApplicationRecord
   belongs_to :combination_of_local_product, optional: true
   belongs_to :delivery_from_counterparty, optional: true
