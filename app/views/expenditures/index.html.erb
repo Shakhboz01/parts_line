@@ -3,5 +3,21 @@
   <div class="card shadow">
     <%= render 'expenditures', expenditures: @expenditures, expenditures_data: @expenditures_data %>
     <%= paginate @expenditures %>
+    <table class='table-bordered'>
+        <thead>
+          <tr>
+            <th>Итого цена</th>
+            <th>Итого оплачено</th>
+            <th>Разница</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= number_to_currency(@expenditures_data.sum(:price)) %></td>
+            <td><%= number_to_currency @expenditures_data.sum(:total_paid) %></td>
+            <td><%= @expenditures_data.sum(:price) - @expenditures_data.sum(:total_paid) %></td>
+          </tr>
+        </tbody>
+      </table>
   </div>
 </div>

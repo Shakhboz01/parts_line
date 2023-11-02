@@ -1,5 +1,6 @@
 class Expenditure < ApplicationRecord
   include ProtectEditAfterDay
+  include ProtectDestroyAfterDay
   attr_accessor :rate
 
   belongs_to :combination_of_local_product, optional: true

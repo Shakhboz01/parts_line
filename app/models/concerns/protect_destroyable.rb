@@ -8,7 +8,7 @@ module ProtectDestroyable
   private
 
   def protect_destroy
-    errors.add(:base, 'cannot be destroyed')
+    return errors.add(:base, "cannot be destroyed")
     throw(:abort)
   end
 end
