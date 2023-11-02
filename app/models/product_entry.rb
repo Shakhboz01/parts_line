@@ -4,10 +4,11 @@ class ProductEntry < ApplicationRecord
   belongs_to :delivery_from_counterparty, optional: true
   belongs_to :product
   belongs_to :storage
-  validates_presence_of :amount
+  validates :amount, comparison: { greater_than: 0 }
+  validates :sell_price, :buy_price, comparison: { greater_than_or_equal_to: 0 }
+  validates :sell_price, comparison: { greater_than_or_equal_to: :buy_price }
   validates_presence_of :buy_price, unless: -> { local_entry }
 
-  validate :amount_greater_than_amount_sold
   before_validation :varify_delivery_from_counterparty_is_not_closed
   before_save :set_service_price
   before_update :amount_sold_is_not_greater_than_amount
@@ -16,10 +17,6 @@ class ProductEntry < ApplicationRecord
   # before_save :set_total_price
 
   private
-
-  def amount_greater_than_amount_sold
-    return errors.add(:base, 'amount is greater than amount sold') if !amount.nil? && amount < amount_sold
-  end
 
   def create_combination_for_local_entry
     return unless local_entry
@@ -35,7 +32,7 @@ class ProductEntry < ApplicationRecord
   end
 
   def amount_sold_is_not_greater_than_amount
-    return errors.add(:base, 'amount sold cannot be greater than amount') if amount_sold > amount
+    return errors.add(:base, "amount sold cannot be greater than amount") if amount_sold > amount
   end
 
   def varify_delivery_from_counterparty_is_not_closed

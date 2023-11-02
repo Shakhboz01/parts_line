@@ -66,7 +66,24 @@ class ProductSellsController < ApplicationController
     end
   end
 
+  def ajax_sell_price_request
+    return render json: ("Please fill forms") if product_sell_params[:product_id].empty? || product_sell_params[:amount].to_i.zero?
+
+    product_sell = ProductSell.new(
+      product_id: product_sell_params[:product_id],
+      amount: product_sell_params[:amount],
+    )
+    response = ProductSells::CalculateSellAndBuyPrice.run(product_sell: product_sell)
+
+    render json: if response.valid?
+             response.result[:average_prices][:average_sell_price]
+           else
+             response.errors.messages.values.flatten[0]
+           end
+  end
+
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_product_sell
     @product_sell = ProductSell.find(params[:id])
@@ -74,6 +91,6 @@ class ProductSellsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_sell_params
-    params.require(:product_sell).permit(:combination_of_local_product_id, :product_id, :total_profit, :amount, :payment_type)
+    params.require(:product_sell).permit(:combination_of_local_product_id, :sell_price, :product_id, :total_profit, :amount, :payment_type)
   end
 end

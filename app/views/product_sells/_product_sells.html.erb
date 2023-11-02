@@ -13,8 +13,8 @@
       <tr>
         <td><%= product_sell.product.name %></td>
         <td><%= product_sell.amount %></td>
-        <td><%= product_sell.sell_price %></td>
-        <td><%= product_sell.total_profit %></td>
+        <td><%= number_to_currency(product_sell.sell_price) %></td>
+        <td><%= number_to_currency(product_sell.total_profit) %></td>
         <td><%= clink_to 'Посмотреть', product_sell_path(product_sell), 'fa-search' %></td>
         <td><%= cdlink_to 'Удалить', product_sell %></td>
       </tr>

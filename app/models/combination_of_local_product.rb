@@ -5,4 +5,19 @@ class CombinationOfLocalProduct < ApplicationRecord
   has_one :product_entry
   validates_presence_of :status
   enum status: %i[processing closed]
+  before_save :proccess_status_change
+
+  private
+
+  def proccess_status_change
+    if closed? && status_before_last_save != "closed"
+      total_price = 0
+      self.product_sells.each do |product_sell|
+        total_price += product_sell.amount * product_sell.buy_price
+      end
+
+      per_price = total_price.to_f / product_entry.amount
+      product_entry.update(buy_price: per_price)
+    end
+  end
 end

@@ -1,28 +1,65 @@
-
 <%= simple_form_for(@product_sell) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
     <%= f.association :combination_of_local_product, as: :hidden %>
-    <%= f.association :product, collection: Product.active %>
-    <%= f.input :amount %>
-    <a style='cursor: pointer; color: blue' id='manual-price'>set price manually</a>
-    <br><br>
+    <%= f.association :product, label: 'товар', collection: Product.active %>
+    <%= f.input :amount, label: 'Количество' %>
+
+    <% unless @product_sell.combination_of_local_product.present? %>
+      <a style='cursor: pointer; color: blue' id='manual-price'>Указать цену продажу вручную</a>
+      <br><br>
+    <% end %>
+
     <div style='display: none' id='price-fields'>
-      <%= f.input :sell_price %>
+      <%= f.input :sell_price, label: 'Цена продажи' %>
     </div>
-  </a>
+  </div>
 
   <div class="form-actions">
     <%= f.button :submit, 'Завершить' %>
+    <%= button_tag 'Предпросмотр цена продажи', type: 'button', id: 'custom-action-button', class: 'btn btn-warning custom-action-button' %>
   </div>
 <% end %>
 
 <script>
-  $(document).ready(function() {
-    $('#manual-price').click(function() {
-      $('#price-fields').css('display', 'block');
+  document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('custom-action-button').addEventListener('click', function(e) {
+      e.preventDefault();
+      var product_id = document.querySelector('#product_sell_product_id').value;
+      var amount = document.querySelector('#product_sell_amount').value;
+      var customActionURL = '/product_sells/ajax_sell_price_request';
+      var data = {
+        product_id: product_id,
+        amount: amount
+      };
+      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+      fetch(customActionURL, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': csrfToken, // Include the CSRF token in the request headers
+        },
+        body: JSON.stringify(data)
+      })
+      .then(function(response) {
+        if (response.ok) {
+          return response.text();
+        } else {
+          throw new Error('Error: ' + response.status);
+        }
+      })
+      .then(function(responseText) {
+        alert(responseText);
+      })
+      .catch(function(error) {
+        console.error(error);
+      });
     });
+  });
+
+  $('#manual-price').click(function() {
+    $('#price-fields').css('display', 'block');
   });
 </script>

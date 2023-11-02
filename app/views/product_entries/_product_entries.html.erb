@@ -37,9 +37,12 @@
         <td><%= product_entry.comment %></td>
         <td><%= active_check(product_entry.return) %></td>
         <td><%= strf_datetime(product_entry.created_at) %></td>
-        <% if product_entry.combination_of_local_product %>
-          <td><%= clink_to 'посмотреть', combination_of_local_product_path(product_entry.combination_of_local_product), 'fa-search' %></td>
-        <% end %>
+        <td>
+          <% if product_entry.combination_of_local_product %>
+              <%= clink_to 'посмотреть', combination_of_local_product_path(product_entry.combination_of_local_product), 'fa-search' %>
+          <% end %>
+          <%= clink_to 'Редактировать', edit_product_entry_path(product_entry), 'fa-edit' %>
+        </td>
         <% if defined?(deletable) %>
           <td><%= cdlink_to 'Удалить', product_entry %></td>
         <% end %>

@@ -4,7 +4,7 @@ class DeliveryFromCounterpartiesController < ApplicationController
   # GET /delivery_from_counterparties or /delivery_from_counterparties.json
   def index
     @q = DeliveryFromCounterparty.ransack(params[:q])
-    @delivery_from_counterparties = @q.result.page(params[:page]).per(40)
+    @delivery_from_counterparties = @q.result.order(id: :desc).page(params[:page]).per(40)
   end
 
   # GET /delivery_from_counterparties/1 or /delivery_from_counterparties/1.json
@@ -34,7 +34,7 @@ class DeliveryFromCounterpartiesController < ApplicationController
 
     respond_to do |format|
       if @delivery_from_counterparty.save
-        format.html { redirect_to delivery_from_counterparty_url(@delivery_from_counterparty), notice: "Delivery from counterparty was successfully created." }
+        format.html { redirect_to new_product_entry_path(delivery_from_counterparty_id: @delivery_from_counterparty.id, local_entry: false), notice: "Delivery from counterparty was successfully created." }
         format.json { render :show, status: :created, location: @delivery_from_counterparty }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -45,13 +45,11 @@ class DeliveryFromCounterpartiesController < ApplicationController
 
   # PATCH/PUT /delivery_from_counterparties/1 or /delivery_from_counterparties/1.json
   def update
-    byebug
     respond_to do |format|
       if @delivery_from_counterparty.update(delivery_from_counterparty_params.merge(status: delivery_from_counterparty_params[:status].to_i))
         format.html { redirect_to delivery_from_counterparties_url, notice: "Delivery from counterparty was successfully updated." }
         format.json { render :show, status: :ok, location: @delivery_from_counterparty }
       else
-        byebug
         format.html { redirect_to request.referrer }
         format.json { render json: @delivery_from_counterparty.errors, status: :unprocessable_entity }
       end
@@ -69,6 +67,7 @@ class DeliveryFromCounterpartiesController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_delivery_from_counterparty
     @delivery_from_counterparty = DeliveryFromCounterparty.find(params[:id])

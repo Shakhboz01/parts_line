@@ -9,6 +9,7 @@
       <%= link_to 'Добавить новый', new_delivery_from_counterparty_path, class: "btn btn-success min-width-btn" %>
     </div>
 
+    <%= render 'filter_form', q: @q, url: request.path %>
     <div class="card-body">
       <table class="table table-hover table-bordered table-striped">
         <thead>

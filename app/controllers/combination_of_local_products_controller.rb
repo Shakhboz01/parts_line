@@ -41,8 +41,15 @@ class CombinationOfLocalProductsController < ApplicationController
   # PATCH/PUT /combination_of_local_products/1 or /combination_of_local_products/1.json
   def update
     respond_to do |format|
-      if @combination_of_local_product.update(combination_of_local_product_params)
-        format.html { redirect_to combination_of_local_product_url(@combination_of_local_product), notice: "Combination of local product was successfully updated." }
+      if @combination_of_local_product.update(
+        combination_of_local_product_params.merge(status: combination_of_local_product_params[:status].to_i)
+      )
+        if @combination_of_local_product.closed?
+          format.html { redirect_to edit_product_entry_url(@combination_of_local_product.product_entry), notice: 'Укажите цену продажи' }
+        else
+          format.html { redirect_to combination_of_local_products_url, notice: 'Combination of local product was successfully updated.' }
+        end
+
         format.json { render :show, status: :ok, location: @combination_of_local_product }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -69,6 +76,6 @@ class CombinationOfLocalProductsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def combination_of_local_product_params
-      params.require(:combination_of_local_product).permit(:comment, :status_id)
+      params.require(:combination_of_local_product).permit(:comment, :status)
     end
 end

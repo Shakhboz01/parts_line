@@ -2,8 +2,8 @@
   <%= render 'layouts/progress', value: '72' %>
 
   <% unless @combination_of_local_product.closed? %>
-    <%= link_to 'Добавить затрат товара', new_product_sell_path(combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-success min-width-btn" %>
-    <%= link_to 'Добавить расход', new_expenditure_path(expenditure_type: 'на_производство', combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-success min-width-btn" %>
+    <%= link_to 'Добавить затрат товара', new_product_sell_path(combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-primary min-width-btn" %>
+    <%= link_to 'Добавить расход', new_expenditure_path(expenditure_type: 'на_производство', combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-primary min-width-btn" %>
   <% end %>
   <br><br>
 
@@ -16,4 +16,13 @@
   <% unless @expenditures.count.zero? %>
     <%= render 'expenditures/expenditures', expenditures: @expenditures, expenditures_data: @expenditures_data %>
   <% end %>
-</div>
+  <br>
+
+  <% unless @combination_of_local_product.closed? %>
+    <%= simple_form_for(@combination_of_local_product) do |f| %>
+      <%= f.input :status, as: :hidden, input_html: { value: 1 } %>
+      <div class="form-actions">
+        <%= f.button :submit, 'Завершить операцию', class: 'btn-success', title:'После завершении вы не сможете добавить или удалить товаров' %>
+      </div>
+    <% end %>
+  <% end %>

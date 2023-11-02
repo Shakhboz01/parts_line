@@ -7,14 +7,13 @@
     <%= f.association :product, label: 'Товар', collection: Product.active.where(local: params[:local_entry] == 'true'), include_blank: false %>
     <%= f.association :storage, label: 'Склад', collection: Storage.pluck(:name, :id), include_blank: false %>
     <%= f.association :delivery_from_counterparty, as: :hidden %>
+    <%= f.input :amount, label: 'количество', id: 'inputs' %>
 
     <% unless @product_entry.local_entry %>
       <%= f.input :buy_price, label: 'Цена прихода каждого товара в $' %>
       <%= f.input :sell_price, label: 'Цена продажи каждого товара в $' %>
       <%= f.input :service_price, label: 'Цена сервиса в $', placeholder: 'Будет равен к цену продажи если не заполняете эту полю' %>
     <% end %>
-
-    <%= f.input :amount, label: 'количество', id: 'inputs' %>
 
     <%= f.input :comment, label: 'Коммент', placeholder: 'Не обязательно' %>
     <%= f.input :return, as: :hidden %>

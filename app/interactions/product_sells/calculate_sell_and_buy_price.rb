@@ -9,17 +9,17 @@ module ProductSells
     object :product_sell
 
     def execute
-      return errors.add(:base, 'amount cannot be zero') if (amount = product_sell.amount).zero?
+      return errors.add(:base, "amount cannot be zero") if (amount = product_sell.amount).zero?
 
       product = product_sell.product
       response = nil
-      first_available_entry = product.product_entries.where('amount > amount_sold').order(id: :desc).last
+      first_available_entry = product.product_entries.where("amount > amount_sold").order(id: :desc).last
       if product.initial_remaining <= 0
         return errors.add(:base, "товар #{product.name}, не имеется в складе!") if first_available_entry.nil?
 
         response = ProductSells::FindProductEntriesUntilAmount.run!(
           product: product,
-          amount: amount
+          amount: amount,
         )
       else
         if (amount <= product.initial_remaining) || first_available_entry.nil?
@@ -40,12 +40,12 @@ module ProductSells
           remaining_amount = amount - product.initial_remaining
           response = ProductSells::FindProductEntriesUntilAmount.run(
             product: product,
-            amount: remaining_amount
+            amount: remaining_amount,
           )
         end
       end
 
-      response.result
+      response
     end
   end
 end

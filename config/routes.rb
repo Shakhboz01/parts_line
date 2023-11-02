@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   resources :delivery_from_counterparties
-  resources :product_sells
+  resources :product_sells do
+    post :ajax_sell_price_request, on: :collection
+  end
+
   resources :expenditures
   resources :combination_of_local_products
   resources :product_entries do
@@ -30,11 +33,11 @@ Rails.application.routes.draw do
 
   resources :participations do
     collection do
-      post 'accept_new_participation', action: :accept_new_participation, as: :accept_new_participation
+      post "accept_new_participation", action: :accept_new_participation, as: :accept_new_participation
     end
   end
   root "pages#main_page"
-  devise_for :users, controllers: { sessions: 'sessions' }
+  devise_for :users, controllers: { sessions: "sessions" }
 
   resources :users, except: %i[update] do
     post :update, on: :member

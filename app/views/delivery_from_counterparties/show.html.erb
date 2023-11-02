@@ -18,7 +18,7 @@
 
   <% unless @delivery_from_counterparty.closed? %>
     <%= simple_form_for(@delivery_from_counterparty) do |f| %>
-      <%= f.input :status, as: :hidden, input_html: { value: 'closed' } %>
+      <%= f.input :status, as: :hidden, input_html: { value: 1 } %>
       <div class="form-actions">
         <%= f.button :submit, 'Завершить операцию', class: 'btn-success', title:'После завершении вы не сможете добавить или удалить товаров' %>
       </div>

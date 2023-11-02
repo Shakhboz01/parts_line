@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_01_033327) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_01_062431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,7 +80,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_01_033327) do
     t.decimal "buy_price", precision: 10, scale: 2, default: "0.0"
     t.decimal "sell_price", precision: 10, scale: 2, default: "0.0"
     t.boolean "paid_in_usd", default: false
-    t.decimal "service_price", precision: 10, scale: 2, default: "0.0"
+    t.decimal "service_price", precision: 10, scale: 2
     t.bigint "product_id", null: false
     t.decimal "amount", precision: 18, scale: 2, default: "0.0"
     t.decimal "amount_sold", precision: 18, scale: 2, default: "0.0"

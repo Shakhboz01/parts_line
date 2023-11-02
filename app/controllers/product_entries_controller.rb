@@ -45,7 +45,7 @@ class ProductEntriesController < ApplicationController
         end
 
         if @product_entry.local_entry
-          format.html { redirect_to combination_of_local_product_path(CombinationOfLocalProduct.last), notice: "Пожалуйста, укажите любые расходы, которые используются для производства этого продукта." }
+          format.html { redirect_to new_product_sell_path(combination_of_local_product_id: @product_entry.combination_of_local_product.id), notice: "Пожалуйста, укажите любые расходы, которые используются для производства этого продукта." }
         else
           format.html { redirect_to product_entries_url, notice: "Product entry was successfully created." }
         end
