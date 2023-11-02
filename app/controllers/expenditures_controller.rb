@@ -20,7 +20,7 @@ class ExpendituresController < ApplicationController
     @expenditure = Expenditure.new(
       combination_of_local_product_id: params[:combination_of_local_product_id],
       delivery_from_counterparty_id: params[:delivery_from_counterparty_id],
-      expenditure_type: params[:expenditure_type]
+      expenditure_type: params[:expenditure_type],
     )
   end
 
@@ -45,6 +45,7 @@ class ExpendituresController < ApplicationController
         format.html { redirect_to expenditures_url, notice: "Expenditure was successfully created." }
         format.json { render :show, status: :created, location: @expenditure }
       else
+        Rails.logger.warn "ERROR OCCURED #{@expenditure.errors.messages}"
         format.html { render :new, expenditure_type: @expenditure_type, status: :unprocessable_entity }
         format.json { render json: @expenditure.errors, status: :unprocessable_entity }
       end
@@ -83,13 +84,14 @@ class ExpendituresController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_expenditure
-      @expenditure = Expenditure.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def expenditure_params
-      params.require(:expenditure).permit(:combination_of_local_product_id, :delivery_from_counterparty_id, :price, :price_in_usd, :price_in_uzs, :payment_type, :total_paid, :expenditure_type)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_expenditure
+    @expenditure = Expenditure.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def expenditure_params
+    params.require(:expenditure).permit(:combination_of_local_product_id, :delivery_from_counterparty_id, :price, :price_in_usd, :price_in_uzs, :payment_type, :total_paid, :expenditure_type)
+  end
 end

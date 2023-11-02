@@ -19,7 +19,9 @@
 
   <div class="form-actions">
     <%= f.button :submit, 'Завершить' %>
-    <%= button_tag 'Предпросмотр цена продажи', type: 'button', id: 'custom-action-button', class: 'btn btn-warning custom-action-button' %>
+    <% unless @product_sell.combination_of_local_product.present? %>
+      <%= button_tag 'Предпросмотр цена продажи', type: 'button', id: 'custom-action-button', class: 'btn btn-warning custom-action-button' %>
+    <% end %>
   </div>
 <% end %>
 

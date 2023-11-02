@@ -15,7 +15,8 @@ class CombinationOfLocalProduct < ApplicationRecord
       self.product_sells.each do |product_sell|
         total_price += product_sell.amount * product_sell.buy_price
       end
-      expenditures = self.product_sells.sum(:amount)
+
+      expenditures = self.expenditures.sum(:price)
       total_price += expenditures
       per_price = total_price.to_f / product_entry.amount
       product_entry.update(buy_price: per_price)

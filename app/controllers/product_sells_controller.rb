@@ -68,7 +68,7 @@ class ProductSellsController < ApplicationController
 
   def ajax_sell_price_request
     return render json: ("Please fill forms") if product_sell_params[:product_id].empty? || product_sell_params[:amount].to_i.zero?
-
+    message = ""
     product_sell = ProductSell.new(
       product_id: product_sell_params[:product_id],
       amount: product_sell_params[:amount],
@@ -76,7 +76,8 @@ class ProductSellsController < ApplicationController
     response = ProductSells::CalculateSellAndBuyPrice.run(product_sell: product_sell)
 
     render json: if response.valid?
-             response.result[:average_prices][:average_sell_price]
+             "Цена продажи (1 шт): #{response.result[:average_prices][:average_sell_price]}$ \n" \
+             "Прибыль (1шт): #{response.result[:average_prices][:average_sell_price] - response.result[:average_prices][:average_buy_price]}$"
            else
              response.errors.messages.values.flatten[0]
            end

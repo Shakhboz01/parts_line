@@ -7,7 +7,7 @@ class ProductEntry < ApplicationRecord
   belongs_to :storage
   validates :amount, comparison: { greater_than: 0 }
   validates :sell_price, :buy_price, comparison: { greater_than_or_equal_to: 0 }
-  validates :sell_price, comparison: { greater_than_or_equal_to: :buy_price }
+  validates :sell_price, comparison: { greater_than_or_equal_to: :buy_price }, if: -> { combination_of_local_product_id.nil? }
   validates_presence_of :buy_price, unless: -> { local_entry }
 
   before_validation :varify_delivery_from_counterparty_is_not_closed
