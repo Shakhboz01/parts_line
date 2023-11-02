@@ -14,19 +14,19 @@ class Expenditure < ApplicationRecord
   before_destroy :varify_delivery_from_counterparty_is_not_closed
 
   scope :filter_by_total_paid_less_than_price, ->(value) {
-    if value == "1" # The checkbox value when selected
-      where("total_paid < price")
-    else
-      all # No filter when the checkbox is not selected
-    end
-  }
+          if value == "1" # The checkbox value when selected
+            where("total_paid < price")
+          else
+            all # No filter when the checkbox is not selected
+          end
+        }
 
   private
 
   def check_if_total_paid_is_not_more_than_price
     return if total_paid.nil?
 
-    errors.add(:base, 'cannot be greater than price') if total_paid > price
+    errors.add(:base, "cannot be greater than price") if total_paid > price
   end
 
   def set_total_paid

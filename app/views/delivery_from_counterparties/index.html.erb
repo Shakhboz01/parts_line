@@ -11,35 +11,25 @@
 
     <%= render 'filter_form', q: @q, url: request.path %>
     <div class="card-body">
-      <table class="table table-hover table-bordered table-striped">
+      <%= render 'delivery_from_counterparties', delivery_from_counterparties: @delivery_from_counterparties %>
+      <%= paginate @delivery_from_counterparties %>
+
+      <table class='table-bordered'>
         <thead>
           <tr>
-            <th>ID</th>
             <th>Итого цена</th>
-            <th>Оплачено</th>
-            <th>тип оплаты</th>
-            <th>Коммент</th>
-            <th>Поставщик</th>
-            <th>Создано в</th>
-            <th colspan="3"></th>
+            <th>Итого оплачено</th>
+            <th>Разница</th>
           </tr>
         </thead>
         <tbody>
-          <% @delivery_from_counterparties.each do |delivery_from_counterparty| %>
-            <tr>
-              <td><%= delivery_from_counterparty.id %></td>
-              <td><%= number_to_currency(delivery_from_counterparty.total_price) %></td>
-              <td><%= number_to_currency(delivery_from_counterparty.total_paid) %></td>
-              <td><%= delivery_from_counterparty.payment_type %></td>
-              <td><%= delivery_from_counterparty.comment %></td>
-              <td><%= delivery_from_counterparty.provider.name %></td>
-              <td><%= strf_datetime(delivery_from_counterparty.created_at) %></td>
-              <td><%= clink_to 'Посмотреть', delivery_from_counterparty_path(delivery_from_counterparty), 'fa-search' %></td>
-            </tr>
-          <% end %>
+          <tr>
+            <td><%= number_to_currency(@all_delivery_from_counterparties.sum(:total_price)) %></td>
+            <td><%= number_to_currency @all_delivery_from_counterparties.sum(:total_paid) %></td>
+            <td><%= @all_delivery_from_counterparties.sum(:total_price) - @all_delivery_from_counterparties.sum(:total_paid) %></td>
+          </tr>
         </tbody>
       </table>
-      <%= paginate @delivery_from_counterparties %>
     </div>
   </div>
 </div>

@@ -4,7 +4,12 @@ class DeliveryFromCounterpartiesController < ApplicationController
   # GET /delivery_from_counterparties or /delivery_from_counterparties.json
   def index
     @q = DeliveryFromCounterparty.ransack(params[:q])
-    @delivery_from_counterparties = @q.result.order(id: :desc).page(params[:page]).per(40)
+    @delivery_from_counterparties =
+      @q.result.filter_by_total_paid_less_than_price(params.dig(:q_other, :total_paid_less_than_price))
+        .order(id: :desc)
+
+    @all_delivery_from_counterparties = @delivery_from_counterparties
+    @delivery_from_counterparties = @delivery_from_counterparties.page(params[:page]).per(40)
   end
 
   # GET /delivery_from_counterparties/1 or /delivery_from_counterparties/1.json

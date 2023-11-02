@@ -1,7 +1,8 @@
 <div class='container'>
-  <%= render 'layouts/progress', value: '72' %>
+
 
   <% unless @delivery_from_counterparty.closed? %>
+    <%= render 'layouts/progress', value: '72' %>
     <%= link_to 'Добавить приход товара', new_product_entry_path(delivery_from_counterparty_id: @delivery_from_counterparty.id, local_entry: false), class: "btn btn-primary min-width-btn" %>
     <%= link_to 'Добавить расход', new_expenditure_path(expenditure_type: 'на_покупку_товаров', delivery_from_counterparty_id: @delivery_from_counterparty.id), class: "btn btn-primary min-width-btn" %>
   <% end %>
