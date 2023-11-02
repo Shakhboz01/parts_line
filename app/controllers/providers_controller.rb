@@ -1,5 +1,5 @@
 class ProvidersController < ApplicationController
-  before_action :set_provider, only: %i[ show edit update destroy ]
+  before_action :set_provider, only: %i[ show edit update destroy toggle_active ]
 
   # GET /providers or /providers.json
   def index
@@ -58,14 +58,20 @@ class ProvidersController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_provider
-      @provider = Provider.find(params[:id])
-    end
+  def toggle_active
+    @provider.toggle(:active).save
+    redirect_to providers_url, notice: "Successfully updated"
+  end
 
-    # Only allow a list of trusted parameters through.
-    def provider_params
-      params.require(:provider).permit(:name, :phone_number, :comment, :active)
-    end
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_provider
+    @provider = Provider.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def provider_params
+    params.require(:provider).permit(:name, :phone_number, :comment, :active)
+  end
 end

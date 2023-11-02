@@ -13,6 +13,22 @@
     <div class="card-body">
       <%= render 'delivery_from_counterparties', delivery_from_counterparties: @delivery_from_counterparties %>
       <%= paginate @delivery_from_counterparties %>
+      <table class='table-bordered'>
+        <thead>
+          <tr>
+            <th>Итого цена</th>
+            <th>Итого оплачено</th>
+            <th>Разница</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= number_to_currency(@all_delivery_from_counterparties.sum(:total_price)) %></td>
+            <td><%= number_to_currency @all_delivery_from_counterparties.sum(:total_paid) %></td>
+            <td><%= @all_delivery_from_counterparties.sum(:total_price) - @all_delivery_from_counterparties.sum(:total_paid) %></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </div>
