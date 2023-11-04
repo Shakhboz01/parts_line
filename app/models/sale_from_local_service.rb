@@ -22,7 +22,8 @@ class SaleFromLocalService < ApplicationRecord
         total_price += product_entry.amount * product_entry.buy_price
       end
 
-      self.total_price = total_price
+      local_service_price = self.local_services.sum(:price)
+      self.total_price = total_price + local_service_price
     end
   end
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :local_services
   resources :sale_from_local_services
   resources :delivery_from_counterparties
   resources :product_sells do
