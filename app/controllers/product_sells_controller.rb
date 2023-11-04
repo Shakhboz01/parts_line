@@ -15,7 +15,7 @@ class ProductSellsController < ApplicationController
   def new
     @product_sell = ProductSell.new(
       combination_of_local_product_id: params[:combination_of_local_product_id],
-      sale_from_local_service: paras[:sale_from_local_service],
+      sale_from_local_service: params[:sale_from_local_service],
     )
   end
 
