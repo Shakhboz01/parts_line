@@ -5,6 +5,7 @@ class ProductSell < ApplicationRecord
   belongs_to :combination_of_local_product, optional: true
   belongs_to :sale_from_local_service, optional: true
   belongs_to :sale, optional: true
+  belongs_to :sale_from_service, optional: true
   belongs_to :product
   validates_presence_of :amount
   enum payment_type: %i[сум доллар карта дригие]

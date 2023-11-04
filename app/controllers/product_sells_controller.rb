@@ -16,6 +16,7 @@ class ProductSellsController < ApplicationController
     @product_sell = ProductSell.new(
       combination_of_local_product_id: params[:combination_of_local_product_id],
       sale_from_local_service_id: params[:sale_from_local_service_id],
+      sale_from_service_id: params[:sale_from_service_id],
     )
   end
 
@@ -34,7 +35,9 @@ class ProductSellsController < ApplicationController
         elsif @product_sell.sale_from_local_service.present?
           format.html { redirect_to sale_from_local_service_url(@product_sell.sale_from_local_service), notice: "Product sell was successfully created." }
         elsif @product_sell.sale.present?
-          format.html { redirect_to sale_url(@product_sell.sale), notice: "Product sell was successfully destroyed." }
+          format.html { redirect_to sale_url(@product_sell.sale), notice: "Product sell was successfully created." }
+        elsif @product_sell.sale_from_service.present?
+          format.html { redirect_to sale_from_service_url(@product_sell.sale_from_service), notice: "Product sell was successfully created." }
         end
 
         format.html { redirect_to product_sells_url, notice: "Product sell was successfully created." }
@@ -70,6 +73,8 @@ class ProductSellsController < ApplicationController
         format.html { redirect_to sale_from_local_service_url(@product_sell.sale_from_local_service), notice: "Product sell was successfully destroyed." }
       elsif @product_sell.sale.present?
         format.html { redirect_to sale_url(@product_sell.sale), notice: "Product sell was successfully destroyed." }
+      elsif @product_sell.sale_from_service.present?
+        format.html { redirect_to sale_from_service_url(@product_sell.sale_from_service), notice: "Product sell was successfully destroyed." }
       end
 
       format.html { redirect_to product_sells_url, notice: "Product sell was successfully destroyed." }
@@ -104,7 +109,7 @@ class ProductSellsController < ApplicationController
   def product_sell_params
     params.require(:product_sell).permit(
       :sale_from_local_service_id, :sale_id, :combination_of_local_product_id,
-      :sell_price, :product_id, :total_profit, :amount, :payment_type
+      :sell_price, :product_id, :total_profit, :amount, :payment_type, :sale_from_service_id
     )
   end
 end

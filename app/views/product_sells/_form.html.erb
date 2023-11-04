@@ -18,6 +18,7 @@
 
           <div class="form-inputs">
             <%= f.association :combination_of_local_product, as: :hidden %>
+            <%= f.association :sale_from_service, as: :hidden %>
             <%= f.association :sale_from_local_service, as: :hidden %>
             <%= f.association :sale, as: :hidden %>
             <%= f.association :product, label: 'товар', collection: Product.active, include_blank: false %>

@@ -16,8 +16,8 @@
       <tr>
         <td><%= active_check(sale_from_service.closed?) %></td>
         <td><%= sale_from_service.id %></td>
-        <td><%= sale_from_service.total_price %></td>
-        <td><%= sale_from_service.total_paid %></td>
+        <td><%= number_to_currency sale_from_service.total_price %></td>
+        <td><%= number_to_currency sale_from_service.total_paid %></td>
         <td><%= sale_from_service.buyer.name %></td>
         <td><%= sale_from_service.payment_type %></td>
         <td><%= sale_from_service.comment %></td>

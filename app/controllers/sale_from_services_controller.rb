@@ -1,4 +1,4 @@
-class SalesController < ApplicationController
+class SaleFromServicesController < ApplicationController
   before_action :set_sale_from_service, only: %i[ show edit update destroy ]
 
   # GET /sales or /sales.json
@@ -32,7 +32,7 @@ class SalesController < ApplicationController
     @sale_from_service.user_id = current_user.id
     respond_to do |format|
       if @sale_from_service.save
-        format.html { redirect_to sales_url(@sale_from_service), notice: "Sale was successfully created." }
+        format.html { redirect_to sale_from_service_url(@sale_from_service), notice: "Sale was successfully created." }
         format.json { render :show, status: :created, location: @sale_from_service }
       else
         format.html { render :new, status: :unprocessable_entity }
@@ -73,6 +73,6 @@ class SalesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def sale_from_service_params
-    params.require(:sale).permit(:total_paid, :payment_type, :buyer_id, :total_price, :comment, :user_id, :status)
+    params.require(:sale_from_service).permit(:total_paid, :payment_type, :buyer_id, :total_price, :comment, :user_id, :status)
   end
 end

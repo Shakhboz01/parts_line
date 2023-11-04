@@ -16,8 +16,8 @@
       <tr>
         <td><%= active_check(sale.closed?) %></td>
         <td><%= sale.id %></td>
-        <td><%= sale.total_price %></td>
-        <td><%= sale.total_paid %></td>
+        <td><%= number_to_currency sale.total_price %></td>
+        <td><%= number_to_currency sale.total_paid %></td>
         <td><%= sale.buyer.name %></td>
         <td><%= sale.payment_type %></td>
         <td><%= sale.comment %></td>

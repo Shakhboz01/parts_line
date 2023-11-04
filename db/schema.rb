@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_04_114150) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_04_115550) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -124,9 +124,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_114150) do
     t.jsonb "average_prices"
     t.bigint "sale_from_local_service_id"
     t.bigint "sale_id"
+    t.bigint "sale_from_service_id"
     t.index ["combination_of_local_product_id"], name: "index_product_sells_on_combination_of_local_product_id"
     t.index ["product_id"], name: "index_product_sells_on_product_id"
     t.index ["sale_from_local_service_id"], name: "index_product_sells_on_sale_from_local_service_id"
+    t.index ["sale_from_service_id"], name: "index_product_sells_on_sale_from_service_id"
     t.index ["sale_id"], name: "index_product_sells_on_sale_id"
   end
 
@@ -264,6 +266,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_114150) do
   add_foreign_key "product_sells", "combination_of_local_products"
   add_foreign_key "product_sells", "products"
   add_foreign_key "product_sells", "sale_from_local_services"
+  add_foreign_key "product_sells", "sale_from_services"
   add_foreign_key "product_sells", "sales"
   add_foreign_key "products", "product_categories"
   add_foreign_key "salaries", "teams"
