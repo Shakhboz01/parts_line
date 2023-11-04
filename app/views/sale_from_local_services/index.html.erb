@@ -1,0 +1,30 @@
+<div class="container my-5">
+  <div class="card shadow">
+    <div class="card-header d-flex justify-content-between align-items-center">
+      <h3 class="card-title font-weight-bold">Sale From Local Services</h3>
+      <%= link_to 'Добавить новый', new_sale_from_local_service_path, class: "btn btn-success min-width-btn" %>
+    </div>
+
+    <div class="card-body">
+      <%= render 'filter_form', q: @q, url: request.path %>
+      <%= render 'sale_from_local_services', sale_from_local_services: @sale_from_local_services %>
+      <%= paginate @sale_from_local_services %>
+      <table class='table-bordered'>
+        <thead>
+          <tr>
+            <th>Итого цена</th>
+            <th>Итого оплачено</th>
+            <th>Разница</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><%= number_to_currency(@all_sale_from_local_services.sum(:total_price)) %></td>
+            <td><%= number_to_currency @all_sale_from_local_services.sum(:total_paid) %></td>
+            <td><%= @all_sale_from_local_services.sum(:total_price) - @all_sale_from_local_services.sum(:total_paid) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

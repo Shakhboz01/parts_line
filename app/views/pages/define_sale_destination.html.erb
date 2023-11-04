@@ -1,0 +1,19 @@
+<%= render 'layouts/progress', value: 25 %>
+<div class='container my-5'>
+  <div class='row'>
+    <span>Укажите директорию</span>
+  </div>
+  <div class='row'>
+    <div class='col-sm-3'></div>
+    <%= link_to new_sale_from_local_service_path, class: 'card shadow text-center col-sm-3 p-3 m-1', style: 'height: 130px; color: wheat; font-size: large; font-weight: bold; background: gray' do %>
+      <span>Услуга</span>
+    <% end %>
+    <%= link_to new_sale_from_local_service_path, class: 'card shadow col-sm-3 m-1 p-3 text-center', style: 'height: 130px; color: wheat; font-size: large; font-weight: bold; background: gray' do %>
+      <span>Продажа</span>
+    <% end %>
+    <%= link_to new_sale_from_local_service_path, class: 'card shadow col-sm-3 m-1 p-3 text-center', style: 'height: 130px; color: wheat; font-size: large; font-weight: bold; background: gray' do %>
+      <span>Обьект</span>
+    <% end %>
+    <div class='col-sm-3'></div>
+  </div>
+</div>

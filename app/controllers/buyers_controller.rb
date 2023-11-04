@@ -1,5 +1,5 @@
 class BuyersController < ApplicationController
-  before_action :set_buyer, only: %i[ toggle_active show edit update destroy ]
+  before_action :set_buyer, only: %i[ toggle_active show edit update destroy toggle_active ]
 
   # GET /buyers or /buyers.json
   def index
@@ -60,17 +60,18 @@ class BuyersController < ApplicationController
 
   def toggle_active
     @buyer.toggle(:active).save
-    redirect_to request.referrer || buyers_path, notice: 'Successfully updated'
+    redirect_to request.referrer || buyers_path, notice: "Successfully updated"
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_buyer
-      @buyer = Buyer.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def buyer_params
-      params.require(:buyer).permit(:name, :phone_number, :comment, :active)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_buyer
+    @buyer = Buyer.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def buyer_params
+    params.require(:buyer).permit(:name, :phone_number, :comment, :active)
+  end
 end

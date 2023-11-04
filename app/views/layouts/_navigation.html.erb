@@ -23,6 +23,7 @@
           Посмотреть список
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Продажу/услугу', new_sale_from_local_service_path, class: 'dropdown-item' %>
           <%= link_to 'Расходов', expenditures_path, class: 'dropdown-item' %>
           <%= link_to 'Приход товаров', delivery_from_counterparties_path, class: 'dropdown-item' %>
           <%= link_to 'Поставщиков', providers_path, class: 'dropdown-item' %>
@@ -39,6 +40,7 @@
           Оформить
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Продажу/услугу', define_sale_destination_path, class: 'dropdown-item' %>
           <%= link_to 'расход', new_expenditure_path, class: 'dropdown-item' %>
           <%= link_to 'Приход товара', new_product_entry_path, class: 'dropdown-item' %>
           <%= link_to 'Поставщика', new_provider_path, class: 'dropdown-item' %>

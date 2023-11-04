@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @sale_from_local_service %>
+
+<div>
+  <%= link_to "Edit this sale from local service", edit_sale_from_local_service_path(@sale_from_local_service) %> |
+  <%= link_to "Back to sale from local services", sale_from_local_services_path %>
+
+  <%= button_to "Destroy this sale from local service", @sale_from_local_service, method: :delete %>
+</div>

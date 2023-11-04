@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_02_072753) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_02_115428) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -150,6 +150,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_072753) do
     t.index ["user_id"], name: "index_salaries_on_user_id"
   end
 
+  create_table "sale_from_local_services", force: :cascade do |t|
+    t.decimal "total_price", precision: 18, scale: 2, default: "0.0"
+    t.decimal "total_paid", precision: 18, scale: 2
+    t.string "coment"
+    t.bigint "buyer_id", null: false
+    t.integer "payment_type", default: 0
+    t.integer "status", default: 0
+    t.decimal "total_expenditure", precision: 18, scale: 2, default: "0.0"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["buyer_id"], name: "index_sale_from_local_services_on_buyer_id"
+    t.index ["user_id"], name: "index_sale_from_local_services_on_user_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "name"
     t.integer "unit"
@@ -205,5 +220,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_02_072753) do
   add_foreign_key "products", "product_categories"
   add_foreign_key "salaries", "teams"
   add_foreign_key "salaries", "users"
+  add_foreign_key "sale_from_local_services", "buyers"
+  add_foreign_key "sale_from_local_services", "users"
   add_foreign_key "services", "users"
 end

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :sale_from_local_services
   resources :delivery_from_counterparties
   resources :product_sells do
     post :ajax_sell_price_request, on: :collection
@@ -39,6 +40,7 @@ Rails.application.routes.draw do
     end
   end
   root "pages#main_page"
+  get "pages#define_sale_destination", to: "pages#define_sale_destination", as: :define_sale_destination
   devise_for :users, controllers: { sessions: "sessions" }
 
   resources :users, except: %i[update] do
