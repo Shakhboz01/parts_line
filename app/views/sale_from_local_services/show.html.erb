@@ -1,10 +1,22 @@
-<p style="color: green"><%= notice %></p>
+<div class='container'>
+  <% unless @sale_from_local_service.closed? %>
+    <%= render 'layouts/progress', value: '46' %>
+    <%= link_to 'Добавить затрат товара', new_product_sell_path(sale_from_local_service_id: @sale_from_local_service.id), class: "btn btn-primary min-width-btn" %>
+  <% end %>
+  <br><br>
 
-<%= render @sale_from_local_service %>
+  <% unless @product_sells.count.zero? %>
+    <%= render 'product_sells/product_sells', product_sells: @product_sells %>
+  <% end %>
 
-<div>
-  <%= link_to "Edit this sale from local service", edit_sale_from_local_service_path(@sale_from_local_service) %> |
-  <%= link_to "Back to sale from local services", sale_from_local_services_path %>
 
-  <%= button_to "Destroy this sale from local service", @sale_from_local_service, method: :delete %>
+  <% unless @sale_from_local_service.closed? %>
+    <%= simple_form_for(@sale_from_local_service) do |f| %>
+      <%= f.input :status, as: :hidden, input_html: { value: 1 } %>
+      <div class="form-actions">
+        <%= f.button :submit, 'Завершить операцию', class: 'btn-success', title:'После завершении вы не сможете добавить или удалить товаров' %>
+      </div>
+    <% end %>
+  <% end %>
+  <br>
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_04_052032) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_04_053626) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -94,11 +94,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_052032) do
     t.boolean "local_entry", default: false
     t.boolean "return", default: false
     t.bigint "storage_id", null: false
-    t.bigint "sale_from_local_service_id"
     t.index ["combination_of_local_product_id"], name: "index_product_entries_on_combination_of_local_product_id"
     t.index ["delivery_from_counterparty_id"], name: "index_product_entries_on_delivery_from_counterparty_id"
     t.index ["product_id"], name: "index_product_entries_on_product_id"
-    t.index ["sale_from_local_service_id"], name: "index_product_entries_on_sale_from_local_service_id"
     t.index ["storage_id"], name: "index_product_entries_on_storage_id"
   end
 
@@ -113,8 +111,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_052032) do
     t.datetime "updated_at", null: false
     t.decimal "amount", precision: 15, scale: 2, default: "0.0"
     t.jsonb "average_prices"
+    t.bigint "sale_from_local_service_id"
     t.index ["combination_of_local_product_id"], name: "index_product_sells_on_combination_of_local_product_id"
     t.index ["product_id"], name: "index_product_sells_on_product_id"
+    t.index ["sale_from_local_service_id"], name: "index_product_sells_on_sale_from_local_service_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -217,10 +217,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_052032) do
   add_foreign_key "product_entries", "combination_of_local_products"
   add_foreign_key "product_entries", "delivery_from_counterparties"
   add_foreign_key "product_entries", "products"
-  add_foreign_key "product_entries", "sale_from_local_services"
   add_foreign_key "product_entries", "storages"
   add_foreign_key "product_sells", "combination_of_local_products"
   add_foreign_key "product_sells", "products"
+  add_foreign_key "product_sells", "sale_from_local_services"
   add_foreign_key "products", "product_categories"
   add_foreign_key "salaries", "teams"
   add_foreign_key "salaries", "users"

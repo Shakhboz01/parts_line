@@ -1,6 +1,4 @@
 <div class='container'>
-
-
   <% unless @delivery_from_counterparty.closed? %>
     <%= render 'layouts/progress', value: '72' %>
     <%= link_to 'Добавить приход товара', new_product_entry_path(delivery_from_counterparty_id: @delivery_from_counterparty.id, local_entry: false), class: "btn btn-primary min-width-btn" %>

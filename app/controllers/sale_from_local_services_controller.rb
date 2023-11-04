@@ -14,6 +14,7 @@ class SaleFromLocalServicesController < ApplicationController
 
   # GET /sale_from_local_services/1 or /sale_from_local_services/1.json
   def show
+    @product_sells = @combination_of_local_product.product_sells
   end
 
   # GET /sale_from_local_services/new
@@ -43,7 +44,7 @@ class SaleFromLocalServicesController < ApplicationController
   # PATCH/PUT /sale_from_local_services/1 or /sale_from_local_services/1.json
   def update
     respond_to do |format|
-      if @sale_from_local_service.update(sale_from_local_service_params)
+      if @sale_from_local_service.update(sale_from_local_service_params.merge(status: delivery_from_counterparty_params[:status].to_i))
         format.html { redirect_to sale_from_local_service_url(@sale_from_local_service), notice: "Sale from local service was successfully updated." }
         format.json { render :show, status: :ok, location: @sale_from_local_service }
       else
