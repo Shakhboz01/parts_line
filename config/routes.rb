@@ -44,7 +44,7 @@ Rails.application.routes.draw do
   get "pages#define_sale_destination", to: "pages#define_sale_destination", as: :define_sale_destination
   devise_for :users, controllers: { sessions: "sessions" }
 
-  resources :users, except: %i[update] do
+  resources :users do
     post :update, on: :member
     get :toggle_active_user, on: :member
     get :new_user_form, on: :collection

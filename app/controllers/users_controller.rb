@@ -48,6 +48,16 @@ class UsersController < ApplicationController
   def update
     authorize User, :manage?
 
+    if params[:id] == "auto_user_creation"
+      user = User.new(user_params)
+      user.email = user.name.split(" ").join + "@gmail.com"
+      if user.save
+        return redirect_to users_path, notice: "Успешно создано."
+      else
+        return redirect_to auto_user_creation_users_path, notice: "error"
+      end
+    end
+
     @user = User.find(params[:id])
     if @user.update(user_params)
       redirect_to users_path, notice: "User was Успешно обновлено."
