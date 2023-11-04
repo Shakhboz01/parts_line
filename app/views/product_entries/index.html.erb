@@ -1,6 +1,10 @@
 <div class="card shadow">
   <div class="card-header d-flex justify-content-between align-items-center">
-    <h3 class="card-title font-weight-bold">Приход товаров <%= clink_to 'Изменить вид', delivery_from_counterparties_path, 'fa-eye' %></h3>
+    <div class="btn-group" role="group" aria-label="Basic example">
+      <%= link_to 'Приход от поставщиков', delivery_from_counterparties_path, class: 'btn btn-secondary' %>
+      <%= link_to 'Приход от производство', combination_of_local_products_path, class: 'btn btn-secondary' %>
+      <button type="button" class="btn btn-primary">Детально</button>
+    </div>
     <%= link_to 'Добавить новый', new_product_entry_path, class: "btn btn-success min-width-btn" %>
   </div>
   <%= render 'filter_form', q: @q, url: request.path %>

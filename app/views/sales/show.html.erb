@@ -1,10 +1,27 @@
-<p style="color: green"><%= notice %></p>
+<div class='container'>
+  <% unless @sale.closed? %>
+    <%= render 'layouts/progress', value: '46' %>
+    <%= render 'product_sells/form', product_sell: ProductSell.new(sale_id: @sale.id) %>
+  <% end %>
+  <br><br>
 
-<%= render @sale %>
+  <div class='row'>
+    <div class='col-sm-12'>
+      <% unless @product_sells.count.zero? %>
+        <%= render 'product_sells/product_sells', product_sells: @product_sells %>
+      <% end %>
+    </div>
+  </div>
 
-<div>
-  <%= link_to "Edit this sale", edit_sale_path(@sale) %> |
-  <%= link_to "Back to sales", sales_path %>
-
-  <%= button_to "Destroy this sale", @sale, method: :delete %>
+  <% unless @sale.closed? %>
+    <%= simple_form_for(@sale) do |f| %>
+      <%= f.input :status, as: :hidden, input_html: { value: 1 } %>
+      <div class="form-actions">
+        <%= f.button :submit, 'Завершить операцию', class: 'btn-success', title:'После завершении вы не сможете добавить или удалить товаров' %>
+      </div>
+    <% end %>
+  <% end %>
+  <br>
+  <div><b>ИТОГО: <%= number_to_currency @sale.get_total_price %></b></div>
 </div>
+

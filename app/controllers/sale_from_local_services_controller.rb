@@ -45,8 +45,8 @@ class SaleFromLocalServicesController < ApplicationController
   # PATCH/PUT /sale_from_local_services/1 or /sale_from_local_services/1.json
   def update
     respond_to do |format|
-      if @sale_from_local_service.update(sale_from_local_service_params.merge(status: delivery_from_counterparty_params[:status].to_i))
-        format.html { redirect_to sale_from_local_service_url(@sale_from_local_service), notice: "Sale from local service was successfully updated." }
+      if @sale_from_local_service.update(sale_from_local_service_params.merge(status: sale_from_local_service_params[:status].to_i))
+        format.html { redirect_to sale_from_local_services_url, notice: "Sale from local service was successfully updated." }
         format.json { render :show, status: :ok, location: @sale_from_local_service }
       else
         format.html { render :edit, status: :unprocessable_entity }

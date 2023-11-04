@@ -33,12 +33,14 @@ class ProductSellsController < ApplicationController
           format.html { redirect_to combination_of_local_product_url(@product_sell.combination_of_local_product), notice: "Product sell was successfully created." }
         elsif @product_sell.sale_from_local_service.present?
           format.html { redirect_to sale_from_local_service_url(@product_sell.sale_from_local_service), notice: "Product sell was successfully created." }
+        elsif @product_sell.sale.present?
+          format.html { redirect_to sale_url(@product_sell.sale), notice: "Product sell was successfully destroyed." }
         end
 
         format.html { redirect_to product_sells_url, notice: "Product sell was successfully created." }
         format.json { render :show, status: :created, location: @product_sell }
       else
-        format.html { render :new, product_sell: @product_sell, status: :unprocessable_entity }
+        format.html { redirect_to request.referrer, notice: @product_sell.errors.messages.values.join("\n") }
         format.json { render json: @product_sell.errors, status: :unprocessable_entity }
       end
     end
@@ -66,6 +68,8 @@ class ProductSellsController < ApplicationController
         format.html { redirect_to combination_of_local_product_url(@product_sell.combination_of_local_product), notice: "Product sell was successfully destroyed." }
       elsif @product_sell.sale_from_local_service.present?
         format.html { redirect_to sale_from_local_service_url(@product_sell.sale_from_local_service), notice: "Product sell was successfully destroyed." }
+      elsif @product_sell.sale.present?
+        format.html { redirect_to sale_url(@product_sell.sale), notice: "Product sell was successfully destroyed." }
       end
 
       format.html { redirect_to product_sells_url, notice: "Product sell was successfully destroyed." }
@@ -98,6 +102,9 @@ class ProductSellsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_sell_params
-    params.require(:product_sell).permit(:sale_from_local_service_id, :combination_of_local_product_id, :sell_price, :product_id, :total_profit, :amount, :payment_type)
+    params.require(:product_sell).permit(
+      :sale_from_local_service_id, :sale_id, :combination_of_local_product_id,
+      :sell_price, :product_id, :total_profit, :amount, :payment_type
+    )
   end
 end

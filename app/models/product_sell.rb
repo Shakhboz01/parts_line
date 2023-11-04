@@ -4,6 +4,7 @@
 class ProductSell < ApplicationRecord
   belongs_to :combination_of_local_product, optional: true
   belongs_to :sale_from_local_service, optional: true
+  belongs_to :sale, optional: true
   belongs_to :product
   validates_presence_of :amount
   enum payment_type: %i[сум доллар карта дригие]
@@ -16,6 +17,10 @@ class ProductSell < ApplicationRecord
   private
 
   def deccrease_amount_sold
+    return throw(:abort) if !combination_of_local_product.nil? && combination_of_local_product.closed?
+    return throw(:abort) if !sale_from_local_service.nil? && sale_from_local_service.closed?
+    return throw(:abort) if !sale.nil? && sale.closed?
+
     price_data.each do |data|
       if data[0].to_i.zero?
         product.increment!(:initial_remaining, data[1]["amount"].to_f) and next

@@ -1,39 +1,32 @@
 <div class="container my-5">
   <div class="card shadow">
     <div class="card-header d-flex justify-content-between align-items-center">
-      <h3 class="card-title font-weight-bold">Sales</h3>
+      <div class="btn-group" role="group" aria-label="Basic example">
+        <button type="button" class="btn btn-primary">Продажа</button>
+        <%= link_to 'Услуга', sale_from_local_services_url, class: 'btn btn-secondary' %>
+        <%= link_to 'Обьекты', sale_from_local_services_url, class: 'btn btn-secondary' %>
+      </div>
       <%= link_to 'Добавить новый', new_sale_path, class: "btn btn-success min-width-btn" %>
     </div>
 
     <div class="card-body">
-      <table class="table table-hover table-bordered table-striped">
+      <%= render 'sale_from_local_services/filter_form', q: @q, url: request.path %>
+      <%= render 'sales', sales: @sales %>
+      <%= paginate @sales %>
+      <table class='table-bordered'>
         <thead>
           <tr>
-                        <th>Total paid</th>
-                        <th>Payment type</th>
-                        <th>Buyer</th>
-                        <th>Total price</th>
-                        <th>Comment</th>
-                        <th>User</th>
-                        <th>Status</th>
-                        <th colspan="3"></th>
+            <th>Итого цена</th>
+            <th>Итого оплачено</th>
+            <th>Разница</th>
           </tr>
         </thead>
         <tbody>
-          <% @sales.each do |sale| %>
-            <tr>
-                              <td><%= sale.total_paid %></td>
-                              <td><%= sale.payment_type %></td>
-                              <td><%= sale.buyer_id %></td>
-                              <td><%= sale.total_price %></td>
-                              <td><%= sale.comment %></td>
-                              <td><%= sale.user_id %></td>
-                              <td><%= sale.status %></td>
-                            <td><%= clink_to 'Посмотреть', sale_path(sale), 'fa-search' %></td>
-              <td><%= clink_to 'Редактировать', edit_sale_path(sale), 'fa-edit' %></td>
-              <td><%= cdlink_to 'удалить', sale %></td>
-            </tr>
-          <% end %>
+          <tr>
+            <td><%= number_to_currency(@all_sales.sum(:total_price)) %></td>
+            <td><%= number_to_currency @all_sales.sum(:total_paid) %></td>
+            <td><%= @all_sales.sum(:total_price) - @all_sales.sum(:total_paid) %></td>
+          </tr>
         </tbody>
       </table>
     </div>
