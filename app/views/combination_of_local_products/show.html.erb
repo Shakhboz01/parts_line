@@ -2,7 +2,7 @@
   <%= render 'layouts/progress', value: '72' %>
 
   <% unless @combination_of_local_product.closed? %>
-    <%= link_to 'Добавить затрат товара', new_product_sell_path(combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-primary min-width-btn" %>
+    <%= render 'product_sells/form', product_sell: ProductSell.new(combination_of_local_product_id: @combination_of_local_product.id) %>
     <%= link_to 'Добавить расход', new_expenditure_path(expenditure_type: 'на_производство', combination_of_local_product_id: @combination_of_local_product.id), class: "btn btn-primary min-width-btn" %>
   <% end %>
   <br><br>

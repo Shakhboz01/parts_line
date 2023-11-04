@@ -15,7 +15,7 @@ class ProductSellsController < ApplicationController
   def new
     @product_sell = ProductSell.new(
       combination_of_local_product_id: params[:combination_of_local_product_id],
-      sale_from_local_service: params[:sale_from_local_service],
+      sale_from_local_service_id: params[:sale_from_local_service_id],
     )
   end
 
@@ -81,7 +81,6 @@ class ProductSellsController < ApplicationController
       amount: product_sell_params[:amount],
     )
     response = ProductSells::CalculateSellAndBuyPrice.run(product_sell: product_sell)
-
     render json: if response.valid?
              "Цена продажи (1 шт): #{response.result[:average_prices][:average_sell_price]}$ \n" \
              "Прибыль (1шт): #{response.result[:average_prices][:average_sell_price] - response.result[:average_prices][:average_buy_price]}$"
@@ -99,6 +98,6 @@ class ProductSellsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_sell_params
-    params.require(:product_sell).permit(:sale_from_local_service, :combination_of_local_product_id, :sell_price, :product_id, :total_profit, :amount, :payment_type)
+    params.require(:product_sell).permit(:sale_from_local_service_id, :combination_of_local_product_id, :sell_price, :product_id, :total_profit, :amount, :payment_type)
   end
 end

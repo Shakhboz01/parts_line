@@ -53,7 +53,7 @@ class ProductSell < ApplicationRecord
     if combination_of_local_product.present?
       self.sell_price = average_prices["average_buy_price"]
     else
-      self.sell_price = sell_price.zero? ? average_prices["average_sell_price"] : sell_price
+      self.sell_price = (sell_price.nil? || sell_price.zero?) ? average_prices["average_sell_price"] : sell_price
     end
 
     profit = sell_price - buy_price

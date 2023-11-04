@@ -9,7 +9,8 @@ module ProductSells
     object :product_sell
 
     def execute
-      return errors.add(:base, "amount cannot be zero") if (amount = product_sell.amount).zero?
+      amount = product_sell.amount
+      return errors.add(:base, "amount cannot be zero") if amount.zero?
 
       product = product_sell.product
       response = nil
@@ -45,7 +46,7 @@ module ProductSells
         end
       end
 
-      response
+      response.is_a?(Hash) ? response : response.result
     end
   end
 end

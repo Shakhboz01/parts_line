@@ -1,29 +1,50 @@
-<%= simple_form_for(@product_sell) do |f| %>
-  <%= f.error_notification %>
-  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+  Добавить затрат товара
+</button>
 
-  <div class="form-inputs">
-    <%= f.association :combination_of_local_product, as: :hidden %>
-    <%= f.association :product, label: 'товар', collection: Product.active %>
-    <%= f.input :amount, label: 'Количество' %>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <%= simple_form_for(product_sell) do |f| %>
+        <div class="modal-body">
+          <%= f.error_notification %>
+          <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-    <% unless @product_sell.combination_of_local_product.present? %>
-      <a style='cursor: pointer; color: blue' id='manual-price'>Указать цену продажу вручную</a>
-      <br><br>
-    <% end %>
+          <div class="form-inputs">
+            <%= f.association :combination_of_local_product, as: :hidden %>
+            <%= f.association :sale_from_local_service, as: :hidden %>
+            <%= f.association :product, label: 'товар', collection: Product.active, include_blank: false %>
+            <%= f.input :amount, label: 'Количество' %>
 
-    <div style='display: none' id='price-fields'>
-      <%= f.input :sell_price, label: 'Цена продажи' %>
+            <% unless product_sell.combination_of_local_product.present? %>
+              <a style='cursor: pointer; color: blue' id='manual-price'>Указать цену продажу вручную</a>
+              <br><br>
+            <% end %>
+            <div style='display: none' id='price-fields'>
+              <%= f.input :sell_price, label: 'Цена продажи в $' %>
+            </div>
+          </div>
+          <div class="form-actions">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+          <%= f.button :submit, 'Завершить' %>
+          <% unless product_sell.combination_of_local_product.present? %>
+            <%= button_tag 'Предпросмотр цена продажи', type: 'button', id: 'custom-action-button', class: 'btn btn-warning custom-action-button' %>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
+</div>
 
-  <div class="form-actions">
-    <%= f.button :submit, 'Завершить' %>
-    <% unless @product_sell.combination_of_local_product.present? %>
-      <%= button_tag 'Предпросмотр цена продажи', type: 'button', id: 'custom-action-button', class: 'btn btn-warning custom-action-button' %>
-    <% end %>
-  </div>
-<% end %>
 
 <script>
   document.addEventListener('DOMContentLoaded', function() {
@@ -62,6 +83,7 @@
   });
 
   $('#manual-price').click(function() {
-    $('#price-fields').css('display', 'block');
+    $('#price-fields').toggle();
+    $('#custom-action-button').toggle();
   });
 </script>

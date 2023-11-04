@@ -1,7 +1,7 @@
 <div class='container'>
   <% unless @sale_from_local_service.closed? %>
     <%= render 'layouts/progress', value: '46' %>
-    <%= link_to 'Добавить затрат товара', new_product_sell_path(sale_from_local_service_id: @sale_from_local_service.id), class: "btn btn-primary min-width-btn" %>
+    <%= render 'product_sells/form', product_sell: ProductSell.new(sale_from_local_service_id: @sale_from_local_service.id) %>
   <% end %>
   <br><br>
 

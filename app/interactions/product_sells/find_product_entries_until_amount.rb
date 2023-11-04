@@ -4,7 +4,7 @@ module ProductSells
     object :product
 
     def execute
-      unsold_product_entries = product.product_entries.where('amount_sold < amount')
+      unsold_product_entries = product.product_entries.where("amount_sold < amount")
       remaining_amount = amount
       product_entry_ids = []
       unsold_product_entries.order(:created_at).each do |product_entry|
@@ -21,7 +21,7 @@ module ProductSells
       ProductSells::HandleAmountSold.run!(
         product_entry_ids: product_entry_ids,
         product: product,
-        amount: amount
+        amount: amount,
       )
     end
   end
