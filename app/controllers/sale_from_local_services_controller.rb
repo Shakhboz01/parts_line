@@ -15,6 +15,7 @@ class SaleFromLocalServicesController < ApplicationController
   # GET /sale_from_local_services/1 or /sale_from_local_services/1.json
   def show
     @product_sells = @sale_from_local_service.product_sells
+    @local_services = @sale_from_local_service.local_services
   end
 
   # GET /sale_from_local_services/new

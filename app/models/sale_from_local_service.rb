@@ -2,6 +2,7 @@ class SaleFromLocalService < ApplicationRecord
   belongs_to :buyer
   belongs_to :user, optional: true
   has_many :product_sells
+  has_many :local_services
   enum status: %i[processing closed]
   enum payment_type: %i[сум доллар карта дригие]
   scope :filter_by_total_paid_less_than_price, ->(value) {
@@ -13,17 +14,24 @@ class SaleFromLocalService < ApplicationRecord
         }
   before_save :proccess_status_change
 
+  def get_total_price
+    calculate_total_price
+  end
+
   private
 
-  def proccess_status_change
-    if closed? && status_before_last_save != "closed"
-      total_price = 0
-      self.product_entries.each do |product_entry|
-        total_price += product_entry.amount * product_entry.buy_price
-      end
-
-      local_service_price = self.local_services.sum(:price)
-      self.total_price = total_price + local_service_price
+  def calculate_total_price
+    total_price = 0
+    self.product_sells.each do |product_sell|
+      total_price += product_sell.amount * product_sell.sell_price
     end
+
+    local_service_price = self.local_services.sum(:price)
+  end
+
+  def proccess_status_change
+    return unless closed? && status_before_last_save != "closed"
+
+    self.total_price = calculate_total_price
   end
 end

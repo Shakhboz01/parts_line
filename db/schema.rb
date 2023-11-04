@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_04_053626) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_04_064334) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -61,6 +61,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_053626) do
     t.bigint "delivery_from_counterparty_id"
     t.index ["combination_of_local_product_id"], name: "index_expenditures_on_combination_of_local_product_id"
     t.index ["delivery_from_counterparty_id"], name: "index_expenditures_on_delivery_from_counterparty_id"
+  end
+
+  create_table "local_services", force: :cascade do |t|
+    t.decimal "price", precision: 16, scale: 2
+    t.string "comment"
+    t.bigint "sale_from_local_service_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sale_from_local_service_id"], name: "index_local_services_on_sale_from_local_service_id"
   end
 
   create_table "participations", force: :cascade do |t|
@@ -213,6 +222,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_053626) do
   add_foreign_key "delivery_from_counterparties", "providers"
   add_foreign_key "expenditures", "combination_of_local_products"
   add_foreign_key "expenditures", "delivery_from_counterparties"
+  add_foreign_key "local_services", "sale_from_local_services"
   add_foreign_key "participations", "users"
   add_foreign_key "product_entries", "combination_of_local_products"
   add_foreign_key "product_entries", "delivery_from_counterparties"
