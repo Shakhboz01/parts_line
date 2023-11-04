@@ -4,7 +4,9 @@ class ProductSellsController < ApplicationController
   # GET /product_sells or /product_sells.json
   def index
     @q = ProductSell.ransack(params[:q])
-    @product_sells = @q.result.order(id: :desc).page(params[:page]).per(40)
+    @product_sells = @q.result.includes(:product).order(id: :desc)
+    @all_product_sells = @product_sells
+    @product_sells = @product_sells.page(params[:page]).per(40)
   end
 
   # GET /product_sells/1 or /product_sells/1.json

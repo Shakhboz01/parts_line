@@ -20,6 +20,7 @@ class ProductSell < ApplicationRecord
   def deccrease_amount_sold
     return throw(:abort) if !combination_of_local_product.nil? && combination_of_local_product.closed?
     return throw(:abort) if !sale_from_local_service.nil? && sale_from_local_service.closed?
+    return throw(:abort) if !sale_from_service.nil? && sale_from_service.closed?
     return throw(:abort) if !sale.nil? && sale.closed?
 
     price_data.each do |data|
