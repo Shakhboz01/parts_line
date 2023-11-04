@@ -5,7 +5,7 @@
   <div class="form-inputs">
     <%= f.input :total_price, label: 'Итого цена', input_html: { disabled: true } %>
     <%= f.input :total_paid, label: 'Итого оплачено в $', input_html: {value: 0, placeholder: 'Пропустите этот поле если вы оплатили полностью'} %>
-    <%= f.association :provider, label: 'Поставщик', collection: Provider.active, include_blank: false %>
+    <%= f.association :provider, label: 'Поставщик', collection: Provider.active.order(weight: :desc), include_blank: false %>
     <%= f.input :payment_type, label: 'Тип оплаты', collection: DeliveryFromCounterparty.payment_types.keys.map { |unit| [DeliveryFromCounterparty.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
     <%= f.input :comment, label: 'Комментарии' %>
   </div>
