@@ -4,6 +4,7 @@
       <h3 class="card-title font-weight-bold">Услуги</h3>
     </div>
     <div class="card-body">
+      <%= render 'filter_form', q: @q, url: request.path %>
       <%= render 'local_services', local_services: @local_services %>
     </div>
   </div>

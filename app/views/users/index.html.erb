@@ -25,6 +25,9 @@
               <td><%= num_to_usd(user.daily_payment) %></td>
               <td>
                 <%= clink_to 'посмотреть историю зарплат/аванс', salaries_path(q: {user_id_eq: user.id}), 'fa-money' %>
+                <% unless %w[бухгалтер менеджер].include?(user.role) %>
+                  <%= clink_to 'История выполненных работ', local_services_path(q: {user_id: user.id}), 'fa-hammer' %>
+                <% end %>
                 <%= clink_to 'Оформить зарплату/аванс', new_salary_path(team_id: user.id), 'fa-plus' %>
                 <%= clink_to 'Редактировать', edit_user_path(user), 'fa-edit' %>
                 <%= clink_to 'Изменить пароль', edit_user_path(user, password_change: true), 'fa-lock-open' %>

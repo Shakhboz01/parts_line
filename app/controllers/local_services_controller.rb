@@ -3,7 +3,8 @@ class LocalServicesController < ApplicationController
 
   # GET /local_services or /local_services.json
   def index
-    @local_services = LocalService.all
+    @q = LocalService.ransack(params[:q])
+    @local_services = @q.result.includes(:user).page(params[:page]).per(40)
   end
 
   # GET /local_services/1 or /local_services/1.json
@@ -66,6 +67,6 @@ class LocalServicesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def local_service_params
-    params.require(:local_service).permit(:price, :comment, :sale_from_local_service_id)
+    params.require(:local_service).permit(:price, :comment, :sale_from_local_service_id, :user_id)
   end
 end

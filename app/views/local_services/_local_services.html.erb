@@ -2,6 +2,7 @@
   <thead>
     <tr>
       <th>Цена</th>
+      <th>Выполнил</th>
       <th>Коммент.</th>
       <th colspan="3"></th>
     </tr>
@@ -10,8 +11,12 @@
     <% @local_services.each do |local_service| %>
       <tr>
         <td><%= number_to_currency local_service.price %></td>
+        <td><%= local_service.user.name %></td>
         <td><%= local_service.comment %></td>
-        <td><%= cdlink_to 'удалить', local_service %></td>
+        <td>
+          <%= clink_to 'Посмотреть', sale_from_local_service_path(local_service.sale_from_local_service), 'fa-search' %>
+          <%= cdlink_to 'удалить', local_service %>
+          </td>
       </tr>
     <% end %>
   </tbody>

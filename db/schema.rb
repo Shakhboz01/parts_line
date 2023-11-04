@@ -67,9 +67,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_064334) do
     t.decimal "price", precision: 16, scale: 2
     t.string "comment"
     t.bigint "sale_from_local_service_id", null: false
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["sale_from_local_service_id"], name: "index_local_services_on_sale_from_local_service_id"
+    t.index ["user_id"], name: "index_local_services_on_user_id"
   end
 
   create_table "participations", force: :cascade do |t|
@@ -223,6 +225,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_064334) do
   add_foreign_key "expenditures", "combination_of_local_products"
   add_foreign_key "expenditures", "delivery_from_counterparties"
   add_foreign_key "local_services", "sale_from_local_services"
+  add_foreign_key "local_services", "users"
   add_foreign_key "participations", "users"
   add_foreign_key "product_entries", "combination_of_local_products"
   add_foreign_key "product_entries", "delivery_from_counterparties"

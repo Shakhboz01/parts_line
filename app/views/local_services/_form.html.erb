@@ -5,6 +5,7 @@
   <div class="form-inputs">
     <%= f.input :price, label: 'Цена в $' %>
     <%= f.input :comment ,label: 'Комментарие', input_html: {placeholder: 'не обязательно'} %>
+    <%= f.association :user, colection: User.active, label: 'Выполнил', input_html: { placeholder: 'Выберите работника который выполнил эу услугу' } %>
     <%= f.association :sale_from_local_service, as: :hidden %>
   </div>
 
