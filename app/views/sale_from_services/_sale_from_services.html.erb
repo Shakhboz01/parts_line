@@ -1,0 +1,28 @@
+<table class="table table-hover table-bordered table-striped">
+  <thead>
+    <tr>
+      <td></td>
+      <th>ID</th>
+      <th>Итого цена</th>
+      <th>Оплачено</th>
+      <th>Покупатель</th>
+      <th>Тип оплаты</th>
+      <th>Комментарие</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% sale_from_services.each do |sale_from_service| %>
+      <tr>
+        <td><%= active_check(sale_from_service.closed?) %></td>
+        <td><%= sale_from_service.id %></td>
+        <td><%= sale_from_service.total_price %></td>
+        <td><%= sale_from_service.total_paid %></td>
+        <td><%= sale_from_service.buyer.name %></td>
+        <td><%= sale_from_service.payment_type %></td>
+        <td><%= sale_from_service.comment %></td>
+        <td><%= clink_to 'Посмотреть', sale_from_service_path(sale_from_service), 'fa-search' %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -1,0 +1,27 @@
+<div class='container'>
+  <% unless @sale_from_service.closed? %>
+    <%= render 'layouts/progress', value: '46' %>
+    <%= render 'product_sells/form', product_sell: ProductSell.new(sale_from_service_id: @sale_from_service.id) %>
+  <% end %>
+  <br><br>
+
+  <div class='row'>
+    <div class='col-sm-12'>
+      <% unless @product_sells.count.zero? %>
+        <%= render 'product_sells/product_sells', product_sells: @product_sells %>
+      <% end %>
+    </div>
+  </div>
+
+  <% unless @sale_from_service.closed? %>
+    <%= simple_form_for(@sale_from_service) do |f| %>
+      <%= f.input :status, as: :hidden, input_html: { value: 1 } %>
+      <div class="form-actions">
+        <%= f.button :submit, 'Завершить операцию', class: 'btn-success', title:'После завершении вы не сможете добавить или удалить товаров' %>
+      </div>
+    <% end %>
+  <% end %>
+  <br>
+  <div><b>ИТОГО: <%= number_to_currency @sale_from_service.get_total_price %></b></div>
+</div>
+
