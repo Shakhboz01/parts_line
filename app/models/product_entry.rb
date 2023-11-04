@@ -5,6 +5,7 @@ class ProductEntry < ApplicationRecord
   belongs_to :delivery_from_counterparty, optional: true
   belongs_to :product
   belongs_to :storage
+  belongs_to :sale_from_local_service, optional: true
   validates :amount, comparison: { greater_than: 0 }
   validates :sell_price, :buy_price, comparison: { greater_than_or_equal_to: 0 }
   validates :sell_price, comparison: { greater_than_or_equal_to: :buy_price }, if: -> { combination_of_local_product_id.nil? }

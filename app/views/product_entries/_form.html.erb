@@ -8,6 +8,7 @@
     <%= f.association :product, label: 'Товар', collection: Product.active.where(local: params[:local_entry] == 'true'), include_blank: false %>
     <%= f.association :storage, label: 'Склад', collection: Storage.pluck(:name, :id), include_blank: false %>
     <%= f.association :delivery_from_counterparty, as: :hidden %>
+    <%= f.association :sale_from_local_service, as: :hidden %>
     <%= f.input :amount, label: 'количество', id: 'inputs' %>
 
     <% unless @product_entry.local_entry %>

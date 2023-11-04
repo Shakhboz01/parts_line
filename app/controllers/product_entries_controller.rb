@@ -18,10 +18,10 @@ class ProductEntriesController < ApplicationController
     @product_entry = ProductEntry.new(
       local_entry: params[:local_entry],
       return: params[:return],
-      delivery_from_counterparty_id: params[:delivery_from_counterparty_id]
+      delivery_from_counterparty_id: params[:delivery_from_counterparty_id],
     )
     @products = Product.active
-    if params[:local_entry] == 'true'
+    if params[:local_entry] == "true"
       @products = @products.where(local: true)
     else
       @products = @products.where(local: false)
@@ -57,7 +57,6 @@ class ProductEntriesController < ApplicationController
     end
   end
 
-
   # PATCH/PUT /product_entries/1 or /product_entries/1.json
   def update
     respond_to do |format|
@@ -86,13 +85,14 @@ class ProductEntriesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product_entry
-      @product_entry = ProductEntry.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def product_entry_params
-      params.require(:product_entry).permit(:local_entry, :buy_price, :sell_price, :delivery_from_counterparty_id, :storage_id, :service_price, :provider_id, :product_id, :amount, :amount_sold, :total_paid, :total_price, :comment, :return)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product_entry
+    @product_entry = ProductEntry.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def product_entry_params
+    params.require(:product_entry).permit(:local_entry, :sale_from_local_service, :buy_price, :sell_price, :delivery_from_counterparty_id, :storage_id, :service_price, :provider_id, :product_id, :amount, :amount_sold, :total_paid, :total_price, :comment, :return)
+  end
 end
