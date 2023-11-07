@@ -1,91 +1,79 @@
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-  Добавить затрат товара
-</button>
+<div class='card-header shadow'>
+  <%= simple_form_for(product_sell) do |f| %>
+    <%= f.error_notification %>
+    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel"></h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
+    <%= f.association :combination_of_local_product, as: :hidden %>
+    <%= f.association :sale_from_service, as: :hidden %>
+    <%= f.association :sale_from_local_service, as: :hidden %>
+    <%= f.association :sale, as: :hidden %>
+
+    <div class='row'>
+      <div class='col-sm-3 col-md-2'>
+        <%= f.association :product, label: 'товар', collection: Product.active, include_blank: false %>
       </div>
-      <%= simple_form_for(product_sell) do |f| %>
-        <div class="modal-body">
-          <%= f.error_notification %>
-          <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-          <div class="form-inputs">
-            <%= f.association :combination_of_local_product, as: :hidden %>
-            <%= f.association :sale_from_service, as: :hidden %>
-            <%= f.association :sale_from_local_service, as: :hidden %>
-            <%= f.association :sale, as: :hidden %>
-            <%= f.association :product, label: 'товар', collection: Product.active, include_blank: false %>
-            <%= f.input :amount, label: 'Количество' %>
-
-            <% unless product_sell.combination_of_local_product.present? %>
-              <a style='cursor: pointer; color: blue' id='manual-price'>Указать цену продажу вручную</a>
-              <br><br>
-            <% end %>
-            <div style='display: none' id='price-fields'>
-              <%= f.input :sell_price, label: 'Цена продажи в $' %>
-            </div>
-          </div>
-          <div class="form-actions">
-          </div>
+      <div class='col-sm-3 col-md-2'>
+        <%= f.input :amount, label: 'Количество' %>
+      </div>
+      <div class='col-sm-3 col-md-3'>
+        <% unless product_sell.combination_of_local_product.present? %>
+          <a style='cursor: pointer; color: blue' id='manual-price'>Указать цену продажу вручную</a>
+        <% end %>
+        <div style='display: none' id='price-fields'>
+          <%= f.input :sell_price, label: 'Цена продажи в $' %>
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-          <%= f.button :submit, 'Завершить' %>
-          <% unless product_sell.combination_of_local_product.present? %>
-            <%= button_tag 'Предпросмотр цена продажи', type: 'button', id: 'custom-action-button', class: 'btn btn-warning custom-action-button' %>
-          <% end %>
-        </div>
-      <% end %>
+      </div>
+      <div class='col-sm-3 col-md-3 align-self-center'>
+        <% unless product_sell.combination_of_local_product.present? %>
+          <%= button_tag 'Предпросмотр цену', type: 'button', id: 'custom-action-button', class: 'btn btn-warning custom-action-button' %>
+        <% end %>
+      </div>
+      <div class='col-sm-3 col-md-2 align-self-center'>
+        <%= f.button :submit, 'Создать' %>
+      </div>
     </div>
-  </div>
+  <% end %>
 </div>
 
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('custom-action-button').addEventListener('click', function(e) {
-      e.preventDefault();
-      var product_id = document.querySelector('#product_sell_product_id').value;
-      var amount = document.querySelector('#product_sell_amount').value;
-      var customActionURL = '/product_sells/ajax_sell_price_request';
-      var data = {
-        product_id: product_id,
-        amount: amount
-      };
-      var csrfToken = $('meta[name="csrf-token"]').attr('content');
-      fetch(customActionURL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-CSRF-Token': csrfToken, // Include the CSRF token in the request headers
-        },
-        body: JSON.stringify(data)
-      })
-      .then(function(response) {
-        if (response.ok) {
-          return response.text();
-        } else {
-          throw new Error('Error: ' + response.status);
-        }
-      })
-      .then(function(responseText) {
-        alert(responseText);
-      })
-      .catch(function(error) {
-        console.error(error);
-      });
-    });
-  });
+document.addEventListener('DOMContentLoaded', function() {
+document.getElementById('custom-action-button').addEventListener('click', function(e) {
+e.preventDefault();
+var product_id = document.querySelector('#product_sell_product_id').value;
+var amount = document.querySelector('#product_sell_amount').value;
+var customActionURL = '/product_sells/ajax_sell_price_request';
+var data = {
+  product_id: product_id,
+  amount: amount
+};
+var csrfToken = $('meta[name="csrf-token"]').attr('content');
+fetch(customActionURL, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-CSRF-Token': csrfToken, // Include the CSRF token in the request headers
+  },
+  body: JSON.stringify(data)
+})
+.then(function(response) {
+  if (response.ok) {
+    return response.text();
+  } else {
+    throw new Error('Error: ' + response.status);
+  }
+})
+.then(function(responseText) {
+  alert(responseText);
+})
+.catch(function(error) {
+  console.error(error);
+});
+});
+});
 
-  $('#manual-price').click(function() {
-    $('#price-fields').toggle();
-    $('#custom-action-button').toggle();
-  });
+$('#manual-price').click(function() {
+$('#price-fields').toggle();
+$('#custom-action-button').toggle();
+});
 </script>

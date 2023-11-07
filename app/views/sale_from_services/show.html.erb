@@ -1,15 +1,11 @@
-<div class='container'>
   <% unless @sale_from_service.closed? %>
     <%= render 'layouts/progress', value: '46' %>
     <%= render 'product_sells/form', product_sell: ProductSell.new(sale_from_service_id: @sale_from_service.id) %>
     <%= render 'team_services/form', team_service: TeamService.new(sale_from_service_id: @sale_from_service.id) %>
-    <%# <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceModal">
-      Добавить сервис
-    </button> %>
   <% end %>
-  <br><br>
+  <br><br><hr>
 
-  <div class='row'>
+  <div class='row shadow'>
     <div class='col-sm-12 col-md-7'>
       <% unless @product_sells.count.zero? %>
         <%= render 'product_sells/product_sells', product_sells: @product_sells %>
@@ -22,29 +18,8 @@
     </div>
   </div>
 
-  <% unless @sale_from_service.closed? %>
-    <%= simple_form_for(@sale_from_service) do |f| %>
-      <%= f.input :status, as: :hidden, input_html: { value: 1 } %>
-      <div class="form-actions">
-        <%= f.button :submit, 'Завершить операцию', class: 'btn-success', title:'После завершении вы не сможете добавить или удалить товаров' %>
-      </div>
-    <% end %>
-  <% end %>
-  <br>
-  <div><b>ИТОГО: <%= number_to_currency @sale_from_service.get_total_price %></b></div>
-</div>
+  <hr><br><br><div><b>ИТОГО: <%= number_to_currency @sale_from_service.get_total_price %></b></div>
 
-<div class="modal fade" id="serviceModal" tabinde x="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <%= render 'team_services/form', team_service: TeamService.new(sale_from_service_id: @sale_from_service.id) %>
-      </div>
-    </div>
-  </div>
-</div>
+  <% unless @sale_from_service.closed? %>
+    <%= render 'sale_from_services/form', sale_from_service: @sale_from_service %>
+  <% end %>
