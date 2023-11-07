@@ -1,16 +1,12 @@
-
-<%= simple_form_for(@team_service) do |f| %>
+<%= simple_form_for(team_service) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :sale_from_service %>
-    <%= f.input :total_price %>
-    <%= f.input :team_fee %>
-    <%= f.input :team_portion %>
-    <%= f.input :company_portion %>
-    <%= f.association :user %>
-    <%= f.input :comment %>
+    <%= f.association :sale_from_service, as: :hidden %>
+    <%= f.association :team, collection: Team.active.pluck(:name, :id) %>
+    <%= f.input :total_price, label: 'итого цена в $' %>
+    <%= f.input :team_fee, label: 'доля бригадера в %' %>
   </div>
 
   <div class="form-actions">

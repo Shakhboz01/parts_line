@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_04_115550) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_07_085209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -229,6 +229,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_115550) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "team_services", force: :cascade do |t|
+    t.bigint "sale_from_service_id", null: false
+    t.bigint "team_id", null: false
+    t.decimal "total_price", precision: 17, scale: 2, default: "0.0"
+    t.integer "team_fee", default: 30
+    t.decimal "team_portion", precision: 17, scale: 2, default: "0.0"
+    t.decimal "company_portion", precision: 17, scale: 2, default: "0.0"
+    t.bigint "user_id"
+    t.string "comment"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sale_from_service_id"], name: "index_team_services_on_sale_from_service_id"
+    t.index ["team_id"], name: "index_team_services_on_team_id"
+    t.index ["user_id"], name: "index_team_services_on_user_id"
+  end
+
   create_table "teams", force: :cascade do |t|
     t.string "name"
     t.boolean "active", default: true
@@ -278,4 +294,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_04_115550) do
   add_foreign_key "sales", "buyers"
   add_foreign_key "sales", "users"
   add_foreign_key "services", "users"
+  add_foreign_key "team_services", "sale_from_services"
+  add_foreign_key "team_services", "teams"
+  add_foreign_key "team_services", "users"
 end

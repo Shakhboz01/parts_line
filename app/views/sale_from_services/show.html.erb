@@ -2,13 +2,21 @@
   <% unless @sale_from_service.closed? %>
     <%= render 'layouts/progress', value: '46' %>
     <%= render 'product_sells/form', product_sell: ProductSell.new(sale_from_service_id: @sale_from_service.id) %>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceModal">
+      Добавить сервис
+    </button>
   <% end %>
   <br><br>
 
   <div class='row'>
-    <div class='col-sm-12'>
+    <div class='col-sm-12 col-md-7'>
       <% unless @product_sells.count.zero? %>
         <%= render 'product_sells/product_sells', product_sells: @product_sells %>
+      <% end %>
+    </div>
+    <div class='col-sm-12 col-md-5'>
+      <% unless @team_services.count.zero? %>
+        <%= render 'team_services/team_services', team_services: @team_services %>
       <% end %>
     </div>
   </div>
@@ -25,3 +33,17 @@
   <div><b>ИТОГО: <%= number_to_currency @sale_from_service.get_total_price %></b></div>
 </div>
 
+<div class="modal fade" id="serviceModal" tabinde x="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render 'team_services/form', team_service: TeamService.new(sale_from_service_id: @sale_from_service.id) %>
+      </div>
+    </div>
+  </div>
+</div>

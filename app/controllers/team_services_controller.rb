@@ -24,7 +24,7 @@ class TeamServicesController < ApplicationController
   # POST /team_services or /team_services.json
   def create
     @team_service = TeamService.new(team_service_params)
-
+    @team_service.user_id = current_user.id
     respond_to do |format|
       if @team_service.save
         format.html { redirect_to sale_from_service_url(@team_service.sale_from_service), notice: "Team service was successfully created." }
