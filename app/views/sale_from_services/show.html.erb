@@ -2,9 +2,10 @@
   <% unless @sale_from_service.closed? %>
     <%= render 'layouts/progress', value: '46' %>
     <%= render 'product_sells/form', product_sell: ProductSell.new(sale_from_service_id: @sale_from_service.id) %>
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceModal">
+    <%= render 'team_services/form', team_service: TeamService.new(sale_from_service_id: @sale_from_service.id) %>
+    <%# <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serviceModal">
       Добавить сервис
-    </button>
+    </button> %>
   <% end %>
   <br><br>
 
