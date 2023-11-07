@@ -4,7 +4,7 @@
 
   <div class="form-inputs">
     <%= f.association :sale_from_service, as: :hidden %>
-    <%= f.association :team, collection: Team.active.pluck(:name, :id) %>
+    <%= f.association :team, collection: Team.active.pluck(:name, :id), label: 'Бригада' %>
     <%= f.input :total_price, label: 'итого цена в $' %>
     <%= f.input :team_fee, label: 'доля бригадера в %' %>
   </div>
