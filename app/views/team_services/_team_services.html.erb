@@ -1,0 +1,29 @@
+<table class="table table-hover table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Sale from service</th>
+      <th>Total price</th>
+      <th>Team fee</th>
+      <th>Team portion</th>
+      <th>Company portion</th>
+      <th>User</th>
+      <th>Comment</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% team_services.each do |team_service| %>
+      <tr>
+        <td><%= team_service.sale_from_service_id %></td>
+        <td><%= team_service.total_price %></td>
+        <td><%= team_service.team_fee %></td>
+        <td><%= team_service.team_portion %></td>
+        <td><%= team_service.company_portion %></td>
+        <td><%= team_service.user_id %></td>
+        <td><%= team_service.comment %></td>
+        <td><%= clink_to 'Посмотреть', team_service_path(team_service), 'fa-search' %></td>
+        <td><%= cdlink_to 'удалить', team_service %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

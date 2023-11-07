@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :team_services
   resources :sale_from_services
   resources :sales
   resources :local_services

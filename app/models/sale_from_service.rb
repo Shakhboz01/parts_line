@@ -1,6 +1,7 @@
 class SaleFromService < ApplicationRecord
   belongs_to :buyer
   belongs_to :user, optional: true
+  has_many :team_services
   enum status: %i[processing closed]
   enum payment_type: %i[сум доллар карта дригие]
   has_many :product_sells
@@ -25,6 +26,7 @@ class SaleFromService < ApplicationRecord
       total_price += product_sell.amount * product_sell.sell_price
     end
 
+    total_price += self.team_services.sum(:total_price)
     total_price
   end
 
