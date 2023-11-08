@@ -4,4 +4,7 @@ class PagesController < ApplicationController
 
   def define_sale_destination
   end
+
+  def shortcuts
+  end
 end
