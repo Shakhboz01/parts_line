@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :team_services
-  resources :sale_from_services
+  resources :sale_from_services do
+    post :default_create, on: :collection
+  end
   resources :sales
   resources :local_services
   resources :sale_from_local_services

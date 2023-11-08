@@ -17,8 +17,10 @@
         <td><%= team_service.team_portion %></td>
         <td><%= team_service.company_portion %></td>
         <td><%= team_service.comment %></td>
-        <td><%= clink_to 'Посмотреть', sale_from_service_path(team_service.sale_from_service), 'fa-search' %></td>
-        <td><%= cdlink_to 'удалить', team_service %></td>
+        <td>
+          <%= clink_to 'Посмотреть', sale_from_service_path(team_service.sale_from_service), 'fa-search' %>
+          <%= cdlink_to 'удалить', team_service %>
+        </td>
       </tr>
     <% end %>
   </tbody>

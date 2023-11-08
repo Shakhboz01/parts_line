@@ -12,7 +12,6 @@ class SaleFromService < ApplicationRecord
             all
           end
         }
-  before_save :proccess_status_change
 
   def get_total_price
     calculate_total_price
@@ -28,11 +27,5 @@ class SaleFromService < ApplicationRecord
 
     total_price += self.team_services.sum(:total_price)
     total_price
-  end
-
-  def proccess_status_change
-    return unless closed? && status_before_last_save != "closed"
-
-    self.total_price = calculate_total_price
   end
 end

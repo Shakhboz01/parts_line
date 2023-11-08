@@ -27,8 +27,6 @@
         <% unless product_sell.combination_of_local_product.present? %>
           <%= button_tag 'Предпросмотр цену', type: 'button', id: 'custom-action-button', class: 'btn btn-warning custom-action-button' %>
         <% end %>
-      </div>
-      <div class='col-sm-3 col-md-2 align-self-center'>
         <%= f.button :submit, 'Создать' %>
       </div>
     </div>

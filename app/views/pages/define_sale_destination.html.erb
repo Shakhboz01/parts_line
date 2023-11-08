@@ -16,7 +16,7 @@
       <% end %>
     </div>
     <div class='col-sm-4'>
-      <%= link_to new_sale_from_service_path, class: 'card shadow text-center p-3 m-1', style: 'height: 130px; color: wheat; font-size: large; font-weight: bold; background: gray' do %>
+      <%= button_to default_create_sale_from_services_path, class: 'card shadow text-center p-3 m-1', style: 'height: 130px; color: wheat; font-size: large; font-weight: bold; background: gray', method: :post do %>
         <span>Обьект</span>
       <% end %>
     </div>
