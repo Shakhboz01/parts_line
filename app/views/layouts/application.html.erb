@@ -38,6 +38,7 @@
   <body>
     <% if user_signed_in? %>
       <%= render 'layouts/navigation' %>
+      <%= render 'layouts/shortcut_helpers' %>
     <% end %>
 
     <% if notice.present? %>
