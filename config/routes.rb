@@ -3,9 +3,13 @@ Rails.application.routes.draw do
   resources :sale_from_services do
     post :default_create, on: :collection
   end
-  resources :sales
+  resources :sales do
+    post :default_create, on: :collection
+  end
   resources :local_services
-  resources :sale_from_local_services
+  resources :sale_from_local_services do
+    post :default_create, on: :collection
+  end
   resources :delivery_from_counterparties
   resources :product_sells do
     post :ajax_sell_price_request, on: :collection

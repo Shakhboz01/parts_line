@@ -12,15 +12,9 @@
   </thead>
   <tbody>
     <% product_sells.each do |product_sell| %>
-      <tr>
-        <td><%= product_sell.id %></td>
-        <td><%= product_sell.product.name %></td>
-        <td><%= product_sell.amount %></td>
-        <td><%= number_to_currency(product_sell.sell_price) %></td>
-        <td><%= number_to_currency(product_sell.total_profit) %></td>
-        <td><%= strf_datetime(product_sell.created_at) %></td>
-        <td><%= cdlink_to 'Удалить', product_sell %></td>
-      </tr>
+      <%= turbo_frame_tag 'product_sells' do %>
+        <%= render 'product_sells/product_sell_turbo', product_sell: product_sell %>
+      <% end %>
     <% end %>
   </tbody>
 </table>

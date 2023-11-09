@@ -64,6 +64,16 @@ class SalesController < ApplicationController
     end
   end
 
+  def default_create
+    buyer = Buyer.first
+    sfs = Sale.new(buyer: buyer, user: current_user)
+    if sfs.save
+      redirect_to sale_url(sfs), notice: 'Теперь добавьте продажу товаров'
+    else
+      redirect_to request.referrer, notice: "Something went wrong"
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

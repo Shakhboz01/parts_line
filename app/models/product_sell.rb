@@ -22,8 +22,10 @@ class ProductSell < ApplicationRecord
   def increase_total_price
     if !sale_from_service.nil?
       sale_from_service.increment!(:total_price, (sell_price * amount))
-    elsif sale_from_local_service.increment!(:total_price, (sell_price * amount))
+    elsif !sale_from_local_service.nil?
       sale_from_local_service.increment!(:total_price, sell_price)
+    elsif !sale.nil?
+      sale.increment!(:total_price, sell_price)
     end
   end
 

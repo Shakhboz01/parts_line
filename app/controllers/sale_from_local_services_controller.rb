@@ -65,6 +65,16 @@ class SaleFromLocalServicesController < ApplicationController
     end
   end
 
+  def default_create
+    buyer = Buyer.first
+    sfs = SaleFromLocalService.new(buyer: buyer, user: current_user)
+    if sfs.save
+      redirect_to sale_from_local_service_url(sfs), notice: "Теперь добавьте услуги и рассход товаров"
+    else
+      redirect_to request.referrer, notice: "Something went wrong"
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
