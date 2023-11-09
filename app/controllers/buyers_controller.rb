@@ -26,6 +26,12 @@ class BuyersController < ApplicationController
 
     respond_to do |format|
       if @buyer.save
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.append(
+            "buyers", partial: "buyers/buyers", locals: { buyers: Buyer.all },
+          )
+        end
+
         format.html { redirect_to buyers_url, notice: "Buyer was successfully created." }
         format.json { render :show, status: :created, location: @buyer }
       else

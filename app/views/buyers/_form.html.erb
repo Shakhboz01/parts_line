@@ -1,5 +1,5 @@
 
-<%= simple_form_for(@buyer) do |f| %>
+<%= simple_form_for(buyer) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
@@ -11,6 +11,6 @@
   </div>
 
   <div class="form-actions">
-    <%= f.button :submit, 'Завершить' %>
+    <%= f.submit "Завершить", "data-turbo-action": "append", "data-turbo-target": "buyers" %>
   </div>
 <% end %>
