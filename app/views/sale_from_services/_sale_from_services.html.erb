@@ -15,7 +15,7 @@
     <% sale_from_services.each do |sale_from_service| %>
       <tr>
         <td><%= active_check(sale_from_service.closed?) %></td>
-        <td><%= sale_from_service.id %></td>
+        <td class="<%= detect_danger_row(sale_from_service.total_price, sale_from_service.total_paid) %>"><%= sale_from_service.id %></td>
         <td><%= number_to_currency sale_from_service.total_price %></td>
         <td><%= number_to_currency sale_from_service.total_paid %></td>
         <td><%= sale_from_service.buyer.name %></td>
