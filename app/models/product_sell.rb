@@ -10,12 +10,22 @@ class ProductSell < ApplicationRecord
   validates_presence_of :amount
   enum payment_type: %i[сум доллар карта дригие]
   validate :handle_amount_sold
-  validate :varify_combination_is_not_closed
+  validate :verify_combination_is_not_closed
   before_create :increase_amount_sold
   before_create :set_prices_and_profit
+  after_create :increase_total_price
   before_destroy :deccrease_amount_sold
+  before_destroy :decrease_total_price
 
   private
+
+  def increase_total_price
+    if !sale_from_service.nil?
+      sale_from_service.increment!(:total_price, (sell_price * amount))
+    elsif sale_from_local_service.increment!(:total_price, (sell_price * amount))
+      sale_from_local_service.increment!(:total_price, sell_price)
+    end
+  end
 
   def deccrease_amount_sold
     return throw(:abort) if !combination_of_local_product.nil? && combination_of_local_product.closed?
@@ -67,7 +77,10 @@ class ProductSell < ApplicationRecord
     self.total_profit = profit * amount
   end
 
-  def varify_combination_is_not_closed
+  def verify_combination_is_not_closed
     return errors.add(:base, "cannot be edited/created") if !combination_of_local_product.nil? && combination_of_local_product.closed?
+    return errors.add(:base, "cannot be edited/created") if !sale_from_service.nil? && sale_from_service.closed?
+
+    errors.add(:base, "cannot be edited/created") if !sale_from_local_service.nil? && sale_from_local_service.closed?
   end
 end

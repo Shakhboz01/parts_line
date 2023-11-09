@@ -8,6 +8,7 @@
       <th>Покупатель</th>
       <th>Тип оплаты</th>
       <th>Комментарие</th>
+      <th>Оформлено в</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -21,6 +22,7 @@
         <td><%= sale_from_local_service.buyer.name %></td>
         <td><%= sale_from_local_service.payment_type %></td>
         <td><%= sale_from_local_service.coment %></td>
+        <td><%= strf_datetime sale_from_local_service.created_at %></td>
         <td><%= clink_to 'Посмотреть', sale_from_local_service_path(sale_from_local_service), 'fa-search' %></td>
       </tr>
     <% end %>
