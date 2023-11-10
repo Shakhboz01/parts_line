@@ -1,7 +1,4 @@
 class Service < ApplicationRecord
-  include ProtectDestroyable
-  include HandleCurrency
-
   attr_accessor :price
 
   belongs_to :user

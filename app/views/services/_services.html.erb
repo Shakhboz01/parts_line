@@ -3,6 +3,7 @@
     <div class="card-header d-flex justify-content-between align-items-center">
       <h3 class="card-title font-weight-bold">Сервисы</h3>
       <%= link_to 'Добавить новый', new_service_path, class: "btn btn-success min-width-btn" %>
+      <%= render 'form', service: Service.new %>
     </div>
 
     <div class="card-body">
@@ -12,32 +13,16 @@
             <th><%= sort_link @q, :id, 'ID' %></th>
             <th><%= sort_link @q, :name, 'Название' %></th>
             <th>Измерение</th>
-            <th><%= sort_link @q, :price_in_usd, 'цена в $' %></th>
-            <th><%= sort_link @q, :price_in_uzs, 'цена' %></th>
             <th>доля бригадеров</th>
             <th colspan="3"></th>
           </tr>
         </thead>
         <tbody>
-          <% services.each do |service| %>
-            <tr class="<%= active_tr(service.active) %>">
-              <td><%= service.id %></td>
-              <td><%= service.name %></td>
-              <td><%= service.unit %></td>
-              <td><%= num_to_usd(service.price_in_usd) %></td>
-              <td><%= num_to_usd(service.price_in_uzs) %></td>
-              <td><%= service.team_fee_in_percent %>%</td>
-
-              <td><%= clink_to 'Редактировать', edit_service_path(service), 'fa-edit' %></td>
-              <td>
-                <% if service.active %>
-                  <%= clink_to 'Деактивировать', toggle_active_service_path(service), 'fa-ban', :post %>
-                <% else %>
-                  <%= clink_to 'Активировать', toggle_active_service_path(service), 'fa-chart-line', :post %>
-                <% end %>
-              </td>
-            </tr>
-          <% end %>
+          <turbo-stream action="prepend" target="new_service">
+            <% services.each do |service| %>
+              <%= render 'new_service', service: service %>
+            <% end %>
+          </turbo-stream>
         </tbody>
       </table>
     </div>

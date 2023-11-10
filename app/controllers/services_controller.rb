@@ -1,5 +1,5 @@
 class ServicesController < ApplicationController
-  before_action :set_service, only: %i[ show edit update destroy toggle_active]
+  before_action :set_service, only: %i[ show edit update destroy toggle_active ]
 
   # GET /services or /services.json
   def index
@@ -26,6 +26,11 @@ class ServicesController < ApplicationController
 
     respond_to do |format|
       if @service.save
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.prepend(
+            "new_service", partial: "services/new_service", locals: { service: @service },
+          )
+        end
         format.html { redirect_to services_url, notice: "Service was successfully created." }
         format.json { render :show, status: :created, location: @service }
       else
@@ -60,17 +65,18 @@ class ServicesController < ApplicationController
 
   def toggle_active
     @service.toggle(:active).save
-    redirect_to services_url, notice: 'Successfully updated'
+    redirect_to services_url, notice: "Successfully updated"
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_service
-      @service = Service.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def service_params
-      params.require(:service).permit(:name, :unit, :service_price, :active, :user_id, :price, :team_fee_in_percent)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_service
+    @service = Service.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def service_params
+    params.require(:service).permit(:name, :unit, :service_price, :active, :user_id, :price, :team_fee_in_percent)
+  end
 end

@@ -12,10 +12,10 @@
   <tbody>
     <% team_services.each do |team_service| %>
       <tr>
-        <td><%= team_service.total_price %></td>
-        <td><%= team_service.team_fee %></td>
-        <td><%= team_service.team_portion %></td>
-        <td><%= team_service.company_portion %></td>
+        <td><%= number_to_currency team_service.total_price %></td>
+        <td><%= team_service.team_fee %>%</td>
+        <td><%= number_to_currency team_service.team_portion %></td>
+        <td><%= number_to_currency team_service.company_portion %></td>
         <td><%= team_service.comment %></td>
         <td>
           <%= clink_to 'Посмотреть', sale_from_service_path(team_service.sale_from_service), 'fa-search' %>

@@ -27,7 +27,7 @@
         <% unless [product_sell.combination_of_local_product, product_sell.sale_from_service].any?(&:present?) %>
           <%= button_tag 'Предпросмотр цену', type: 'button', id: 'custom-action-button', class: 'btn btn-warning custom-action-button' %>
         <% end %>
-        <%= f.button :submit, 'Создать' %>
+        <%= f.submit "Создать", class: 'btn btn-primary'%>
       </div>
     </div>
   <% end %>

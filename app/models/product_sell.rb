@@ -29,6 +29,16 @@ class ProductSell < ApplicationRecord
     end
   end
 
+  def decrease_total_price
+    if !sale_from_service.nil?
+      sale_from_service.decrement!(:total_price, (sell_price * amount))
+    elsif !sale_from_local_service.nil?
+      sale_from_local_service.decrement!(:total_price, sell_price)
+    elsif !sale.nil?
+      sale.decrement!(:total_price, sell_price)
+    end
+  end
+
   def deccrease_amount_sold
     return throw(:abort) if !combination_of_local_product.nil? && combination_of_local_product.closed?
     return throw(:abort) if !sale_from_local_service.nil? && sale_from_local_service.closed?
