@@ -79,7 +79,7 @@ class ProductSell < ApplicationRecord
 
   def set_prices_and_profit
     self.buy_price = average_prices["average_buy_price"]
-    if [combination_of_local_product, sale_from_service].any?(&:present?)
+    if [combination_of_local_product, sale_from_service, sale_from_local_service].any?(&:present?)
       self.sell_price = average_prices["average_buy_price"]
     else
       self.sell_price = (sell_price.nil? || sell_price.zero?) ? average_prices["average_sell_price"] : sell_price
