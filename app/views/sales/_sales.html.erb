@@ -16,7 +16,7 @@
     <% sales.each do |sale| %>
       <tr>
         <td><%= active_check(sale.closed?) %></td>
-        <td><%= sale.id %></td>
+        <td class="<%= detect_danger_row(sale.total_price, sale.total_paid) %>"><%= sale.id %></td>
         <td><%= number_to_currency sale.total_price %></td>
         <td><%= number_to_currency sale.total_paid %></td>
         <td><%= sale.buyer.name %></td>

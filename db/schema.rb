@@ -184,7 +184,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_041318) do
   end
 
   create_table "sale_from_services", force: :cascade do |t|
-    t.decimal "total_paid", precision: 17, scale: 2
+    t.decimal "total_paid", precision: 17, scale: 2, default: "0.0"
     t.integer "payment_type", default: 0
     t.bigint "buyer_id", null: false
     t.decimal "total_price", precision: 17, scale: 2, default: "0.0"
@@ -198,10 +198,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_09_041318) do
   end
 
   create_table "sales", force: :cascade do |t|
-    t.decimal "total_paid", precision: 17
+    t.decimal "total_paid", precision: 17, scale: 2, default: "0.0"
     t.integer "payment_type", default: 0
     t.bigint "buyer_id", null: false
-    t.decimal "total_price", precision: 17, default: "0"
+    t.decimal "total_price", precision: 17, scale: 2, default: "0.0"
     t.string "comment"
     t.bigint "user_id"
     t.integer "status", default: 0

@@ -6,6 +6,14 @@
 <%= button_to default_create_sale_from_services_path, style: 'display: none', accesskey: '4', method: :post do %>
   <span>Обьект</span>
 <% end %>
+
+<%= button_to default_create_sales_path, style: 'display: none', accesskey: '3', method: :post do %>
+  <span>продажа</span>
+<% end %>
+
+<%= button_to default_create_sale_from_local_services_path, style: 'display: none', accesskey: '2', method: :post do %>
+  <span>услуга</span>
+<% end %>
 <!-- Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">

@@ -48,7 +48,7 @@ class SalesController < ApplicationController
         format.html { redirect_to sales_url, notice: "Sale was successfully updated." }
         format.json { render :show, status: :ok, location: @sale }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to request.referrer, notice: @sale.errors.messages.values }
         format.json { render json: @sale.errors, status: :unprocessable_entity }
       end
     end
