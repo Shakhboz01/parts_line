@@ -1,4 +1,4 @@
-<div class='card-header shadow'>
+<div class='card-header shadow-lg'>
   <%= simple_form_for(sale_from_service) do |f| %>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>

@@ -8,7 +8,7 @@ class Expenditure < ApplicationRecord
   validates_presence_of :expenditure_type
   validates_presence_of :price
   enum expenditure_type: %i[другие на_производство на_покупку_товаров]
-  enum payment_type: %i[сум доллар карта дригие]
+  enum payment_type: %i[доллар сум карта дригие]
 
   validate :check_if_total_paid_is_not_more_than_price
   before_save :set_total_paid

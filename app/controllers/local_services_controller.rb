@@ -29,7 +29,7 @@ class LocalServicesController < ApplicationController
         format.html { redirect_to sale_from_local_service_url(@local_service.sale_from_local_service), notice: "Local service was successfully created." }
         format.json { render :show, status: :created, location: @local_service }
       else
-        format.html { render :new, status: :unprocessable_entity }
+        format.html { redirect_to request.referrer, notice: @local_service.errors.messages, status: :unprocessable_entity }
         format.json { render json: @local_service.errors, status: :unprocessable_entity }
       end
     end

@@ -11,7 +11,7 @@
     <% @local_services.each do |local_service| %>
       <tr>
         <td><%= number_to_currency local_service.price %></td>
-        <td><%= local_service.user.name %></td>
+        <td><%= local_service&.user&.name %></td>
         <td><%= local_service.comment %></td>
         <td>
           <%= clink_to 'Посмотреть', sale_from_local_service_path(local_service.sale_from_local_service), 'fa-search' %>

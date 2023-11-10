@@ -3,7 +3,7 @@ class SaleFromService < ApplicationRecord
   belongs_to :user, optional: true
   has_many :team_services
   enum status: %i[processing closed]
-  enum payment_type: %i[сум доллар карта дригие]
+  enum payment_type: %i[доллар сум карта дригие]
   has_many :product_sells
   scope :filter_by_total_paid_less_than_price, ->(value) {
           if value == "1"

@@ -5,7 +5,7 @@
   <% end %>
   <br><br><hr>
 
-  <div class='row shadow'>
+  <div class='row shadow-lg'>
     <div class='col-sm-12 col-md-7'>
       <% unless @product_sells.count.zero? %>
         <%= render 'product_sells/product_sells', product_sells: @product_sells %>

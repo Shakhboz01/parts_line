@@ -1,4 +1,4 @@
-<div class='card-header shadow'>
+<div class='card-header shadow-lg'>
   <%= simple_form_for(product_sell) do |f| %>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -13,7 +13,7 @@
         <%= f.association :product, label: 'товар', collection: Product.active, include_blank: false %>
       </div>
       <div class='col-sm-3 col-md-2'>
-        <%= f.input :amount, label: 'Количество' %>
+        <%= f.input :amount, label: 'Количество', input_html: {value: ''} %>
       </div>
       <% unless [product_sell.combination_of_local_product, product_sell.sale_from_service].any?(&:present?) %>
         <div class='col-sm-3 col-md-3'>

@@ -10,7 +10,7 @@ module ProductSells
 
     def execute
       amount = product_sell.amount
-      return errors.add(:base, "amount cannot be zero") if amount.zero?
+      return errors.add(:base, "amount cannot be zero") if amount.nil? || amount.zero?
 
       product = product_sell.product
       response = nil
