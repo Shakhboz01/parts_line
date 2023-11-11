@@ -3,8 +3,8 @@
     <div class="card-header d-flex justify-content-between align-items-center">
       <div class="btn-group" role="group" aria-label="Basic example">
         <button type="button" class="btn btn-primary">Продажа</button>
-        <%= link_to 'Услуга', sale_from_local_services_url, class: 'btn btn-secondary' %>
-        <%= link_to 'Обьекты', sale_from_services_url, class: 'btn btn-secondary' %>
+        <%= link_to 'Услуга', sale_from_local_services_url(params.permit!), class: 'btn btn-secondary' %>
+        <%= link_to 'Обьекты', sale_from_services_url(params.permit!), class: 'btn btn-secondary' %>
       </div>
       <%= link_to 'Добавить новый', new_sale_path, class: "btn btn-success min-width-btn" %>
     </div>
