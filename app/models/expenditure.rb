@@ -5,6 +5,7 @@ class Expenditure < ApplicationRecord
 
   belongs_to :combination_of_local_product, optional: true
   belongs_to :delivery_from_counterparty, optional: true
+  has_many :transaction_histories, dependent: :destroy
   validates_presence_of :expenditure_type
   validates_presence_of :price
   enum expenditure_type: %i[другие на_производство на_покупку_товаров]

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_11_070400) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_11_112903) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -252,6 +252,22 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_11_070400) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "transaction_histories", force: :cascade do |t|
+    t.bigint "sale_id"
+    t.bigint "sale_from_service_id"
+    t.bigint "sale_from_local_service_id"
+    t.bigint "delivery_from_counterparty_id"
+    t.bigint "expenditure_id"
+    t.decimal "price", precision: 17, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["delivery_from_counterparty_id"], name: "index_transaction_histories_on_delivery_from_counterparty_id"
+    t.index ["expenditure_id"], name: "index_transaction_histories_on_expenditure_id"
+    t.index ["sale_from_local_service_id"], name: "index_transaction_histories_on_sale_from_local_service_id"
+    t.index ["sale_from_service_id"], name: "index_transaction_histories_on_sale_from_service_id"
+    t.index ["sale_id"], name: "index_transaction_histories_on_sale_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -297,4 +313,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_11_070400) do
   add_foreign_key "team_services", "sale_from_services"
   add_foreign_key "team_services", "teams"
   add_foreign_key "team_services", "users"
+  add_foreign_key "transaction_histories", "delivery_from_counterparties"
+  add_foreign_key "transaction_histories", "expenditures"
+  add_foreign_key "transaction_histories", "sale_from_local_services"
+  add_foreign_key "transaction_histories", "sale_from_services"
+  add_foreign_key "transaction_histories", "sales"
 end

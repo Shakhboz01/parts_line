@@ -2,6 +2,7 @@ class DeliveryFromCounterparty < ApplicationRecord
   belongs_to :provider
   has_many :expenditures
   has_many :product_entries
+  has_many :transaction_histories, dependent: :destroy
   enum status: %i[processing closed]
   enum payment_type: %i[доллар сум карта дригие]
   scope :unpaid, -> { where("total_price > total_paid") }

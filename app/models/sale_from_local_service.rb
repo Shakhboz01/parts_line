@@ -3,6 +3,7 @@ class SaleFromLocalService < ApplicationRecord
   belongs_to :user, optional: true
   has_many :product_sells
   has_many :local_services
+  has_many :transaction_histories, dependent: :destroy
   enum status: %i[processing closed]
   enum payment_type: %i[доллар сум карта дригие]
   scope :unpaid, -> { where("total_price > total_paid") }

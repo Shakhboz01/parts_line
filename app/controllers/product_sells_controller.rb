@@ -32,7 +32,7 @@ class ProductSellsController < ApplicationController
 
     respond_to do |format|
       if @product_sell.save
-        format.html { redirect_to product_sells_url, notice: "Product sell was successfully created." }
+        format.html { redirect_to request.referrer, notice: "Product sell was successfully created." }
         format.json { render :show, status: :created, location: @product_sell }
       else
         format.html { redirect_to request.referrer, notice: @product_sell.errors.messages.values.join("\n") }
@@ -56,11 +56,10 @@ class ProductSellsController < ApplicationController
 
   # DELETE /product_sells/1 or /product_sells/1.json
   def destroy
-    if @product_sell.destroy
-      format.html { redirect_to request.referrer, notice: "Product sell was successfully destroyed." }
+    @product_sell.destroy
+    respond_to do |format|
+      format.html { redirect_to request.referrer }
       format.json { head :no_content }
-    else
-      format.html { redirect_to request.referrer, notice: "Error occured when deleting." }
     end
   end
 

@@ -9,7 +9,10 @@ class TransactionHistory < ApplicationRecord
   def proccess_increment
     return unless transactable
 
-    transactable.increment!(:total_paid, price)
+    byebug
+    unless transactable.transaction_histories.count.zero?
+      transactable.increment!(:total_paid, price)
+    end
   end
 
   def proccess_decrement

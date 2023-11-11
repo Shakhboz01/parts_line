@@ -9,7 +9,7 @@
         <%= f.input :total_price, label: 'Договор' %>
       </div>
       <div class="col-sm-3 col-md-2">
-        <%= f.input :total_paid, label: 'Итого оплачено в $', input_html: {value: 0, placeholder: 'Пропустите этот поле если клиент оплатили полностью'} %>
+        <%= f.input :total_paid, label: 'Итого оплачено в $', input_html: {placeholder: 'Пропустите этот поле если клиент оплатили полностью'} %>
       </div>
       <div class="col-sm-3 col-md-2">
         <%= f.association :buyer, label: 'Покупатель', collection: Buyer.active.order(weight: :desc), include_blank: false %>

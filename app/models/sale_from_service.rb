@@ -2,6 +2,7 @@ class SaleFromService < ApplicationRecord
   belongs_to :buyer
   belongs_to :user, optional: true
   has_many :team_services
+  has_many :transaction_histories, dependent: :destroy
   enum status: %i[processing closed]
   enum payment_type: %i[доллар сум карта дригие]
   has_many :product_sells
