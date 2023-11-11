@@ -1,6 +1,7 @@
 <table class="table table-hover table-bordered table-striped">
   <thead>
     <tr>
+      <th></th>
       <th>ID</th>
       <th>Итого цена</th>
       <th>Оплачено</th>
@@ -14,7 +15,8 @@
   <tbody>
     <% delivery_from_counterparties.each do |delivery_from_counterparty| %>
       <tr>
-        <td><%= delivery_from_counterparty.id %></td>
+        <td><%= active_check(delivery_from_counterparty.closed?) %></td>
+        <td class="<%= detect_danger_row(delivery_from_counterparty.total_price, delivery_from_counterparty.total_paid) %>"><%= delivery_from_counterparty.id %></td>
         <td><%= number_to_currency(delivery_from_counterparty.total_price) %></td>
         <td><%= number_to_currency(delivery_from_counterparty.total_paid) %></td>
         <td><%= delivery_from_counterparty.payment_type %></td>

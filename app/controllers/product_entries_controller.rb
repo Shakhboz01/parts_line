@@ -41,7 +41,7 @@ class ProductEntriesController < ApplicationController
     respond_to do |format|
       if @product_entry.save
         if @product_entry.delivery_from_counterparty_id.present?
-          format.html { redirect_to delivery_from_counterparty_url(@product_entry.delivery_from_counterparty), notice: "Product entry was successfully destroyed." }
+          format.html { redirect_to delivery_from_counterparty_url(@product_entry.delivery_from_counterparty), notice: "Product entry was successfully created." }
         end
 
         if @product_entry.local_entry
@@ -51,7 +51,7 @@ class ProductEntriesController < ApplicationController
         end
         format.json { render :show, status: :created, location: @product_entry }
       else
-        format.html { render :new, product_entry: @product_entry, status: :unprocessable_entity }
+        format.html { redirect_to request.referrer, notice: @product_entry.errors.messages }
         format.json { render json: @product_entry.errors, status: :unprocessable_entity }
       end
     end
@@ -61,10 +61,14 @@ class ProductEntriesController < ApplicationController
   def update
     respond_to do |format|
       if @product_entry.update(product_entry_params)
+        if @product_entry.delivery_from_counterparty_id.present?
+          format.html { redirect_to delivery_from_counterparty_url(@product_entry.delivery_from_counterparty), notice: "Product entry was successfully updated." }
+        end
+
         format.html { redirect_to product_entries_url, notice: "Product entry was successfully updated." }
         format.json { render :show, status: :ok, location: @product_entry }
       else
-        format.html { render :edit, status: :unprocessable_entity }
+        format.html { redirect_to request.referrer, notice: @product_entry.errors.messages }
         format.json { render json: @product_entry.errors, status: :unprocessable_entity }
       end
     end

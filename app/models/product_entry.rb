@@ -11,10 +11,10 @@ class ProductEntry < ApplicationRecord
   validates_presence_of :buy_price, unless: -> { local_entry }
 
   before_validation :varify_delivery_from_counterparty_is_not_closed
-  before_save :set_service_price
   before_update :amount_sold_is_not_greater_than_amount
   before_create :create_combination_for_local_entry
   before_destroy :varify_delivery_from_counterparty_is_not_closed
+  before_destroy :decrease_total_price_and_total_paid
   # before_save :set_total_price
 
   private
@@ -24,12 +24,6 @@ class ProductEntry < ApplicationRecord
 
     colp = CombinationOfLocalProduct.create
     self.combination_of_local_product = colp
-  end
-
-  def set_service_price
-    return unless service_price.nil? || !sell_price.nil?
-
-    self.service_price = sell_price
   end
 
   def amount_sold_is_not_greater_than_amount

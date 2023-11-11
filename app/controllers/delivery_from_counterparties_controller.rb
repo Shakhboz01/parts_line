@@ -71,6 +71,16 @@ class DeliveryFromCounterpartiesController < ApplicationController
     end
   end
 
+  def default_create
+    provider = Provider.first
+    sfs = DeliveryFromCounterparty.new(provider: provider)
+    if sfs.save
+      redirect_to delivery_from_counterparty_url(sfs), notice: "Теперь добавьте продажу товаров"
+    else
+      redirect_to request.referrer, notice: "Something went wrong"
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.

@@ -1,27 +1,16 @@
-<div class='container'>
-  <% unless @delivery_from_counterparty.closed? %>
-    <%= render 'layouts/progress', value: '72' %>
-    <%= link_to 'Добавить приход товара', new_product_entry_path(delivery_from_counterparty_id: @delivery_from_counterparty.id, local_entry: false), class: "btn btn-primary min-width-btn" %>
-    <%= link_to 'Добавить расход', new_expenditure_path(expenditure_type: 'на_покупку_товаров', delivery_from_counterparty_id: @delivery_from_counterparty.id), class: "btn btn-primary min-width-btn" %>
-  <% end %>
-  <br><br>
+<% unless @delivery_from_counterparty.closed? %>
+  <%= render 'layouts/progress', value: '72' %>
+  <%= render 'product_entries/form', product_entry: ProductEntry.new(delivery_from_counterparty_id: @delivery_from_counterparty.id) %>
+<% end %>
+<br><br>
 
-  <% unless @delivery_from_counterparty.product_entries.count.zero? %>
-    <%= render 'product_entries/product_entries', product_entries: @product_entries, q: @q, deletable: true %>
-  <% end %>
+<% unless @delivery_from_counterparty.product_entries.count.zero? %>
+  <%= render 'product_entries/product_entries', product_entries: @product_entries, q: @q, deletable: true %>
+<% end %>
+<br><hr><hr>
 
-  <% unless @expenditures.count.zero? %>
-    <%= render 'expenditures/expenditures', expenditures: @expenditures, expenditures_data: @expenditures_data %>
-  <% end %>
-  <br><hr>
+<div><b>ИТОГО: <%= number_to_currency @delivery_from_counterparty.calculate_total_price %></b></div>
 
-  <% unless @delivery_from_counterparty.closed? %>
-    <%= simple_form_for(@delivery_from_counterparty) do |f| %>
-      <%= f.input :status, as: :hidden, input_html: { value: 1 } %>
-      <div class="form-actions">
-        <%= f.button :submit, 'Завершить операцию', class: 'btn-success', title:'После завершении вы не сможете добавить или удалить товаров' %>
-      </div>
-    <% end %>
-  <% end %>
-  <br>
-</div>
+<% unless @delivery_from_counterparty.closed? %>
+  <%= render 'form', delivery_from_counterparty: @delivery_from_counterparty %><br>
+<% end %>

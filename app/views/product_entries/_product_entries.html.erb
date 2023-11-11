@@ -36,6 +36,7 @@
           <% if product_entry.combination_of_local_product %>
               <%= clink_to 'посмотреть', combination_of_local_product_path(product_entry.combination_of_local_product), 'fa-search' %>
           <% end %>
+
           <%= clink_to 'Редактировать', edit_product_entry_path(product_entry), 'fa-edit' %>
         </td>
         <% if defined?(deletable) %>

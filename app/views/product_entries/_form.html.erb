@@ -1,27 +1,47 @@
 <%# do nor show provider if local entry %>
 <%# removed service price %>
-<%= simple_form_for(@product_entry) do |f| %>
+<%= simple_form_for(product_entry) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= f.association :delivery_from_counterparty, as: :hidden %>
+  <%= f.input :return, as: :hidden %>
+  <%= f.input :amount_sold, as: :hidden %>
+  <%= f.input :local_entry, as: :hidden %>
 
-  <div class="form-inputs">
-    <%= f.association :product, label: 'Товар', collection: Product.active.where(local: params[:local_entry] == 'true'), include_blank: false %>
-    <%= f.association :storage, label: 'Склад', collection: Storage.pluck(:name, :id), include_blank: false %>
-    <%= f.association :delivery_from_counterparty, as: :hidden %>
-    <%= f.input :amount, label: 'количество', id: 'inputs' %>
-
-    <% unless @product_entry.local_entry %>
-      <%= f.input :buy_price, label: 'Цена прихода каждого товара в $' %>
-      <%= f.input :sell_price, label: 'Цена продажи каждого товара в $' %>
+  <div class="row">
+    <div class='col-sm-2'>
+      <%= f.association :product, label: 'Товар', collection: Product.active.where(local: params[:local_entry] == 'true'), include_blank: false %>
+    </div>
+    <div class='col-sm-1'>
+      <%= f.association :storage, label: 'Склад', collection: Storage.pluck(:name, :id), include_blank: false %>
+    </div>
+    <div class='col-sm-1'>
+      <%= f.input :amount, label: 'количество', id: 'inputs' %>
+    </div>
+    <% unless product_entry.local_entry %>
+      <div class='col-sm-2'>
+        <%= f.input :buy_price, label: 'Цена прихода каждого товара в $' %>
+      </div>
+      <div class='col-sm-2'>
+        <%= f.input :sell_price, label: 'Цена продажи каждого товара в $' %>
+      </div>
     <% end %>
 
-    <%= f.input :comment, label: 'Коммент', placeholder: 'Не обязательно' %>
-    <%= f.input :return, as: :hidden %>
-    <%= f.input :amount_sold, as: :hidden %>
-    <%= f.input :local_entry, as: :hidden %>
-  </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, 'Завершить' %>
+    <div class='col-sm-2'>
+      <%= f.input :comment, label: 'Коммент', placeholder: 'Не обязательно' %>
+    </div>
+    <div class='col-sm-2 align-self-center'>
+      <div class="form-actions">
+        <%= f.button :submit, 'Создать' %>
+      </div>
+    </div>
   </div>
 <% end %>
+
+<script>
+  $(document).ready(function() {
+    $("input").focus(function() {
+      $(this).select();
+    });
+  });
+</script>

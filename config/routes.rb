@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   resources :sale_from_local_services do
     post :default_create, on: :collection
   end
-  resources :delivery_from_counterparties
+  resources :delivery_from_counterparties do
+    post :default_create, on: :collection
+  end
   resources :product_sells do
     post :ajax_sell_price_request, on: :collection
   end

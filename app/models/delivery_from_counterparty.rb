@@ -12,18 +12,14 @@ class DeliveryFromCounterparty < ApplicationRecord
           end
         }
 
-  before_save :proccess_status_change
-
-  private
-
-  def proccess_status_change
-    if closed? && status_before_last_save != "closed"
-      total_price = 0
-      self.product_entries.each do |product_entry|
-        total_price += product_entry.amount * product_entry.buy_price
-      end
-
-      self.total_price = total_price
+  def calculate_total_price
+    total_price = 0
+    self.product_entries.each do |product_entry|
+      total_price += product_entry.amount * product_entry.buy_price
     end
+
+    self.total_price = total_price unless closed?
+    self.total_paid = total_price unless closed?
+    total_price
   end
 end
