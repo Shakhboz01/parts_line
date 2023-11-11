@@ -15,9 +15,7 @@
           <%= f.label :team_id_eq, 'Бригадер', class: 'control-label' %>
           <%= f.select :team_id_eq, Team.pluck(:name, :id) , {include_blank: true}, class: 'form-control' %>
         </div>
-      </div>
-      <div class="row card-body">
-        <div class="form-group col-xs-12 col-sm-6">
+        <div class="form-group col-xs-12 col-sm-4 align-self-center">
           <%= f.submit 'Фильтр', class: 'btn btn-primary' %>
           <%= link_to 'Очистить поиск', request.path, class: 'btn btn-default' %>
         </div>
@@ -25,3 +23,4 @@
     </div>
   <% end %>
 </div>
+<script>$(function(){$(".datepicker").datepicker({dateFormat: 'dd-mm-yy'})})</script>

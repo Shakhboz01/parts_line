@@ -1,6 +1,8 @@
 <div class='container'>
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h3 class="card-title font-weight-bold">Продажа</h3>
+  </div>
   <% unless @sale.closed? %>
-    <%= render 'layouts/progress', value: '46' %>
     <%= render 'product_sells/form', product_sell: ProductSell.new(sale_id: @sale.id) %>
   <% end %>
   <br><br>

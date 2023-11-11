@@ -4,6 +4,7 @@ class Sale < ApplicationRecord
   enum status: %i[processing closed]
   enum payment_type: %i[доллар сум карта дригие]
   has_many :product_sells
+  scope :unpaid, -> { where("total_price > total_paid") }
   scope :filter_by_total_paid_less_than_price, ->(value) {
           if value == "1"
             where("total_paid < total_price")

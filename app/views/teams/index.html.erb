@@ -21,6 +21,7 @@
               <td><%= team.name %></td>
               <td>
                 <%= clink_to 'посмотреть историю зарплат/аванс', salaries_path(q: {team_id_eq: team.id}), 'fa-money' %>
+                <%= clink_to 'посмотреть историю выполненных работ', team_services_path(q: {team_id_eq: team.id}), 'fa-hammer' %>
                 <%= clink_to 'Оформить зарплату/аванс', new_salary_path(team_id: team.id), 'fa-plus' %>
                 <%= clink_to 'Редактировать', edit_team_path(team), 'fa-edit' %>
                 <% if team.active %>

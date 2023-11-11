@@ -8,9 +8,7 @@ class SalariesController < ApplicationController
     # info
     @total_by_prepayment = @salaries.where(prepayment: true).count
     @total_by_payment = @salaries.count - @total_by_prepayment
-    @total_price_in_uzs = @salaries.sum(:price_in_uzs)
-    @total_price_in_usd = @salaries.sum(:price_in_usd)
-
+    @total_price = @salaries.sum(:price)
     @salaries = @salaries.page(params[:page]).per(40)
   end
 
@@ -22,7 +20,7 @@ class SalariesController < ApplicationController
   def new
     @salary = Salary.new(
       team_id: params[:team_id],
-      user_id: params[:user_id]
+      user_id: params[:user_id],
     )
     @hidden = @salary.team_id.present? || @salary.user_id.present?
   end
@@ -70,13 +68,14 @@ class SalariesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_salary
-      @salary = Salary.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def salary_params
-      params.require(:salary).permit(:prepayment, :month, :team_id, :user_id, :price_in_usd, :price_in_uzs, :payment_type, :price)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_salary
+    @salary = Salary.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def salary_params
+    params.require(:salary).permit(:prepayment, :month, :team_id, :user_id, :price_in_usd, :price_in_uzs, :payment_type, :price)
+  end
 end

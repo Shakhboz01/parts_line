@@ -32,16 +32,6 @@ class ProductSellsController < ApplicationController
 
     respond_to do |format|
       if @product_sell.save
-        if @product_sell.combination_of_local_product_id.present?
-          format.html { redirect_to combination_of_local_product_url(@product_sell.combination_of_local_product), notice: "Product sell was successfully created." }
-        elsif @product_sell.sale_from_local_service.present?
-          format.html { redirect_to sale_from_local_service_url(@product_sell.sale_from_local_service), notice: "Product sell was successfully created." }
-        elsif @product_sell.sale.present?
-          format.html { redirect_to sale_url(@product_sell.sale), notice: "Product sell was successfully created." }
-        elsif @product_sell.sale_from_service.present?
-          format.html { redirect_to sale_from_service_url(@product_sell.sale_from_service), notice: "Product sell was successfully created." }
-        end
-
         format.html { redirect_to product_sells_url, notice: "Product sell was successfully created." }
         format.json { render :show, status: :created, location: @product_sell }
       else
@@ -66,21 +56,11 @@ class ProductSellsController < ApplicationController
 
   # DELETE /product_sells/1 or /product_sells/1.json
   def destroy
-    @product_sell.destroy
-
-    respond_to do |format|
-      if @product_sell.combination_of_local_product_id.present?
-        format.html { redirect_to combination_of_local_product_url(@product_sell.combination_of_local_product), notice: "Product sell was successfully destroyed." }
-      elsif @product_sell.sale_from_local_service.present?
-        format.html { redirect_to sale_from_local_service_url(@product_sell.sale_from_local_service), notice: "Product sell was successfully destroyed." }
-      elsif @product_sell.sale.present?
-        format.html { redirect_to sale_url(@product_sell.sale), notice: "Product sell was successfully destroyed." }
-      elsif @product_sell.sale_from_service.present?
-        format.html { redirect_to sale_from_service_url(@product_sell.sale_from_service), notice: "Product sell was successfully destroyed." }
-      end
-
-      format.html { redirect_to product_sells_url, notice: "Product sell was successfully destroyed." }
+    if @product_sell.destroy
+      format.html { redirect_to request.referrer, notice: "Product sell was successfully destroyed." }
       format.json { head :no_content }
+    else
+      format.html { redirect_to request.referrer, notice: "Error occured when deleting." }
     end
   end
 

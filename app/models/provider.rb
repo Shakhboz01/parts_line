@@ -4,6 +4,5 @@ class Provider < ApplicationRecord
   has_many :delivery_from_counterparties
   validates_presence_of :name
   validates_uniqueness_of :name
-  scope :active, -> { where(:active => true)}
-
+  scope :active, -> { where(:active => true) }
 end

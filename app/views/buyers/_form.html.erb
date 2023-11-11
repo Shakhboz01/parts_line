@@ -4,13 +4,12 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :phone_number %>
-    <%= f.input :comment %>
-    <%= f.input :active %>
+    <%= f.input :name, label: 'Имя' %>
+    <%= f.input :phone_number, label: 'Номер телефона' %>
+    <%= f.input :comment, label: 'Коммент' %>
   </div>
 
   <div class="form-actions">
-    <%= f.submit "Завершить", "data-turbo-action": "append", "data-turbo-target": "buyers" %>
+    <%= f.button :submit, 'Завершить' %>
   </div>
 <% end %>

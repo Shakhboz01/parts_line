@@ -2,11 +2,12 @@
   <table class="table table-hover table-bordered table-striped">
     <thead>
       <tr>
-        <th>ID</th>
-        <th>имя</th>
-        <th>номер телефона</th>
-        <th>Коммент</th>
-        <th>created at</th>
+        <th><%= sort_link @q, :id, 'ID' %></th>
+        <th><%= sort_link @q, :name, 'имя' %></th>
+        <th><%= sort_link @q, :phone_number, 'номер телефона' %></th>
+        <th>долг</th>
+        <th><%= sort_link @q, :comment, 'Коммент' %></th>
+        <th><%= sort_link @q, :created_at, 'Оформлено в' %></th>
       </tr>
     </thead>
     <tbody>
@@ -15,6 +16,7 @@
           <td><%= buyer.id %></td>
           <td><%= buyer.name %></td>
           <td><%= buyer.phone_number %></td>
+          <td><%= number_to_currency buyer.calculate_debt %></td>
           <td><%= buyer.comment %></td>
           <td><%= strf_datetime(buyer.created_at) %></td>
           <td>

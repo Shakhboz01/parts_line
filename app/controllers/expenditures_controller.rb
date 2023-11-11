@@ -67,19 +67,13 @@ class ExpendituresController < ApplicationController
 
   # DELETE /expenditures/1 or /expenditures/1.json
   def destroy
-    @expenditure.destroy
-
     respond_to do |format|
-      if @expenditure.combination_of_local_product_id.present?
-        format.html { redirect_to combination_of_local_product_url(@expenditure.combination_of_local_product), notice: "expenditure was successfully destroyed." }
+      if @expenditure.destroy
+        format.html { redirect_to request.referrer, notice: "Expenditure was successfully destroyed." }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to request.referrer, notice: "Cannot be deleted" }
       end
-
-      if @expenditure.delivery_from_counterparty_id.present?
-        format.html { redirect_to delivery_from_counterparty_path(@expenditure.delivery_from_counterparty), notice: "Expenditure was successfully created." }
-      end
-
-      format.html { redirect_to expenditures_url, notice: "Expenditure was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 
