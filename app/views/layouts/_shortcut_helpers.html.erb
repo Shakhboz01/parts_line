@@ -7,6 +7,10 @@
   <span>Обьект</span>
 <% end %>
 
+<%= link_to new_product_entry_path(local_entry: true), style:'display:none', accesskey: '6' do %>
+  <span>Приход от производство</span>
+<% end %>
+
 <%= button_to default_create_sales_path, style: 'display: none', accesskey: '3', method: :post do %>
   <span>продажа</span>
 <% end %>
