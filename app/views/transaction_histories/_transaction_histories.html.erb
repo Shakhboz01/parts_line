@@ -1,0 +1,17 @@
+<table class="table table-hover table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Цена</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% transaction_histories.each do |transaction_history| %>
+      <tr>
+        <td><%= transaction_history.id %></td>
+        <td><%= transaction_history.price %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

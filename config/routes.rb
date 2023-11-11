@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :transaction_histories
   resources :team_services
   resources :sale_from_services do
     post :default_create, on: :collection

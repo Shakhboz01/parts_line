@@ -11,16 +11,6 @@
       </li>
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Настройки
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <%= link_to 'Сервисы', services_path, class: 'dropdown-item' %>
-          <%= link_to 'Настройки курса', currency_rates_path, class: 'dropdown-item' %>
-          <%= link_to 'Шорткаты', shortcut_path, class: 'dropdown-item' %>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           Посмотреть список
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -50,6 +40,17 @@
           <%= link_to 'Зарплату/Аванс', new_salary_path, class: 'dropdown-item' %>
           <%= link_to 'Перекличку работников', new_participation_path, class: 'dropdown-item' %>
           <%= link_to 'Бригаду', new_team_path, class: 'dropdown-item' %>
+        </div>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Прочие
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <%= link_to 'Сервисы', services_path, class: 'dropdown-item' %>
+          <%= link_to 'Настройки курса', currency_rates_path, class: 'dropdown-item' %>
+          <%= link_to 'Шорткаты', shortcut_path, class: 'dropdown-item' %>
+          <%= link_to 'История пополнений', transaction_histories_path, class: 'dropdown-item' %>
         </div>
       </li>
     </ul>
