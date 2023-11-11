@@ -19,5 +19,7 @@
     </div>
   </div><br><br><hr>
   <div><b>ИТОГО: <%= number_to_currency @sale_from_local_service.get_total_price %></b></div>
-  <%= render 'form', sale_from_local_service: @sale_from_local_service %>
+  <% unless @sale_from_local_service.closed? %>
+    <%= render 'form', sale_from_local_service: @sale_from_local_service %>
+  <% end %>
 </div>

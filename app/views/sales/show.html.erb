@@ -14,6 +14,8 @@
   </div>
   <br><br><hr>
   <div><b>ИТОГО: <%= number_to_currency @sale.get_total_price %></b></div>
-  <%= render 'sales/form', sale: @sale %>
+  <% unless @sale.closed? %>
+    <%= render 'sales/form', sale: @sale %>
+  <% end %>
 </div>
 
