@@ -1,5 +1,9 @@
 class TransactionHistory < ApplicationRecord
-  belongs_to :transactable, polymorphic: true, optional: true
+  belongs_to :sale, optional: true
+  belongs_to :sale_from_service, optional: true
+  belongs_to :sale_from_local_service, optional: true
+  belongs_to :delivery_from_counterparty, optional: true
+  belongs_to :expenditure, optional: true
   validates_presence_of :price
   before_create :proccess_increment
   before_destroy :proccess_decrement
@@ -7,17 +11,30 @@ class TransactionHistory < ApplicationRecord
   private
 
   def proccess_increment
-    return unless transactable
-
-    byebug
-    unless transactable.transaction_histories.count.zero?
-      transactable.increment!(:total_paid, price)
+    if !sale.nil? && !sale.transaction_histories.empty?
+      sale.increment!(:total_paid, price)
+    elsif !sale_from_service.nil? && !sale_from_service.transaction_histories.empty?
+      sale_from_service.increment!(:total_paid, price)
+    elsif !sale_from_local_service.nil? && !sale_from_local_service.transaction_histories.empty?
+      sale_from_local_service.increment!(:total_paid, price)
+    elsif !delivery_from_counterparty.nil? && !delivery_from_counterparty.transaction_histories.empty?
+      delivery_from_counterparty.increment!(:total_paid, price)
+    elsif !expenditure.nil? && !expenditure.transaction_histories.empty?
+      expenditure.increment!(:total_paid, price)
     end
   end
 
   def proccess_decrement
-    return unless transactable
-
-    transactable.decrement!(:total_paid, price)
+    if !sale.nil?
+      sale.decrement!(:total_paid, price)
+    elsif !sale_from_service.nil?
+      sale_from_service.decrement!(:total_paid, price)
+    elsif !sale_from_local_service.nil?
+      sale_from_local_service.decrement!(:total_paid, price)
+    elsif !delivery_from_counterparty.nil?
+      delivery_from_counterparty.decrement!(:total_paid, price)
+    elsif !expenditure.nil?
+      expenditure.decrement!(:total_paid, price)
+    end
   end
 end

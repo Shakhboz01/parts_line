@@ -5,6 +5,12 @@ class TransactionHistoriesController < ApplicationController
   def index
     @q = TransactionHistory.ransack(params[:q])
     @transaction_histories = @q.result.order(id: :desc)
+    @transaction_histories =
+      @transaction_histories.where(sale_id: params[:sale_id])
+                            .where(sale_from_local_service_id: params[:sale_from_local_service_id])
+                            .where(sale_from_service_id: params[:sale_from_service_id])
+                            .where(expenditure_id: params[:expenditure_id])
+                            .where(delivery_from_counterparty_id: params[:delivery_from_counterparty_id])
     @all_transaction_histories = @transaction_histories
     @transaction_histories = @transaction_histories.page(params[:page]).per(40)
   end

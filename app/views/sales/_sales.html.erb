@@ -23,7 +23,13 @@
         <td><%= sale.payment_type %></td>
         <td><%= sale.comment %></td>
         <td><%= strf_datetime sale.created_at %></td>
-        <td><%= clink_to 'Посмотреть', sale_path(sale), 'fa-search' %></td>
+        <td>
+          <%= clink_to 'Посмотреть', sale_path(sale), 'fa-search' %>
+
+          <% if sale.closed? %>
+            <%= render 'sale_transaction', sale: sale %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
