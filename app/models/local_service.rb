@@ -11,9 +11,11 @@ class LocalService < ApplicationRecord
 
   def increase_total_price
     sale_from_local_service.increment!(:total_price, price)
+    sale_from_local_service.increment!(:total_paid, price)
   end
 
   def decrease_total_price
+    sale_from_local_service.decrement!(:total_paid, price)
     sale_from_local_service.decrement!(:total_price, price)
   end
 

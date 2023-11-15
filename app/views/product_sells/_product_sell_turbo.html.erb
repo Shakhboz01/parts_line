@@ -3,6 +3,7 @@
   <td><%= product_sell.product.name %></td>
   <td><%= product_sell.amount %></td>
   <td><%= number_to_currency(product_sell.sell_price) %></td>
+  <td><%= number_to_currency(product_sell.sell_price * product_sell.amount) %></td>
   <td><%= number_to_currency(product_sell.total_profit) %></td>
   <td><%= strf_datetime(product_sell.created_at) %></td>
   <td><%= cdlink_to 'Удалить', product_sell %></td>
