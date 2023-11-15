@@ -6,7 +6,6 @@
         <%= link_to 'Приход от производство', combination_of_local_products_path, class: 'btn btn-secondary' %>
         <%= link_to 'Детально', product_entries_path, class: 'btn btn-secondary' %>
       </div>
-      <%= link_to 'Добавить новый', new_delivery_from_counterparty_path, class: "btn btn-success min-width-btn" %>
     </div>
 
     <%= render 'filter_form', q: @q, url: request.path %>

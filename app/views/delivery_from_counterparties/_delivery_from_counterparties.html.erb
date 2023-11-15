@@ -23,7 +23,12 @@
         <td><%= delivery_from_counterparty.comment %></td>
         <td><%= delivery_from_counterparty.provider.name %></td>
         <td><%= strf_datetime(delivery_from_counterparty.created_at) %></td>
-        <td><%= clink_to 'Посмотреть', delivery_from_counterparty_path(delivery_from_counterparty), 'fa-search' %></td>
+        <td>
+          <%= clink_to 'Посмотреть', delivery_from_counterparty_path(delivery_from_counterparty), 'fa-search' %>
+          <% if delivery_from_counterparty.closed? %>
+            <%= render 'delivery_from_counterparty_transaction', delivery_from_counterparty: delivery_from_counterparty %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>

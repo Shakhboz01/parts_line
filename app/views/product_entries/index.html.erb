@@ -5,7 +5,6 @@
       <%= link_to 'Приход от производство', combination_of_local_products_path, class: 'btn btn-secondary' %>
       <button type="button" class="btn btn-primary">Детально</button>
     </div>
-    <%= link_to 'Добавить новый', new_product_entry_path, class: "btn btn-success min-width-btn" %>
   </div>
   <%= render 'filter_form', q: @q, url: request.path %>
   <div class="card-body">
