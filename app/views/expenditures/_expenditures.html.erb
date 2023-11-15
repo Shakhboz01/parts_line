@@ -20,7 +20,10 @@
           <td><%= expenditure.payment_type %></td>
           <td><%= expenditure.expenditure_type %></td>
           <td><%= strf_datetime(expenditure.created_at) %></td>
-          <td><%= cdlink_to 'Удалить', expenditure %></td>
+          <td>
+            <%= cdlink_to 'Удалить', expenditure %>
+            <%= render 'expenditures_transaction', expenditure: expenditure %>
+          </td>
         </tr>
       <% end %>
     </tbody>

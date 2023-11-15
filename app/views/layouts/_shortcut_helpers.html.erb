@@ -3,6 +3,10 @@
   create a product
 </button>
 
+<button accesskey='7' style='display: none' type="button" class="btn btn-primary" data-toggle="modal" data-target="#expenditureModal">
+  create an expenditure
+</button>
+
 <%= button_to default_create_sale_from_services_path, style: 'display: none', accesskey: '4', method: :post do %>
   <span>Обьект</span>
 <% end %>
@@ -33,6 +37,21 @@
       </div>
       <div class="modal-body">
         <%= render 'products/form', product: Product.new %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="expenditureModal" tabindex="-1" role="dialog" aria-labelledby="expenditureModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <%= render 'expenditures/form', expenditure: Expenditure.new %>
       </div>
     </div>
   </div>

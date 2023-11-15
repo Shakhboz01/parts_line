@@ -12,6 +12,7 @@ class Expenditure < ApplicationRecord
   enum payment_type: %i[доллар сум карта дригие]
 
   validate :check_if_total_paid_is_not_more_than_price
+  after_create :set_transaction_history
   before_save :set_total_paid
   before_destroy :varify_delivery_from_counterparty_is_not_closed
 
@@ -24,6 +25,10 @@ class Expenditure < ApplicationRecord
         }
 
   private
+
+  def set_transaction_history
+    self.transaction_histories.create(price: price)
+  end
 
   def check_if_total_paid_is_not_more_than_price
     return if total_paid.nil?
