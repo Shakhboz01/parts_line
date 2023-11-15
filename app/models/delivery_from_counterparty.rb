@@ -1,4 +1,5 @@
 class DeliveryFromCounterparty < ApplicationRecord
+  include HandleTransactionHistory
   belongs_to :provider
   has_many :expenditures
   has_many :product_entries

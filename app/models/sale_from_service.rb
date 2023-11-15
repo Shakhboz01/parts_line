@@ -1,4 +1,5 @@
 class SaleFromService < ApplicationRecord
+  include HandleTransactionHistory
   belongs_to :buyer
   belongs_to :user, optional: true
   has_many :team_services

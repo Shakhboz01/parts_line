@@ -1,4 +1,5 @@
 class SaleFromLocalService < ApplicationRecord
+  include HandleTransactionHistory
   belongs_to :buyer
   belongs_to :user, optional: true
   has_many :product_sells
