@@ -8,3 +8,8 @@
   max-height: 400px;
   overflow: auto
 }
+
+.main-page-body{
+  max-height: 950px;
+  overflow: auto
+}

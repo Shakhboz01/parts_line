@@ -15,7 +15,7 @@ class Expenditure < ApplicationRecord
   after_create :set_transaction_history
   before_save :set_total_paid
   before_destroy :varify_delivery_from_counterparty_is_not_closed
-  scope :unpaid, -> { where("total_price > total_paid") }
+  scope :unpaid, -> { where("price > total_paid") }
   scope :filter_by_total_paid_less_than_price, ->(value) {
           if value == "1" # The checkbox value when selected
             where("total_paid < price")
