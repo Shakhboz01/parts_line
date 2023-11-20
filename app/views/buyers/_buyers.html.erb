@@ -1,33 +1,43 @@
 <%= turbo_frame_tag 'buyers' do %>
-  <table class="table table-hover table-bordered table-striped">
+  <table class="table shadow table-hover table-bordered table-striped">
     <thead>
       <tr>
-        <th><%= sort_link @q, :id, 'ID' %></th>
-        <th><%= sort_link @q, :name, 'имя' %></th>
-        <th><%= sort_link @q, :phone_number, 'номер телефона' %></th>
+        <% unless defined?(shrink) %>
+          <th>ID</th>
+        <% end %>
+
+        <th>имя</th>
         <th>долг</th>
-        <th><%= sort_link @q, :comment, 'Коммент' %></th>
-        <th><%= sort_link @q, :created_at, 'Оформлено в' %></th>
+
+        <% unless defined?(shrink) %>
+          <th>номер телефона</th>
+          <th>Коммент</th>
+          <th>Оформлено в</th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
       <% buyers.each do |buyer| %>
         <tr class="<%= active_tr(buyer.active) %>">
-          <td><%= buyer.id %></td>
+          <% unless defined?(shrink) %>
+            <td><%= buyer.id %></td>
+          <% end %>
           <td><%= buyer.name %></td>
-          <td><%= buyer.phone_number %></td>
           <td><%= link_to number_to_currency(buyer.calculate_debt), sales_url(q_other: {total_paid_less_than_price: '1'},q: {buyer_id_eq: buyer.id}), method: :get %></td>
-          <td><%= buyer.comment %></td>
-          <td><%= strf_datetime(buyer.created_at) %></td>
-          <td>
-            <%= clink_to 'Посмотреть история оказания услуги', sales_path, 'fa-history' %>
-            <%= clink_to 'Редактировать', edit_buyer_path(buyer), 'fa-edit' %>
-            <% if buyer.active %>
-              <%= clink_to 'Деактивировать', toggle_active_buyer_path(buyer), 'fa-ban', :post %>
-            <% else %>
-              <%= clink_to 'Активировать', toggle_active_buyer_path(buyer), 'fa-chart-line', :post %>
-            <% end %>
-          </td>
+          <% unless defined?(shrink) %>
+            <td><%= buyer.phone_number %></td>
+            <td><%= buyer.comment %></td>
+            <td><%= strf_datetime(buyer.created_at) %></td>
+            <td>
+              <%= clink_to 'Посмотреть история оказания услуги', sales_path, 'fa-history' %>
+              <%= clink_to 'Редактировать', edit_buyer_path(buyer), 'fa-edit' %>
+              <% if buyer.active %>
+                <%= clink_to 'Деактивировать', toggle_active_buyer_path(buyer), 'fa-ban', :post %>
+              <% else %>
+                <%= clink_to 'Активировать', toggle_active_buyer_path(buyer), 'fa-chart-line', :post %>
+              <% end %>
+            </td>
+          <% end %>
         </tr>
       <% end %>
     </tbody>

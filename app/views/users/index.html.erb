@@ -22,7 +22,7 @@
             <tr class="<%= !user.active && 'table-dark'  %>">
               <td><%= user.name %></td>
               <td><%= user.role.capitalize %></td>
-              <td><%= num_to_usd(user.daily_payment) %></td>
+              <td><%= number_to_currency(user.daily_payment) %></td>
               <td>
                 <%= clink_to 'посмотреть историю зарплат/аванс', salaries_path(q: {user_id_eq: user.id}), 'fa-money' %>
                 <% unless %w[бухгалтер менеджер].include?(user.role) %>

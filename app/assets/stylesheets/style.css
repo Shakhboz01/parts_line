@@ -3,3 +3,8 @@
   padding: 6px;
   background-color: rgb(204, 205, 206);
 }
+
+.main-page-header{
+  max-height: 400px;
+  overflow: auto
+}

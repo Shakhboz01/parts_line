@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-  <a class="navbar-brand" href="#">SAM NERJ</a>
+  <%= link_to 'SAM NERJ', root_path, class: 'navbar-brand' %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -51,6 +51,7 @@
           <%= link_to 'Настройки курса', currency_rates_path, class: 'dropdown-item' %>
           <%= link_to 'Шорткаты', shortcut_path, class: 'dropdown-item' %>
           <%= link_to 'История пополнений', transaction_histories_path, class: 'dropdown-item' %>
+          <%= link_to 'История изменений остатки товара', product_remaining_inequalities_path, class: 'dropdown-item' %>
         </div>
       </li>
     </ul>

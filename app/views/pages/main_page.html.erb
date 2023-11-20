@@ -1,1 +1,57 @@
-<h1>I am a main page</h1>
+  <div class='row'>
+    <div class='col-sm-4 main-page-header'>
+      <div>
+        <h4 class='text-center'>Покупатели</h4>
+        <%= render 'buyers/buyers', buyers: @buyers, shrink: true %>
+      </div>
+    </div>
+    <div class='col-sm-4 main-page-header'>
+      <div>
+        <h4 class='text-center'>Поставщики</h4>
+        <%= render 'providers/providers', providers: @providers, shrink: true %>
+      </div>
+    </div>
+    <div class='col-sm-4 main-page-header'>
+      <div>
+        <h4 class='text-center'>Касса</h4>
+        <%= search_form_for @q, url: request.path, html: { class: 'form form-horizontal filter-form'} do |f| %>
+          <div class="container">
+            <div class="row">
+              <div class="form-group col-sm-3">
+                <%= f.label :created_at_gteq, 'Дата от' %>
+                <%= f.text_field :created_at_gteq, value: @q.created_at_gteq.nil? ? '' : @q.created_at_gteq, class: 'datepicker', autocomplete: :off %>
+              </div>
+              <div class="form-group col-sm-3">
+                <%= f.label :created_at_end_of_day_lteq, 'Дата до' %>
+                <%= f.text_field :created_at_end_of_day_lteq, value: @q.created_at_end_of_day_lteq.nil? ? '' : @q.created_at_end_of_day_lteq, class: 'datepicker', autocomplete: :off %>
+              </div>
+              <div class="form-group col-sm-6">
+                <%= f.submit 'Фильтр' %>
+                <%= link_to 'Очистить', request.path, class: "cancel-button" %>
+              </div>
+            </div>
+          </div>
+        <% end %>
+        <br>
+        <table class='table'>
+          <thead>
+            <tr>
+              <th>Приход денег</th>
+              <td><%= number_to_currency @total_income %></td>
+            </tr>
+            <tr>
+              <th>Уход денег</th>
+              <td><%= number_to_currency @total_expenditure %></td>
+            </tr>
+            <tr>
+              <th>деньги на кассе</th>
+              <td><%= number_to_currency (@total_income - @total_expenditure) %></td>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>$(function(){$(".datepicker").datepicker({dateFormat: 'dd-mm-yy'})})</script>
