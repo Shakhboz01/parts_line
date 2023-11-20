@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_11_112903) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_20_084510) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -109,6 +109,18 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_11_112903) do
     t.index ["delivery_from_counterparty_id"], name: "index_product_entries_on_delivery_from_counterparty_id"
     t.index ["product_id"], name: "index_product_entries_on_product_id"
     t.index ["storage_id"], name: "index_product_entries_on_storage_id"
+  end
+
+  create_table "product_remaining_inequalities", force: :cascade do |t|
+    t.bigint "product_id", null: false
+    t.decimal "amount"
+    t.decimal "previous_amount"
+    t.string "reason"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_product_remaining_inequalities_on_product_id"
+    t.index ["user_id"], name: "index_product_remaining_inequalities_on_user_id"
   end
 
   create_table "product_sells", force: :cascade do |t|
@@ -295,6 +307,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_11_112903) do
   add_foreign_key "product_entries", "delivery_from_counterparties"
   add_foreign_key "product_entries", "products"
   add_foreign_key "product_entries", "storages"
+  add_foreign_key "product_remaining_inequalities", "products"
+  add_foreign_key "product_remaining_inequalities", "users"
   add_foreign_key "product_sells", "combination_of_local_products"
   add_foreign_key "product_sells", "products"
   add_foreign_key "product_sells", "sale_from_local_services"

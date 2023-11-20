@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :product_remaining_inequalities
   resources :transaction_histories
   resources :team_services
   resources :sale_from_services do

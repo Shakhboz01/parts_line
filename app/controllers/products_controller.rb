@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products or /products.json
   def index
     @q = Product.ransack(params[:q])
-    @products = @q.result.order(active: :desc).page(params[:page]).per(40)
+    @products = @q.result.order(active: :desc).order(name: :asc).page(params[:page]).per(40)
     @product_categories = ProductCategory.all
   end
 
@@ -61,18 +61,18 @@ class ProductsController < ApplicationController
 
   def toggle_active
     @product.toggle(:active).save
-    redirect_to products_url, notice: 'Successfully updated'
+    redirect_to products_url, notice: "Successfully updated"
   end
 
-
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_product
-      @product = Product.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def product_params
-      params.require(:product).permit(:name, :local, :sell_price, :buy_price, :unit, :product_category_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_product
+    @product = Product.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def product_params
+    params.require(:product).permit(:name, :local, :sell_price, :buy_price, :unit, :product_category_id)
+  end
 end

@@ -10,16 +10,22 @@ class Product < ApplicationRecord
   validates_presence_of :unit
   belongs_to :product_category
   has_many :product_entries
+  has_many :product_remaining_inequalities
   enum unit: %i[ шт кг метр пачка ]
-  scope :active, -> { where(:active => true)}
-  scope :local, -> { where(:local => true)}
+  scope :active, -> { where(:active => true) }
+  scope :local, -> { where(:local => true) }
   after_save :process_initial_remaining_change, if: :saved_change_to_initial_remaining?
+
+  def calculate_product_remaining
+    remaining_from_entries = product_entries.sum(:amount) - product_entries.sum(:amount_sold)
+    remaining_from_entries + initial_remaining
+  end
 
   private
 
   def process_initial_remaining_change
     return if initial_remaining.positive? && !self.product_entries.count.zero?
 
-    SendMessage.run(message: "Остаток товара(#{product.name}) = #{initial_remaining}")
+    SendMessage.run(message: "Остаток товара(#{name}) = #{initial_remaining}")
   end
 end

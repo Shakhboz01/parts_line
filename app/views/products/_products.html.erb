@@ -18,7 +18,7 @@
           <th><%= sort_link q, :sell_price, 'Цена продажи' %></th>
           <th><%= sort_link q, :unit, 'Единица измерения' %></th>
           <th>Остаток</th>
-          <th><%= sort_link q, :created_at, 'СоздОформлено в' %></th>
+          <th><%= sort_link q, :created_at, 'Оформлено в' %></th>
           <th colspan="3"></th>
         </tr>
       </thead>
@@ -31,11 +31,16 @@
             <td><%= number_to_currency(product.buy_price) %></td>
             <td><%= number_to_currency(product.sell_price) %></td>
             <td><%= product.unit %></td>
-            <td><%= calculate_product_remaining(product) %></td>
+            <td><%= product.calculate_product_remaining %></td>
             <td><%= strf_datetime(product.created_at) %></td>
             <td>
-              <%= clink_to 'История приход товара', product_entries_path(q: {product_id_eq: product.id}), 'fa-search' %>
-              <%= clink_to 'Редактировать', edit_product_path(product), 'fa-edit' %>
+              <%= clink_to 'История приход товара', product_entries_path(q: {product_id_eq: product.id}), 'fa-search' %> |
+              <%= clink_to 'Редактировать', edit_product_path(product), 'fa-edit' %> |
+              <%= clink_to 'Изменить остаток товара', new_product_remaining_inequality_path(product_id: product.id), 'fa-not-equal' %> |
+              <% if product.product_remaining_inequalities.exists? %>
+                <%= clink_to 'показать историю изменений остаток товара', product_remaining_inequalities_path(q: {product_id_eq: product.id}), 'fa-clock-rotate-left' %> |
+              <% end %>
+
               <% if product.active %>
                   <%= clink_to 'Деактивировать', toggle_active_product_path(product), 'fa-ban', :post %>
                 <% else %>
