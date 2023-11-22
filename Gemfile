@@ -44,7 +44,7 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 gem "bootsnap", require: false
 gem "simple_form"
 gem "ransack"
-gem 'kaminari', '~> 1.2'
+gem "kaminari", "~> 1.2"
 
 # Use Sass to process CSS
 # gem "sassc-rails"
@@ -78,11 +78,11 @@ end
 gem "cssbundling-rails", "~> 1.2"
 
 gem "jsbundling-rails", "~> 1.1"
-gem 'active_interaction'
+gem "active_interaction"
 gem "devise", "~> 4.9"
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
+gem "jquery-rails"
+gem "jquery-ui-rails"
 gem "pundit", "~> 2.3"
-gem 'telegram-bot-ruby'
-gem 'rack-attack'
-gem 'byebug'
+gem "telegram-bot-ruby"
+gem "rack-attack"
+gem "byebug"

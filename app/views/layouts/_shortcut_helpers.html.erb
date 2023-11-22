@@ -3,7 +3,7 @@
   create a product
 </button>
 
-<button accesskey='7' style='display: none' type="button" class="btn btn-primary" data-toggle="modal" data-target="#expenditureModal">
+<button accesskey='0' style='display: none' type="button" class="btn btn-primary" data-toggle="modal" data-target="#expenditureModal">
   create an expenditure
 </button>
 
@@ -11,7 +11,7 @@
   <span>Обьект</span>
 <% end %>
 
-<%= link_to new_product_entry_path(local_entry: true), style:'display:none', accesskey: '6' do %>
+<%= link_to new_product_entry_path(local_entry: true), style:'display:none', accesskey: '9' do %>
   <span>Приход от производство</span>
 <% end %>
 
@@ -23,7 +23,7 @@
   <span>услуга</span>
 <% end %>
 
-<%= button_to default_create_delivery_from_counterparties_path, style: 'display: none', accesskey: '5', method: :post do %>
+<%= button_to default_create_delivery_from_counterparties_path, style: 'display: none', accesskey: '8', method: :post do %>
   <span>Приход от поставщика</span>
 <% end %>
 <!-- Modal -->
