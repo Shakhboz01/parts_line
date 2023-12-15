@@ -2,7 +2,7 @@ class DeliveryFromCounterparty < ApplicationRecord
   include HandleTransactionHistory
   belongs_to :provider
   has_many :expenditures
-  has_many :product_entries
+  has_many :product_entries, dependent: :destroy
   has_many :transaction_histories, dependent: :destroy
   enum status: %i[processing closed]
   enum payment_type: %i[наличные карта click дригие]

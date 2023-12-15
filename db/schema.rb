@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_15_095156) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_15_105328) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -47,7 +47,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_095156) do
     t.bigint "provider_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
     t.index ["provider_id"], name: "index_delivery_from_counterparties_on_provider_id"
+    t.index ["user_id"], name: "index_delivery_from_counterparties_on_user_id"
   end
 
   create_table "expenditures", force: :cascade do |t|
@@ -299,6 +301,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_095156) do
   end
 
   add_foreign_key "delivery_from_counterparties", "providers"
+  add_foreign_key "delivery_from_counterparties", "users"
   add_foreign_key "expenditures", "combination_of_local_products"
   add_foreign_key "expenditures", "delivery_from_counterparties"
   add_foreign_key "local_services", "sale_from_local_services"

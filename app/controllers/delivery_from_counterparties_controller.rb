@@ -43,7 +43,7 @@ class DeliveryFromCounterpartiesController < ApplicationController
   # POST /delivery_from_counterparties or /delivery_from_counterparties.json
   def create
     @delivery_from_counterparty = DeliveryFromCounterparty.new(delivery_from_counterparty_params)
-
+    @delivery_from_counterparty.user_id = current_user.id
     respond_to do |format|
       if @delivery_from_counterparty.save
         format.html { redirect_to new_product_entry_path(delivery_from_counterparty_id: @delivery_from_counterparty.id, local_entry: false), notice: "Delivery from counterparty was successfully created." }
@@ -80,7 +80,7 @@ class DeliveryFromCounterpartiesController < ApplicationController
 
   def default_create
     provider = Provider.first
-    sfs = DeliveryFromCounterparty.new(provider: provider)
+    sfs = DeliveryFromCounterparty.new(provider: provider, user_id: current_user.id)
     if sfs.save
       redirect_to delivery_from_counterparty_url(sfs), notice: "Теперь добавьте продажу товаров"
     else
