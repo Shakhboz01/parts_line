@@ -1,11 +1,10 @@
 <% unless @delivery_from_counterparty.closed? %>
-  <%= render 'layouts/progress', value: '72' %>
-  <%= render 'product_entries/form', product_entry: ProductEntry.new(delivery_from_counterparty_id: @delivery_from_counterparty.id) %>
+  <%= render 'product_entries/form', product_entry: @product_entry, storage: @storage, products: @products %>
 <% end %>
 <br><br>
 
 <% unless @delivery_from_counterparty.product_entries.count.zero? %>
-  <%= render 'product_entries/product_entries', product_entries: @product_entries, q: @q, deletable: true %>
+  <%= render 'product_entries/product_entries', product_entries: @product_entries, q: @q, deletable: true, shrink: true %>
 <% end %>
 <br><hr><hr>
 

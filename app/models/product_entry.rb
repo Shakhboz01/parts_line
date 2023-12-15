@@ -2,7 +2,7 @@
 # ignored service_price
 class ProductEntry < ApplicationRecord
   belongs_to :combination_of_local_product, optional: true
-  belongs_to :delivery_from_counterparty, optional: true
+  belongs_to :delivery_from_counterparty
   belongs_to :product
   belongs_to :storage
   validates :amount, comparison: { greater_than: 0 }
@@ -14,7 +14,6 @@ class ProductEntry < ApplicationRecord
   before_update :amount_sold_is_not_greater_than_amount
   before_create :create_combination_for_local_entry
   before_destroy :varify_delivery_from_counterparty_is_not_closed
-  before_destroy :decrease_total_price_and_total_paid
   # before_save :set_total_price
 
   private
@@ -31,7 +30,9 @@ class ProductEntry < ApplicationRecord
   end
 
   def varify_delivery_from_counterparty_is_not_closed
-    throw(:abort) if !delivery_from_counterparty.nil? && delivery_from_counterparty.closed?
+    throw(:abort) if delivery_from_counterparty.closed?
+    delivery_from_counterparty.decrement!(:total_price, buy_price)
+    delivery_from_counterparty.decrement!(:total_paid, buy_price)
   end
 
   # def set_total_price

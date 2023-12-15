@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
 
     respond_to do |format|
       if @product.save
-        format.html { redirect_to product_category_url(@product.product_category), notice: "Product was successfully created." }
+        format.html { redirect_to request.referrer, notice: "Product was successfully created." }
         format.json { render :show, status: :created, location: @product }
       else
         format.html { render :new, product: @product, status: :unprocessable_entity }
@@ -40,7 +40,7 @@ class ProductsController < ApplicationController
   def update
     respond_to do |format|
       if @product.update(product_params)
-        format.html { redirect_to products_url, notice: "Product was successfully updated." }
+        format.html { redirect_to request.referrer, notice: "Product was successfully updated." }
         format.json { render :show, status: :ok, location: @product }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -73,6 +73,6 @@ class ProductsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_params
-    params.require(:product).permit(:name, :local, :price_in_usd :sell_price, :buy_price, :unit, :product_category_id)
+    params.require(:product).permit(:name, :local, :price_in_usd, :sell_price, :buy_price, :unit, :product_category_id)
   end
 end

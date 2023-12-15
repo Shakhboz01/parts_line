@@ -18,6 +18,13 @@ class DeliveryFromCounterpartiesController < ApplicationController
     @expenditures_data = @delivery_from_counterparty.expenditures
     @q = @delivery_from_counterparty.product_entries.ransack(params[:q])
     @product_entries = @q.result
+    @storage = @delivery_from_counterparty.product_entries&.last&.storage_id
+    @product_entry = ProductEntry.new(delivery_from_counterparty_id: @delivery_from_counterparty.id)
+    @products = Product.active.order(:name)
+    if (product_entries = @delivery_from_counterparty.product_entries).exists?
+      price_in_usd = product_entries.last.product.price_in_usd
+      @products = @products.where(price_in_usd: price_in_usd).order(:name)
+    end
   end
 
   # GET /delivery_from_counterparties/new

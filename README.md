@@ -5,6 +5,7 @@ TODO:
  Add priority enum for product: xodovoy sredniy ne-xodovoy
  Add boolean to product: importniy
  Add discount table, fields: price_in_usd:oolean, price:decimal, verified:boolean default false,sales:references, delivery_from_counterparties:references, user:references
+
 QUESTIONS:
  What king of expenditures do you have
  Send me a photo that was forgotten

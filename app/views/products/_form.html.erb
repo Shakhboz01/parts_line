@@ -1,11 +1,3 @@
-<span class='text-center'>
-  <i class="fa-solid fa-circle-info"></i> Цены должны указатся в долларах!
-</span>
-<br>
-<span>
-  <i class="fa-solid fa-circle-info"></i> Собственный - товары которые производятся внутри организации!
-</span>
-<br><hr>
 <%= simple_form_for(product) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>

@@ -16,16 +16,10 @@ class ProductEntriesController < ApplicationController
     return redirect_to define_product_destination_product_entries_path if params[:local_entry].nil?
 
     @product_entry = ProductEntry.new(
-      local_entry: params[:local_entry],
       return: params[:return],
       delivery_from_counterparty_id: params[:delivery_from_counterparty_id],
     )
     @products = Product.active
-    if params[:local_entry] == "true"
-      @products = @products.where(local: true)
-    else
-      @products = @products.where(local: false)
-    end
   end
 
   def define_product_destination; end
