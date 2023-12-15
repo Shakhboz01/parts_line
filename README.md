@@ -9,7 +9,8 @@ QUESTIONS:
  What king of expenditures do you have
  Send me a photo that was forgotten
  List of workers, their roles, allowed_to_use, daily_salary
-
+ How to calculate productivity of workers
+ How to find if a product is fast-sold or not
 
     READY features:
   main branch
