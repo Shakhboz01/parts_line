@@ -21,15 +21,15 @@
       </div>
       <% unless product_entry.local_entry %>
         <div class='col-sm-2'>
-          <%= f.input :buy_price, label: 'Цена прихода каждого товара' %>
+          <%= f.input :buy_price, label: 'Цена прихода', input_html: {id: 'product_entry_buy_price'} %>
         </div>
         <div class='col-sm-2'>
-          <%= f.input :sell_price, label: 'Цена продажи каждого товара' %>
+          <%= f.input :sell_price, label: 'Цена продажи', input_html: {id: 'product_entry_sell_price'} %>
         </div>
       <% end %>
 
       <div class='col-sm-2'>
-        <%= f.input :comment, label: 'Коммент', placeholder: 'Не обязательно' %>
+        <%= f.input :price_in_percentage, label: 'продажа в %', input_html: {id: 'product_entry_price_in_percentage', value: defined?(price_in_percentage) ? price_in_percentage : 0} %>
       </div>
       <div class='col-sm-2 align-self-center'>
         <div class="form-actions">
@@ -46,4 +46,43 @@
       $(this).select();
     });
   });
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Function to calculate sell price based on buy price and percentage
+  function calculateSellPrice() {
+    var buyPrice = parseFloat(document.getElementById('product_entry_buy_price').value);
+    var priceInPercentage = parseFloat(document.getElementById('product_entry_price_in_percentage').value);
+
+    if (!isNaN(buyPrice) && !isNaN(priceInPercentage)) {
+      var sellPrice = buyPrice + (buyPrice * (priceInPercentage / 100));
+      document.getElementById('product_entry_sell_price').value = sellPrice.toFixed(2);
+    }
+  }
+
+  // Function to calculate percentage based on buy price and sell price
+  function calculatePercentage() {
+    var buyPrice = parseFloat(document.getElementById('product_entry_buy_price').value);
+    var sellPrice = parseFloat(document.getElementById('product_entry_sell_price').value);
+
+    if (!isNaN(buyPrice) && !isNaN(sellPrice) && buyPrice !== 0 && sellPrice !== 0) {
+      var percentage = (sellPrice * 100 / buyPrice) - 100;
+      document.getElementById('product_entry_price_in_percentage').value = percentage.toFixed(2);
+    }
+  }
+
+  // Event listeners for price-in-percentage and buy-price inputs
+  document.getElementById('product_entry_price_in_percentage').addEventListener('input', function() {
+    calculateSellPrice();
+  });
+
+  document.getElementById('product_entry_buy_price').addEventListener('input', function() {
+    calculateSellPrice();
+    calculatePercentage();
+  });
+
+  // Event listener for sell-price input
+  document.getElementById('product_entry_sell_price').addEventListener('input', function() {
+    calculatePercentage();
+  });
+});
 </script>

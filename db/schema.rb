@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_15_105328) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_15_110131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -107,6 +107,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_105328) do
     t.boolean "local_entry", default: false
     t.boolean "return", default: false
     t.bigint "storage_id", null: false
+    t.decimal "price_in_percentage", precision: 5, scale: 2
     t.index ["combination_of_local_product_id"], name: "index_product_entries_on_combination_of_local_product_id"
     t.index ["delivery_from_counterparty_id"], name: "index_product_entries_on_delivery_from_counterparty_id"
     t.index ["product_id"], name: "index_product_entries_on_product_id"

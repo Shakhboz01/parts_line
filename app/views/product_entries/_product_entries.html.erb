@@ -4,13 +4,13 @@
       <th><%= sort_link q, :id, 'ID' %></th>
       <th><%= sort_link q, :buy_price, 'Цена прихода' %></th>
       <th><%= sort_link q, :sell_price, 'Цена продажи' %></th>
+      <th><%= sort_link q, :sell_price, 'Цена в %' %></th>
       <th>Товар</th>
       <th><%= sort_link q, :amount, 'Количество' %></th>
       <% unless defined?(shrink) %>
       <th><%= sort_link q, :amount_sold, 'Продано' %></th>
       <% end %>
       <th>склад</th>
-      <th><%= sort_link q, :comment, 'Коммент' %></th>
       <% unless defined?(shrink) %>
         <th>
           <%= sort_link q, :return, 'Возврат' %>
@@ -27,13 +27,13 @@
         <td><%= product_entry.id %></td>
         <td><%= num_to_usd(product_entry.buy_price) %> (<%= num_to_usd(product_entry.buy_price * product_entry.amount) %>)</td>
         <td><%= num_to_usd(product_entry.sell_price) %> (<%= num_to_usd(product_entry.sell_price * product_entry.amount) %>)</td>
+        <td><%= product_entry.price_in_percentage %>%</td>
         <td><%= product_entry.product.name %></td>
         <td><%= product_entry.amount %></td>
         <% unless defined?(shrink) %>
         <td><%= product_entry.amount_sold %></td>
         <% end %>
         <td><%= product_entry.storage.name %></td>
-        <td><%= product_entry.comment %></td>
         <% unless defined?(shrink) %>
           <td><%= active_check(product_entry.return) %></td>
           <td><%= strf_datetime(product_entry.created_at) %></td>

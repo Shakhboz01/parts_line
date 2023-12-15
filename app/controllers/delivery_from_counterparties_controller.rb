@@ -20,9 +20,11 @@ class DeliveryFromCounterpartiesController < ApplicationController
     @product_entries = @q.result
     @storage = @delivery_from_counterparty.product_entries&.last&.storage_id
     @product_entry = ProductEntry.new(delivery_from_counterparty_id: @delivery_from_counterparty.id)
+    @price_in_percentage = 0
     @products = Product.active.order(:name)
     if (product_entries = @delivery_from_counterparty.product_entries).exists?
       price_in_usd = product_entries.last.product.price_in_usd
+      @price_in_percentage = product_entries.last.price_in_percentage
       @products = @products.where(price_in_usd: price_in_usd).order(:name)
     end
   end
