@@ -5,7 +5,7 @@ class DeliveryFromCounterparty < ApplicationRecord
   has_many :product_entries
   has_many :transaction_histories, dependent: :destroy
   enum status: %i[processing closed]
-  enum payment_type: %i[доллар сум карта дригие]
+  enum payment_type: %i[наличные карта click дригие]
   scope :unpaid, -> { where("total_price > total_paid") }
   scope :filter_by_total_paid_less_than_price, ->(value) {
           if value == "1"
@@ -25,4 +25,14 @@ class DeliveryFromCounterparty < ApplicationRecord
     self.total_paid = total_price unless closed?
     total_price
   end
+
+  def calculate_sell_price
+    sell_price = 0
+    self.product_entries.each do |product_entry|
+      sell_price += product_entry.amount * product_entry.sell_price
+    end
+
+    sell_price
+  end
+
 end

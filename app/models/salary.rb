@@ -5,7 +5,7 @@ class Salary < ApplicationRecord
 
   belongs_to :team, optional: true
   belongs_to :user, optional: true
-  enum payment_type: %i[доллар сум карта дригие]
+  enum payment_type: %i[наличные карта click дригие]
 
   validates :price, presence: true
   validates_presence_of :month

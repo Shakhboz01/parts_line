@@ -170,7 +170,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_20_084510) do
 
   create_table "salaries", force: :cascade do |t|
     t.boolean "prepayment"
-    t.date "month", default: "2023-10-26"
+    t.date "month", default: "2023-12-15"
     t.bigint "team_id"
     t.bigint "user_id"
     t.decimal "price", precision: 10, scale: 2

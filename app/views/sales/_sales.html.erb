@@ -11,7 +11,9 @@
       <% unless defined?(shrink) %>
         <th>Тип оплаты</th>
         <th>Комментарие</th>
-        <th>Оформлено в</th>
+      <% end %>
+        <th>Дата продажи</th>
+      <% unless defined?(shrink) %>
         <th colspan="3"></th>
       <% end %>
     </tr>

@@ -1,9 +1,9 @@
 class Sale < ApplicationRecord
   include HandleTransactionHistory
   belongs_to :buyer
-  belongs_to :user, optional: true
+  belongs_to :user
   enum status: %i[processing closed]
-  enum payment_type: %i[доллар сум карта дригие]
+  enum payment_type: %i[наличные карта click дригие]
   has_many :product_sells
   has_many :transaction_histories, dependent: :destroy
   scope :unpaid, -> { where("total_price > total_paid") }

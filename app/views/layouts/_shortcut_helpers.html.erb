@@ -7,23 +7,12 @@
   create an expenditure
 </button>
 
-<%= button_to default_create_sale_from_services_path, style: 'display: none', accesskey: '4', method: :post do %>
-  <span>Обьект</span>
-<% end %>
 
-<%= link_to new_product_entry_path(local_entry: true), style:'display:none', accesskey: '9' do %>
-  <span>Приход от производство</span>
-<% end %>
-
-<%= button_to default_create_sales_path, style: 'display: none', accesskey: '3', method: :post do %>
+<%= button_to default_create_sales_path, style: 'display: none', accesskey: '2', method: :post do %>
   <span>продажа</span>
 <% end %>
 
-<%= button_to default_create_sale_from_local_services_path, style: 'display: none', accesskey: '2', method: :post do %>
-  <span>услуга</span>
-<% end %>
-
-<%= button_to default_create_delivery_from_counterparties_path, style: 'display: none', accesskey: '8', method: :post do %>
+<%= button_to default_create_delivery_from_counterparties_path, style: 'display: none', accesskey: '5', method: :post do %>
   <span>Приход от поставщика</span>
 <% end %>
 <!-- Modal -->

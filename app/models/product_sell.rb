@@ -8,7 +8,7 @@ class ProductSell < ApplicationRecord
   belongs_to :sale_from_service, optional: true
   belongs_to :product
   validates_presence_of :amount
-  enum payment_type: %i[доллар сум карта дригие]
+  enum payment_type: %i[наличные карта click дригие]
   validate :handle_amount_sold
   validate :verify_combination_is_not_closed
   before_create :increase_amount_sold

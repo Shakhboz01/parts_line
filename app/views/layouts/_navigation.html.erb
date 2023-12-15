@@ -14,7 +14,7 @@
           Посмотреть список
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <%= link_to 'Продажи/услуги', sale_from_local_services_path, class: 'dropdown-item' %>
+          <%= link_to 'Продажи', sales_path, class: 'dropdown-item' %>
           <%= link_to 'Расходов', expenditures_path, class: 'dropdown-item' %>
           <%= link_to 'Приход товаров', delivery_from_counterparties_path, class: 'dropdown-item' %>
           <%= link_to 'Поставщиков', providers_path, class: 'dropdown-item' %>
@@ -22,7 +22,6 @@
           <%= link_to 'Товар/материалов', products_path, class: 'dropdown-item' %>
           <%= link_to 'Зарплат/Аванс', salaries_path, class: 'dropdown-item' %>
           <%= link_to 'Работников', users_path, class: 'dropdown-item' %>
-          <%= link_to 'Бригад', teams_path, class: 'dropdown-item' %>
           <%= link_to 'Переклички работников', participations_path, class: 'dropdown-item' %>
         </div>
       </li>
@@ -31,15 +30,14 @@
           Оформить
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <%= link_to 'Продажу/услугу', define_sale_destination_path, class: 'dropdown-item' %>
-          <%= link_to 'Приход товара', new_product_entry_path, class: 'dropdown-item' %>
-          <%= link_to 'Расход', new_expenditure_path, class: 'dropdown-item' %>
+          <%= link_to 'Продажу (alt + 2)', default_create_sales_path, method: :post, class: 'dropdown-item' %>
+          <%= link_to 'Приход товара (alt + 5)', default_create_delivery_from_counterparties_path, method: :post, class: 'dropdown-item' %>
+          <%= link_to 'Расход (alt + 0)', new_expenditure_path, class: 'dropdown-item' %>
           <%= link_to 'Поставщика', new_provider_path, class: 'dropdown-item' %>
           <%= link_to 'Покупателя', buyers_path, class: 'dropdown-item' %>
-          <%= link_to 'Товар/материал', new_product_path, class: 'dropdown-item' %>
+          <%= link_to 'Товарa (alt + 1)', new_product_path, class: 'dropdown-item' %>
           <%= link_to 'Зарплату/Аванс', new_salary_path, class: 'dropdown-item' %>
           <%= link_to 'Перекличку работников', new_participation_path, class: 'dropdown-item' %>
-          <%= link_to 'Бригаду', new_team_path, class: 'dropdown-item' %>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -47,7 +45,6 @@
           Прочие
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <%= link_to 'Сервисы', services_path, class: 'dropdown-item' %>
           <%= link_to 'Настройки курса', currency_rates_path, class: 'dropdown-item' %>
           <%= link_to 'Шорткаты', shortcut_path, class: 'dropdown-item' %>
           <%= link_to 'История пополнений', transaction_histories_path, class: 'dropdown-item' %>

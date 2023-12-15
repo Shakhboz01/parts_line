@@ -9,7 +9,11 @@
 <% end %>
 <br><hr><hr>
 
-<div><b>ИТОГО: <%= number_to_currency @delivery_from_counterparty.calculate_total_price %></b></div>
+<div class='d-flex justify-content-around'>
+  <b>ИТОГО ЦЕНА прихода: <%= num_to_usd @delivery_from_counterparty.calculate_total_price %></b>
+  <b>ИТОГО ЦЕНА ПОСЛЕ ПРОДАЖИ: <%= num_to_usd @delivery_from_counterparty.calculate_sell_price %></b>
+  <b>ИТОГО количество: <%= @delivery_from_counterparty.product_entries.sum(:amount) %></b>
+</div>
 
 <% unless @delivery_from_counterparty.closed? %>
   <%= render 'form', delivery_from_counterparty: @delivery_from_counterparty %><br>

@@ -45,7 +45,7 @@
               <td><%= number_to_currency @total_expenditure %></td>
             </tr>
             <tr>
-              <th>деньги на кассе</th>
+              <th>остаток</th>
               <td><%= number_to_currency (@total_income - @total_expenditure) %></td>
             </tr>
           </thead>
@@ -55,25 +55,17 @@
   </div>
   <br>
   <div class='row'>
-    <div class='col-sm-4 main-page-body'>
+    <div class='col-sm-6 main-page-body'>
       <h4 class='text-center'>Продажи</h4>
       <%= render 'sales/sales', sales: @sales, shrink: true %>
     </div>
-    <div class='col-sm-4 main-page-body'>
-      <h4 class='text-center'>Услуги</h4>
-      <%= render 'sale_from_local_services/sale_from_local_services', sale_from_local_services: @sale_from_local_services, shrink: true %>
-    </div>
-    <div class='col-sm-4 main-page-body'>
-      <h4 class='text-center'>Обьекты</h4>
-      <%= render 'sale_from_services/sale_from_services', sale_from_services: @sale_from_services, shrink: true %>
+    <div class='col-sm-12 col-md-6'>
+      <h4 class='text-center'>Приход от поставщиков</h4>
+      <%= render 'delivery_from_counterparties/delivery_from_counterparties', delivery_from_counterparties: @delivery_from_counterparties, shrink: true %>
     </div>
   </div>
   <br>
   <div class='row'>
-    <div class='col-sm-12 col-md-7'>
-      <h4 class='text-center'>Приход от поставщиков</h4>
-      <%= render 'delivery_from_counterparties/delivery_from_counterparties', delivery_from_counterparties: @delivery_from_counterparties, shrink: true %>
-    </div>
     <div class='col-sm-12 col-md-5'>
       <h4 class='text-center'>Расходы</h4>
       <%= render 'expenditures/expenditures', expenditures: @expenditures, shrink: true %>

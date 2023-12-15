@@ -5,7 +5,7 @@ class SaleFromService < ApplicationRecord
   has_many :team_services
   has_many :transaction_histories, dependent: :destroy
   enum status: %i[processing closed]
-  enum payment_type: %i[доллар сум карта дригие]
+  enum payment_type: %i[наличные карта click дригие]
   has_many :product_sells
   scope :unpaid, -> { where("total_price > total_paid") }
   scope :filter_by_total_paid_less_than_price, ->(value) {
