@@ -25,8 +25,8 @@
     <% product_entries.each do |product_entry| %>
       <tr>
         <td><%= product_entry.id %></td>
-        <td><%= num_to_usd(product_entry.buy_price) %> (<%= num_to_usd(product_entry.buy_price * product_entry.amount) %>)</td>
-        <td><%= num_to_usd(product_entry.sell_price) %> (<%= num_to_usd(product_entry.sell_price * product_entry.amount) %>)</td>
+        <td><%= currency_convert(product_entry.paid_in_usd, product_entry.buy_price) %> (<%= currency_convert(product_entry.paid_in_usd, product_entry.buy_price * product_entry.amount) %>)</td>
+        <td><%= currency_convert(product_entry.paid_in_usd, product_entry.sell_price) %> (<%= currency_convert(product_entry.paid_in_usd, product_entry.sell_price * product_entry.amount) %>)</td>
         <td><%= product_entry.price_in_percentage %>%</td>
         <td><%= product_entry.product.name %></td>
         <td><%= product_entry.amount %></td>

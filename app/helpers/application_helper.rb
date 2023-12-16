@@ -1,4 +1,12 @@
 module ApplicationHelper
+  def currency_convert(in_usd, price)
+    if in_usd
+      number_to_currency(price)
+    else
+      num_to_usd(price)
+    end
+  end
+
   def clink_to(title, link, css_class = nil, method = :get)
     styled_title =
       css_class.nil? ? t(title) : raw("<i class=\"fa fa-fw #{css_class}\"></i>")

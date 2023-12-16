@@ -60,7 +60,10 @@ class DeliveryFromCounterpartiesController < ApplicationController
   # PATCH/PUT /delivery_from_counterparties/1 or /delivery_from_counterparties/1.json
   def update
     respond_to do |format|
-      if @delivery_from_counterparty.update(delivery_from_counterparty_params.merge(status: delivery_from_counterparty_params[:status].to_i))
+      if @delivery_from_counterparty.update(delivery_from_counterparty_params.merge(
+          status: delivery_from_counterparty_params[:status].to_i,
+          total_price: @delivery_from_counterparty.calculate_total_price(false)
+         ))
         format.html { redirect_to delivery_from_counterparties_url, notice: "Delivery from counterparty was successfully updated." }
         format.json { render :show, status: :ok, location: @delivery_from_counterparty }
       else

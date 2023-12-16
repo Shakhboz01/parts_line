@@ -11,18 +11,15 @@ class ProductEntry < ApplicationRecord
   validates_presence_of :buy_price, unless: -> { local_entry }
 
   before_validation :varify_delivery_from_counterparty_is_not_closed
+  before_create :set_currency
   before_update :amount_sold_is_not_greater_than_amount
-  before_create :create_combination_for_local_entry
   before_destroy :varify_delivery_from_counterparty_is_not_closed
-  # before_save :set_total_price
+  after_create :update_delivery_currency
 
   private
 
-  def create_combination_for_local_entry
-    return unless local_entry
-
-    colp = CombinationOfLocalProduct.create
-    self.combination_of_local_product = colp
+  def set_currency
+    self.paid_in_usd = product.price_in_usd
   end
 
   def amount_sold_is_not_greater_than_amount
@@ -35,7 +32,9 @@ class ProductEntry < ApplicationRecord
     delivery_from_counterparty.decrement!(:total_paid, buy_price)
   end
 
-  # def set_total_price
-  #   self.total_price = amount * buy_price
-  # end
+  def update_delivery_currency
+    return if delivery_from_counterparty.nil? || delivery_from_counterparty.price_in_usd == paid_in_usd
+
+    delivery_from_counterparty.update(price_in_usd: paid_in_usd)
+  end
 end

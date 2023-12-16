@@ -7,6 +7,7 @@
       <table class='table-bordered'>
         <thead>
           <tr>
+            <th></th>
             <th>Итого цена</th>
             <th>Итого оплачено</th>
             <th>Разница</th>
@@ -14,9 +15,16 @@
         </thead>
         <tbody>
           <tr>
-            <td><%= number_to_currency(@all_delivery_from_counterparties.sum(:total_price)) %></td>
-            <td><%= number_to_currency @all_delivery_from_counterparties.sum(:total_paid) %></td>
-            <td><%= @all_delivery_from_counterparties.sum(:total_price) - @all_delivery_from_counterparties.sum(:total_paid) %></td>
+            <th>В долларах </th>
+            <td><%= number_to_currency @all_delivery_from_counterparties.price_in_usd.sum(:total_price) %></td>
+            <td><%= number_to_currency @all_delivery_from_counterparties.price_in_usd.sum(:total_paid) %></td>
+            <td><%= number_to_currency(@all_delivery_from_counterparties.price_in_usd.sum(:total_price) - @all_delivery_from_counterparties.price_in_usd.sum(:total_paid)) %></td>
+          </tr>
+          <tr>
+            <th>В сумах </th>
+            <td><%= num_to_usd(@all_delivery_from_counterparties.price_in_uzs.sum(:total_price)) %></td>
+            <td><%= num_to_usd @all_delivery_from_counterparties.price_in_uzs.sum(:total_paid) %></td>
+            <td><%= num_to_usd(@all_delivery_from_counterparties.price_in_uzs.sum(:total_price) - @all_delivery_from_counterparties.price_in_uzs.sum(:total_paid)) %></td>
           </tr>
         </tbody>
       </table>

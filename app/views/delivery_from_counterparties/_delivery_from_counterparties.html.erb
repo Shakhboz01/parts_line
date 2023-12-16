@@ -24,8 +24,8 @@
           <td class="<%= detect_danger_row(delivery_from_counterparty.total_price, delivery_from_counterparty.total_paid) %>"><%= delivery_from_counterparty.id %></td>
         <% end %>
         <td><%= delivery_from_counterparty.provider.name %></td>
-        <td><%= number_to_currency(delivery_from_counterparty.total_price) %></td>
-        <td><%= number_to_currency(delivery_from_counterparty.total_paid) %></td>
+        <td><%= currency_convert(delivery_from_counterparty.price_in_usd, delivery_from_counterparty.total_price) %></td>
+        <td><%= currency_convert(delivery_from_counterparty.price_in_usd, delivery_from_counterparty.total_paid) %></td>
         <% unless defined?(shrink) %>
           <td><%= delivery_from_counterparty.payment_type %></td>
           <td><%= delivery_from_counterparty.comment %></td>

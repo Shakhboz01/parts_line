@@ -13,10 +13,6 @@ class TransactionHistory < ApplicationRecord
   def proccess_increment
     if !sale.nil? && !sale.transaction_histories.empty?
       sale.increment!(:total_paid, price)
-    elsif !sale_from_service.nil? && !sale_from_service.transaction_histories.empty?
-      sale_from_service.increment!(:total_paid, price)
-    elsif !sale_from_local_service.nil? && !sale_from_local_service.transaction_histories.empty?
-      sale_from_local_service.increment!(:total_paid, price)
     elsif !delivery_from_counterparty.nil? && !delivery_from_counterparty.transaction_histories.empty?
       delivery_from_counterparty.increment!(:total_paid, price)
     elsif !expenditure.nil? && !expenditure.transaction_histories.empty?
@@ -27,10 +23,6 @@ class TransactionHistory < ApplicationRecord
   def proccess_decrement
     if !sale.nil?
       sale.decrement!(:total_paid, price)
-    elsif !sale_from_service.nil?
-      sale_from_service.decrement!(:total_paid, price)
-    elsif !sale_from_local_service.nil?
-      sale_from_local_service.decrement!(:total_paid, price)
     elsif !delivery_from_counterparty.nil?
       delivery_from_counterparty.decrement!(:total_paid, price)
     elsif !expenditure.nil?

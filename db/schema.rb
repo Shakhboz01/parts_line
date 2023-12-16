@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_15_110131) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_15_160258) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -48,6 +48,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_110131) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
+    t.boolean "price_in_usd", default: false
     t.index ["provider_id"], name: "index_delivery_from_counterparties_on_provider_id"
     t.index ["user_id"], name: "index_delivery_from_counterparties_on_user_id"
   end
