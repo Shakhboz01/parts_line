@@ -62,6 +62,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_160258) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "delivery_from_counterparty_id"
+    t.boolean "price_in_usd", default: false
     t.index ["combination_of_local_product_id"], name: "index_expenditures_on_combination_of_local_product_id"
     t.index ["delivery_from_counterparty_id"], name: "index_expenditures_on_delivery_from_counterparty_id"
   end
@@ -141,6 +142,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_160258) do
     t.bigint "sale_from_local_service_id"
     t.bigint "sale_id"
     t.bigint "sale_from_service_id"
+    t.boolean "price_in_usd", default: false
     t.index ["combination_of_local_product_id"], name: "index_product_sells_on_combination_of_local_product_id"
     t.index ["product_id"], name: "index_product_sells_on_product_id"
     t.index ["sale_from_local_service_id"], name: "index_product_sells_on_sale_from_local_service_id"
@@ -224,6 +226,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_160258) do
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "price_in_usd", default: false
     t.index ["buyer_id"], name: "index_sales_on_buyer_id"
     t.index ["user_id"], name: "index_sales_on_user_id"
   end
@@ -278,6 +281,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_15_160258) do
     t.decimal "price", precision: 17, scale: 2
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "price_in_usd", default: false
     t.index ["delivery_from_counterparty_id"], name: "index_transaction_histories_on_delivery_from_counterparty_id"
     t.index ["expenditure_id"], name: "index_transaction_histories_on_expenditure_id"
     t.index ["sale_from_local_service_id"], name: "index_transaction_histories_on_sale_from_local_service_id"

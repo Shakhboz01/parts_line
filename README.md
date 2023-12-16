@@ -12,6 +12,7 @@ QUESTIONS:
  List of workers, their roles, allowed_to_use, daily_salary
  How to calculate productivity of workers
  How to find if a product is fast-sold or not
+ Expenditure types
 
     READY features:
   main branch
