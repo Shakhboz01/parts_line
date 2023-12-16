@@ -1,4 +1,5 @@
 class ProductEntriesController < ApplicationController
+  include Pundit::Authorization
   before_action :set_product_entry, only: %i[ show edit update destroy ]
 
   # GET /product_entries or /product_entries.json
@@ -53,6 +54,8 @@ class ProductEntriesController < ApplicationController
 
   # PATCH/PUT /product_entries/1 or /product_entries/1.json
   def update
+    authorize ProductEntry, :manage?
+
     respond_to do |format|
       if @product_entry.update(product_entry_params)
         if @product_entry.delivery_from_counterparty_id.present?

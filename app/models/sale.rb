@@ -15,16 +15,15 @@ class Sale < ApplicationRecord
           end
         }
 
-  def get_total_price
-    calculate_total_price
-  end
-
-  private
-
-  def calculate_total_price
+  def calculate_total_price(enable_to_alter = true)
     total_price = 0
     self.product_sells.each do |product_sell|
       total_price += product_sell.amount * product_sell.sell_price
+    end
+
+    if enable_to_alter
+      self.total_price = total_price unless closed?
+      self.total_paid = total_price unless closed?
     end
 
     total_price

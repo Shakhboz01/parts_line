@@ -15,6 +15,12 @@ class SalesController < ApplicationController
   # GET /sales/1 or /sales/1.json
   def show
     @product_sells = @sale.product_sells
+    @product_sell = ProductSell.new(sale_id: @sale.id)
+    @products = Product.active.order(:name)
+    if (product_sells = @sale.product_sells).exists?
+      price_in_usd = product_sells.last.product.price_in_usd
+      @products = @products.where(price_in_usd: price_in_usd).order(:name)
+    end
   end
 
   # GET /sales/new
@@ -44,7 +50,10 @@ class SalesController < ApplicationController
   # PATCH/PUT /sales/1 or /sales/1.json
   def update
     respond_to do |format|
-      if @sale.update(sale_params.merge(status: sale_params[:status].to_i))
+      if @sale.update(sale_params.merge(
+          status: sale_params[:status].to_i,
+          total_price: @sale.calculate_total_price(false)
+        ))
         format.html { redirect_to sales_url, notice: "Sale was successfully updated." }
         format.json { render :show, status: :ok, location: @sale }
       else

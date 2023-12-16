@@ -2,8 +2,8 @@
   <thead>
     <tr>
       <% unless defined?(shrink) %>
-        <th></th>
         <th>ID</th>
+        <th>Проводка<br>закрыто</th>
       <% end %>
       <th>Поставщик</th>
       <th>Итого цена</th>
@@ -20,8 +20,8 @@
     <% delivery_from_counterparties.each do |delivery_from_counterparty| %>
       <tr>
         <% unless defined?(shrink) %>
-          <td><%= active_check(delivery_from_counterparty.closed?) %></td>
           <td class="<%= detect_danger_row(delivery_from_counterparty.total_price, delivery_from_counterparty.total_paid) %>"><%= delivery_from_counterparty.id %></td>
+          <td><%= active_check(delivery_from_counterparty.closed?) %></td>
         <% end %>
         <td><%= delivery_from_counterparty.provider.name %></td>
         <td><%= currency_convert(delivery_from_counterparty.price_in_usd, delivery_from_counterparty.total_price) %></td>

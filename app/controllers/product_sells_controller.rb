@@ -72,8 +72,8 @@ class ProductSellsController < ApplicationController
     )
     response = ProductSells::CalculateSellAndBuyPrice.run(product_sell: product_sell)
     render json: if response.valid?
-             "Цена продажи (1 шт): #{response.result[:average_prices][:average_sell_price]}$ \n" \
-             "Прибыль (1шт): #{response.result[:average_prices][:average_sell_price] - response.result[:average_prices][:average_buy_price]}$"
+             "Цена продажи (1 шт): #{response.result[:average_prices][:average_sell_price].to_f.round(2)}\n" \
+             "Прибыль (1шт): #{(response.result[:average_prices][:average_sell_price] - response.result[:average_prices][:average_buy_price]).to_f.round(2)}"
            else
              response.errors.messages.values.flatten[0]
            end

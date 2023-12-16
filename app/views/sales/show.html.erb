@@ -3,7 +3,7 @@
     <h3 class="card-title font-weight-bold">Продажа</h3>
   </div>
   <% unless @sale.closed? %>
-    <%= render 'product_sells/form', product_sell: ProductSell.new(sale_id: @sale.id) %>
+    <%= render 'product_sells/form', product_sell: @product_sell, products: @products %>
   <% end %>
   <br><br>
 
@@ -15,7 +15,10 @@
     </div>
   </div>
   <br><br><hr>
-  <div><b>ИТОГО: <%= number_to_currency @sale.get_total_price %></b></div>
+  <div class='d-flex justify-content-around'>
+  <b>ИТОГО ЦЕНА: <%= num_to_usd @sale.calculate_total_price %></b>
+  <b>ИТОГО КОЛИЧЕСТВО: <%= @sale.product_sells.sum(:amount) %></b>
+</div>
   <% unless @sale.closed? %>
     <%= render 'sales/form', sale: @sale %>
   <% end %>
