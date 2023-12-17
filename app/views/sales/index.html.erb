@@ -22,15 +22,15 @@
         <tbody>
           <tr>
             <th>В долларах </th>
-            <td><%= number_to_currency @sales.price_in_usd.sum(:total_price) %></td>
-            <td><%= number_to_currency @sales.price_in_usd.sum(:total_paid) %></td>
-            <td><%= number_to_currency(@sales.price_in_usd.sum(:total_price) - @sales.price_in_usd.sum(:total_paid)) %></td>
+            <td><%= number_to_currency @sales_data.price_in_usd.sum(:total_price) %></td>
+            <td><%= number_to_currency @sales_data.price_in_usd.sum(:total_paid) %></td>
+            <td><%= number_to_currency(@sales_data.price_in_usd.sum(:total_price) - @sales_data.price_in_usd.sum(:total_paid)) %></td>
           </tr>
           <tr>
             <th>В сумах </th>
-            <td><%= num_to_usd(@sales.price_in_uzs.sum(:total_price)) %></td>
-            <td><%= num_to_usd @sales.price_in_uzs.sum(:total_paid) %></td>
-            <td><%= num_to_usd(@sales.price_in_uzs.sum(:total_price) - @sales.price_in_uzs.sum(:total_paid)) %></td>
+            <td><%= num_to_usd(@sales_data.price_in_uzs.sum(:total_price)) %></td>
+            <td><%= num_to_usd @sales_data.price_in_uzs.sum(:total_paid) %></td>
+            <td><%= num_to_usd(@sales_data.price_in_uzs.sum(:total_price) - @sales_data.price_in_uzs.sum(:total_paid)) %></td>
           </tr>
         </tbody>
       </table>

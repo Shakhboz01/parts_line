@@ -26,15 +26,15 @@
         <tbody>
           <tr>
             <th>В долларах </th>
-            <td><%= number_to_currency @product_sells.where(price_in_usd: true).sum(:sell_price) %></td>
-            <td><%= number_to_currency @product_sells.where(price_in_usd: true).sum(:total_profit) %></td>
-            <td><%= number_to_currency(@product_sells.where(price_in_usd: true).sum(:sell_price) - @product_sells.where(price_in_usd: true).sum(:total_profit)) %></td>
+            <td><%= number_to_currency @product_sells_data.where(price_in_usd: true).sum(:sell_price) %></td>
+            <td><%= number_to_currency @product_sells_data.where(price_in_usd: true).sum(:total_profit) %></td>
+            <td><%= number_to_currency(@product_sells_data.where(price_in_usd: true).sum(:sell_price) - @product_sells_data.where(price_in_usd: true).sum(:total_profit)) %></td>
           </tr>
           <tr>
             <th>В сумах </th>
-            <td><%= num_to_usd(@product_sells.where(price_in_usd: false).sum(:sell_price)) %></td>
-            <td><%= num_to_usd @product_sells.where(price_in_usd: false).sum(:total_profit) %></td>
-            <td><%= num_to_usd(@product_sells.where(price_in_usd: false).sum(:sell_price) - @product_sells.where(price_in_usd: false).sum(:total_profit)) %></td>
+            <td><%= num_to_usd(@product_sells_data.where(price_in_usd: false).sum(:sell_price)) %></td>
+            <td><%= num_to_usd @product_sells_data.where(price_in_usd: false).sum(:total_profit) %></td>
+            <td><%= num_to_usd(@product_sells_data.where(price_in_usd: false).sum(:sell_price) - @product_sells_data.where(price_in_usd: false).sum(:total_profit)) %></td>
           </tr>
         </tbody>
       </table>

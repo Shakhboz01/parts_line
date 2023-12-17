@@ -9,7 +9,7 @@ class TransactionHistoriesController < ApplicationController
       @transaction_histories.where(sale_id: params[:sale_id])
                             .where(expenditure_id: params[:expenditure_id])
                             .where(delivery_from_counterparty_id: params[:delivery_from_counterparty_id])
-    @all_transaction_histories = @transaction_histories
+    @transaction_histories_data = @transaction_histories
     @transaction_histories = @transaction_histories.page(params[:page]).per(40)
   end
 

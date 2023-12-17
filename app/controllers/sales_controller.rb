@@ -8,7 +8,7 @@ class SalesController < ApplicationController
       @q.result.filter_by_total_paid_less_than_price(params.dig(:q_other, :total_paid_less_than_price))
         .order(id: :desc)
 
-    @all_sales = @sales
+    @sales_data = @sales
     @sales = @sales.page(params[:page]).per(40)
   end
 

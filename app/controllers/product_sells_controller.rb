@@ -5,7 +5,7 @@ class ProductSellsController < ApplicationController
   def index
     @q = ProductSell.ransack(params[:q])
     @product_sells = @q.result.includes(:product).order(id: :desc)
-    @all_product_sells = @product_sells
+    @product_sells_data = @product_sells
     @product_sells = @product_sells.page(params[:page]).per(40)
   end
 

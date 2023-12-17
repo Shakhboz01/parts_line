@@ -8,7 +8,7 @@ class DeliveryFromCounterpartiesController < ApplicationController
       @q.result.filter_by_total_paid_less_than_price(params.dig(:q_other, :total_paid_less_than_price))
         .order(id: :desc)
 
-    @all_delivery_from_counterparties = @delivery_from_counterparties
+    @delivery_from_counterparties_data = @delivery_from_counterparties
     @delivery_from_counterparties = @delivery_from_counterparties.page(params[:page]).per(40)
   end
 

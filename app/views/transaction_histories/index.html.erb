@@ -11,7 +11,7 @@
         <thead>
           <tr>
             <th>Итого</th>
-            <th><%= num_to_usd @all_transaction_histories.sum(:price) %></th>
+            <th><%= num_to_usd @transaction_histories_data.sum(:price) %></th>
           </tr>
         </thead>
       </table>

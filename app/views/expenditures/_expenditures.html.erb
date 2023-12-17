@@ -8,7 +8,7 @@
         <th>Цена</th>
         <th>Оплачено</th>
         <% unless defined?(shrink) %>
-         <th>Тип оплаты</th>
+          <th>Тип оплаты</th>
         <% end %>
         <th>Тип расхода</th>
         <th>Дата создания</th>
@@ -21,8 +21,8 @@
           <% unless defined?(shrink) %>
             <td class="<%= detect_danger_row(expenditure.price, expenditure.total_paid) %>"><%= expenditure.id %></td>
           <% end %>
-          <td><%= number_to_currency(expenditure.price) %></td>
-          <td><%= number_to_currency(expenditure.total_paid) %></td>
+          <td><%= currency_convert(expenditure.price_in_usd, expenditure.price) %></td>
+          <td><%= currency_convert(expenditure.price_in_usd, expenditure.total_paid) %></td>
           <% unless defined?(shrink) %>
             <td><%= expenditure.payment_type %></td>
           <% end %>
