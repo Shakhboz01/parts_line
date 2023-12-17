@@ -29,7 +29,7 @@ class TransactionHistoriesController < ApplicationController
   # POST /transaction_histories or /transaction_histories.json
   def create
     @transaction_history = TransactionHistory.new(transaction_history_params)
-
+    @transaction_history.user_id = current_user.id
     respond_to do |format|
       if @transaction_history.save
         format.html { redirect_to request.referrer, notice: "Transaction history was successfully created." }

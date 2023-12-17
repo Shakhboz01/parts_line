@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_17_132154) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_17_134148) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -283,11 +283,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_17_132154) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "price_in_usd", default: false
+    t.bigint "user_id"
     t.index ["delivery_from_counterparty_id"], name: "index_transaction_histories_on_delivery_from_counterparty_id"
     t.index ["expenditure_id"], name: "index_transaction_histories_on_expenditure_id"
     t.index ["sale_from_local_service_id"], name: "index_transaction_histories_on_sale_from_local_service_id"
     t.index ["sale_from_service_id"], name: "index_transaction_histories_on_sale_from_service_id"
     t.index ["sale_id"], name: "index_transaction_histories_on_sale_id"
+    t.index ["user_id"], name: "index_transaction_histories_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -343,4 +345,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_17_132154) do
   add_foreign_key "transaction_histories", "sale_from_local_services"
   add_foreign_key "transaction_histories", "sale_from_services"
   add_foreign_key "transaction_histories", "sales"
+  add_foreign_key "transaction_histories", "users"
 end

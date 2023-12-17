@@ -1,5 +1,6 @@
 class TransactionHistory < ApplicationRecord
   belongs_to :sale, optional: true
+  belongs_to :user
   belongs_to :sale_from_service, optional: true
   belongs_to :sale_from_local_service, optional: true
   belongs_to :delivery_from_counterparty, optional: true
