@@ -7,6 +7,8 @@ class Sale < ApplicationRecord
   has_many :product_sells
   has_many :transaction_histories, dependent: :destroy
   scope :unpaid, -> { where("total_price > total_paid") }
+  scope :price_in_uzs, -> { where('price_in_usd = ?', false) }
+  scope :price_in_usd, -> { where('price_in_usd = ?', true) }
   scope :filter_by_total_paid_less_than_price, ->(value) {
           if value == "1"
             where("total_paid < total_price")

@@ -2,18 +2,19 @@
   <thead>
     <tr>
       <% unless defined?(shrink) %>
-        <td></td>
         <th>ID</th>
+        <td>Проводка<br>закрыто</td>
       <% end %>
       <th>Покупатель</th>
       <th>Итого цена</th>
       <th>Оплачено</th>
       <% unless defined?(shrink) %>
         <th>Тип оплаты</th>
-        <th>Комментарие</th>
+        <th>Коммент.</th>
       <% end %>
-        <th>Дата продажи</th>
       <% unless defined?(shrink) %>
+        <th>Дата продажи</th>
+        <th>Исполнитель</th>
         <th colspan="3"></th>
       <% end %>
     </tr>
@@ -22,16 +23,17 @@
     <% sales.each do |sale| %>
       <tr>
         <% unless defined?(shrink) %>
-          <td><%= active_check(sale.closed?) %></td>
           <td class="<%= detect_danger_row(sale.total_price, sale.total_paid) %>"><%= sale.id %></td>
+          <td><%= active_check(sale.closed?) %></td>
         <% end %>
         <td><%= sale.buyer.name %></td>
-        <td><%= number_to_currency sale.total_price %></td>
-        <td><%= number_to_currency sale.total_paid %></td>
+        <td><%= currency_convert(sale.price_in_usd, sale.total_price) %></td>
+        <td><%= currency_convert(sale.price_in_usd, sale.total_paid) %></td>
         <% unless defined?(shrink) %>
           <td><%= sale.payment_type %></td>
           <td><%= sale.comment %></td>
           <td><%= strf_datetime sale.created_at %></td>
+          <td><%= sale.user.name %></td>
         <% end %>
         <td>
           <%= clink_to 'Посмотреть', sale_path(sale), 'fa-search' %>

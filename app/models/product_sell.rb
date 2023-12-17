@@ -4,15 +4,20 @@
 class ProductSell < ApplicationRecord
   belongs_to :combination_of_local_product, optional: true
   belongs_to :sale_from_local_service, optional: true
-  belongs_to :sale, optional: true
+  belongs_to :sale
   belongs_to :sale_from_service, optional: true
   belongs_to :product
+  has_one :buyer, through: :sale
+  has_one :user, through: :sale
   validates_presence_of :amount
   enum payment_type: %i[наличные карта click дригие]
   validate :handle_amount_sold
   validate :verify_combination_is_not_closed
+  scope :price_in_uzs, -> { where('price_in_usd = ?', false) }
+  scope :price_in_usd, -> { where('price_in_usd = ?', true) }
   before_create :increase_amount_sold
   before_create :set_prices_and_profit
+  after_create :update_sale_currency
   after_create :increase_total_price
   before_destroy :deccrease_amount_sold
   before_destroy :decrease_total_price
@@ -84,6 +89,7 @@ class ProductSell < ApplicationRecord
   end
 
   def set_prices_and_profit
+    self.price_in_usd = product.price_in_usd
     self.buy_price = average_prices["average_buy_price"]
     if [combination_of_local_product, sale_from_service, sale_from_local_service].any?(&:present?)
       self.sell_price = average_prices["average_buy_price"]
@@ -100,5 +106,11 @@ class ProductSell < ApplicationRecord
     return errors.add(:base, "cannot be edited/created") if !sale_from_service.nil? && sale_from_service.closed?
 
     errors.add(:base, "cannot be edited/created") if !sale_from_local_service.nil? && sale_from_local_service.closed?
+  end
+
+  def update_sale_currency
+    return if sale.nil? || sale.price_in_usd == price_in_usd
+
+    sale.update(price_in_usd: price_in_usd)
   end
 end

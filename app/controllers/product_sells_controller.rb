@@ -11,6 +11,8 @@ class ProductSellsController < ApplicationController
 
   # GET /product_sells/1 or /product_sells/1.json
   def show
+    @q = ProductEntry.ransack(params[:q])
+    @product_entries = @q.result.where(id: @product_sell.price_data.keys)
   end
 
   # GET /product_sells/new

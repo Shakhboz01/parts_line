@@ -13,11 +13,12 @@
       <% end %>
       <th>склад</th>
       <% unless defined?(shrink) %>
-        <th>
+        <%# <th>
           <%= sort_link q, :return, 'Возврат' %>
-          <i title='При оформлении возврата, оно учитывается как приход' class="fa-solid fa-circle-info"></i>
-        </th>
+          <%# <i title='При оформлении возврата, оно учитывается как приход' class="fa-solid fa-circle-info"></i> %>
+        <%# </th> %>
         <th><%= sort_link q, :created_at, 'Оформлено в' %></th>
+        <td>Исполнитель</td>
       <% end %>
       <th colspan="3"></th>
     </tr>
@@ -37,8 +38,9 @@
         <% end %>
         <td><%= product_entry.storage.name %></td>
         <% unless defined?(shrink) %>
-          <td><%= active_check(product_entry.return) %></td>
+          <%# <td><%= active_check(product_entry.return) %>
           <td><%= strf_datetime(product_entry.created_at) %></td>
+          <td><%= product_entry.user.name %></td>
         <% end %>
         <td>
           <% if product_entry.combination_of_local_product %>

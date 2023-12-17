@@ -4,6 +4,7 @@ class ProductEntry < ApplicationRecord
   belongs_to :combination_of_local_product, optional: true
   belongs_to :delivery_from_counterparty
   has_one :provider, through: :delivery_from_counterparty
+  has_one :user, through: :delivery_from_counterparty
   belongs_to :product
   belongs_to :storage
   validates :amount, comparison: { greater_than: 0 }
