@@ -37,18 +37,36 @@
         <table class='table'>
           <thead>
             <tr>
-              <th>Приход денег</th>
-              <td><%= number_to_currency @total_income %></td>
-            </tr>
-            <tr>
-              <th>Уход денег</th>
-              <td><%= number_to_currency @total_expenditure %></td>
-            </tr>
-            <tr>
-              <th>остаток</th>
-              <td><%= number_to_currency (@total_income - @total_expenditure) %></td>
+              <th>Итого</th>
+              <th>В долларах</th>
+              <th>Оплачено</th>
+              <th>В сумах</th>
+              <th>Оплачено</th>
             </tr>
           </thead>
+          <tbody>
+            <tr>
+              <th>Продажа</th>
+              <td><%= number_to_currency @total_sale_in_usd %></td>
+              <td><%= number_to_currency @paid_sale_in_usd %></td>
+              <td><%= num_to_usd @total_sale_in_uzs %></td>
+              <td><%= num_to_usd @paid_sale_in_uzs %></td>
+            </tr>
+            <tr>
+              <th>Приход товара</th>
+              <td><%= number_to_currency @total_delivery_from_counterparty_in_usd %></td>
+              <td><%= number_to_currency @paid_delivery_from_counterparty_in_usd %></td>
+              <td><%= num_to_usd @total_delivery_from_counterparty_in_uzs %></td>
+              <td><%= num_to_usd @paid_delivery_from_counterparty_in_uzs %></td>
+            </tr>
+            <tr>
+              <th>Расходы</th>
+              <td><%= number_to_currency @total_expenditure_in_usd %></td>
+              <td><%= number_to_currency @paid_expenditure_in_usd %></td>
+              <td><%= num_to_usd @total_expenditure_in_uzs %></td>
+              <td><%= num_to_usd @paid_expenditure_in_uzs %></td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>

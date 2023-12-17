@@ -10,6 +10,8 @@ class Expenditure < ApplicationRecord
   validates_presence_of :price
   enum expenditure_type: %i[другие на_производство на_покупку_товаров]
   enum payment_type: %i[наличные карта click дригие]
+  scope :price_in_uzs, -> { where('price_in_usd = ?', false) }
+  scope :price_in_usd, -> { where('price_in_usd = ?', true) }
 
   validate :check_if_total_paid_is_not_more_than_price
   after_create :set_transaction_history

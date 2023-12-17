@@ -7,6 +7,8 @@ class TransactionHistory < ApplicationRecord
   validates_presence_of :price
   before_create :proccess_increment
   before_destroy :proccess_decrement
+  scope :price_in_uzs, -> { where('price_in_usd = ?', false) }
+  scope :price_in_usd, -> { where('price_in_usd = ?', true) }
 
   private
 

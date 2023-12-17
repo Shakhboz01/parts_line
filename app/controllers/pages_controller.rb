@@ -16,13 +16,45 @@ class PagesController < ApplicationController
       params[:q] ||= {}
       params[:q][:created_at_gteq] = DateTime.current.beginning_of_day
     end
-    @q = TransactionHistory.ransack(params[:q])
-    @total_income = @q.result.where(expenditure_id: nil)
-      .where(delivery_from_counterparty_id: nil).sum(:price)
 
-    @total_expenditure = @q.result.where(sale_id: nil)
-      .where(sale_from_service_id: nil)
-      .where(sale_from_local_service_id: nil).sum(:price)
+    @q = TransactionHistory.ransack(params[:q])
+
+    @paid_sale_in_usd = @q.result.where.not(sale_id: nil).price_in_usd.sum(:price)
+    @paid_sale_in_uzs = @q.result.where.not(sale_id: nil).price_in_uzs.sum(:price)
+    @total_sale_in_usd = Sale.price_in_usd
+                             .where('created_at >= ?', params[:q][:created_at_gteq])
+                             .where('created_at <= ?', params[:q][:created_at_end_of_day_lteq])
+                             .sum(:total_price)
+    @total_sale_in_uzs = Sale.price_in_uzs
+                             .where('created_at >= ?', params[:q][:created_at_gteq])
+                             .where('created_at <= ?', params[:q][:created_at_end_of_day_lteq])
+                             .sum(:total_price)
+
+
+    @total_delivery_from_counterparty_in_usd =
+      DeliveryFromCounterparty.price_in_usd
+                              .where('created_at >= ?', params[:q][:created_at_gteq])
+                              .where('created_at <= ?', params[:q][:created_at_end_of_day_lteq])
+                              .sum(:total_price)
+    @total_delivery_from_counterparty_in_uzs =
+      DeliveryFromCounterparty.price_in_uzs.where('created_at >= ?', params[:q][:created_at_gteq]).where('created_at <= ?', params[:q][:created_at_end_of_day_lteq])
+                              .sum(:total_price)
+    @paid_delivery_from_counterparty_in_usd =
+      @q.result.where.not(delivery_from_counterparty_id: nil).price_in_usd.sum(:price)
+    @paid_delivery_from_counterparty_in_uzs =
+      @q.result.where.not(delivery_from_counterparty_id: nil).price_in_uzs.sum(:price)
+
+
+    @paid_expenditure_in_usd = @q.result.where.not(expenditure_id: nil).price_in_usd.sum(:price)
+    @paid_expenditure_in_usd = @q.result.where.not(expenditure_id: nil).price_in_uzs.sum(:price)
+    @total_expenditure_in_usd = Expenditure.price_in_usd
+                                           .where('created_at >= ?', params[:q][:created_at_gteq])
+                                           .where('created_at <= ?', params[:q][:created_at_end_of_day_lteq])
+                                           .sum(:price)
+    @total_expenditure_in_uzs = Expenditure.price_in_uzs
+                                           .where('created_at >= ?', params[:q][:created_at_gteq])
+                                           .where('created_at <= ?', params[:q][:created_at_end_of_day_lteq])
+                                           .sum(:price)
   end
 
   def define_sale_destination; end
