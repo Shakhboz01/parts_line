@@ -12,6 +12,10 @@ class ExpendituresController < ApplicationController
 
   # GET /expenditures/1 or /expenditures/1.json
   def show
+    unless @expenditure.sale_ids.nil?
+      ids = @expenditure.sale_ids.gsub(/\s+/, '').split(',')
+      @sales = Sale.where(id: ids)
+    end
   end
 
   # GET /expenditures/new
@@ -86,6 +90,6 @@ class ExpendituresController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def expenditure_params
-    params.require(:expenditure).permit(:combination_of_local_product_id, :price_in_usd, :delivery_from_counterparty_id, :price, :price_in_usd, :price_in_uzs, :payment_type, :total_paid, :expenditure_type)
+    params.require(:expenditure).permit(:combination_of_local_product_id, :sale_ids, :price_in_usd, :delivery_from_counterparty_id, :price, :price_in_usd, :price_in_uzs, :payment_type, :total_paid, :expenditure_type)
   end
 end

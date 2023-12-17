@@ -10,6 +10,7 @@
     <%= f.input :price_in_usd, label: 'Сумма в $' %>
     <%= f.input :total_paid, label: 'Оплачено', placeholder: 'Пропустите этот поле если вы оплатили полностью' %>
     <%= f.input :expenditure_type, label: 'Тип расхода', collection: Expenditure.expenditure_types.keys.map { |unit| [Expenditure.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
+    <%= f.input :sale_ids, label: 'привязка от продаж', placeholder: 'Пример: 312,313,314...', include_blank: false %>
   </div>
 
   <div class="form-actions">
