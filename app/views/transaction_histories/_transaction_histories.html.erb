@@ -11,7 +11,7 @@
     <% transaction_histories.each do |transaction_history| %>
       <tr>
         <td><%= transaction_history.id %></td>
-        <td><%= transaction_history.price %></td>
+        <td><%= currency_convert(transaction_history.price_in_usd, transaction_history.price) %></td>
         <td><%= strf_datetime transaction_history.created_at %></td>
       </tr>
     <% end %>
