@@ -1,5 +1,6 @@
 class Sale < ApplicationRecord
   include HandleTransactionHistory
+  attr_accessor :discount_price
   belongs_to :buyer
   belongs_to :user
   enum status: %i[processing closed]
@@ -7,6 +8,7 @@ class Sale < ApplicationRecord
   has_many :product_sells
   has_one :discount
   has_many :transaction_histories, dependent: :destroy
+  before_update :check_discount
   scope :unpaid, -> { where("total_price > total_paid") }
   scope :price_in_uzs, -> { where('price_in_usd = ?', false) }
   scope :price_in_usd, -> { where('price_in_usd = ?', true) }
@@ -31,4 +33,14 @@ class Sale < ApplicationRecord
 
     total_price
   end
+
+  private
+
+  def check_discount
+    return if discount_price.nil?
+
+    self.total_price = total_price - discount_price.to_f
+    Discount.create(sale_id: self.id, user_id: user_id, comment: comment, price_in_usd: price_in_usd, price: discount_price)
+  end
+
 end

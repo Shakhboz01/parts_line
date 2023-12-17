@@ -10,7 +10,7 @@ module HandleTransactionHistory
 
   def create_th
     if closed? && status_before_last_save != "closed"
-      self.transaction_histories.create(price: total_paid)
+      self.transaction_histories.create(price: total_paid, price_in_usd: price_in_usd, user_id: user_id)
     end
   end
 

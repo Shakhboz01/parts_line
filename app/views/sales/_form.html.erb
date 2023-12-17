@@ -6,7 +6,7 @@
 
     <div class="row">
       <div class="col-sm-3 col-md-2">
-        <%= f.input :total_price, label: 'Договор', disabled: true %>
+        <%= f.input :total_price, label: 'Договор', disabled: true, input_html: {id: 'total-price'} %>
       </div>
       <div class="col-sm-3 col-md-2">
         <%= f.input :total_paid, label: 'Итого оплачено', input_html: {placeholder: 'Пропустите этот поле если клиент оплатили полностью'} %>
@@ -16,6 +16,9 @@
       </div>
       <div class="col-sm-3 col-md-2">
         <%= f.input :payment_type, label: 'Тип оплаты', collection: Sale.payment_types.keys.map { |unit| [Sale.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
+      </div>
+      <div class="col-sm-3 col-md-2">
+        <%= f.input :discount_price, label: 'Скидка', as: :numeric, input_html:  {id: 'discount-price'} %>
       </div>
       <div class="col-sm-3 col-md-2">
         <%= f.input :comment, label: 'Комментарие' %>

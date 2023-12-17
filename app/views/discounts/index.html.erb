@@ -21,12 +21,16 @@
         <tbody>
           <% @discounts.each do |discount| %>
             <tr>
+              <td><%= discount.id %></td>
               <td><%= link_to discount.sale_id, sale_path(discount.sale) %></td>
               <td><%= active_check(discount.verified) %></td>
               <td><%= currency_convert(discount.price_in_usd, discount.price) %></td>
               <td><%= discount.user.name %></td>
+              <td><%= discount.comment %></td>
               <% unless discount.verified %>
-                <%= clink_to 'Отметить как проверенное', verify_discount_path(discount), 'fa-ban', :post %>
+                <td>
+                  <%= clink_to 'Отметить как проверенное', verify_discount_path(discount), 'fa-check', :post %>
+                </td>
               <% end %>
             </tr>
           <% end %>
