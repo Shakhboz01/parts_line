@@ -5,6 +5,7 @@ class Sale < ApplicationRecord
   enum status: %i[processing closed]
   enum payment_type: %i[наличные карта click дригие]
   has_many :product_sells
+  has_one :discount
   has_many :transaction_histories, dependent: :destroy
   scope :unpaid, -> { where("total_price > total_paid") }
   scope :price_in_uzs, -> { where('price_in_usd = ?', false) }

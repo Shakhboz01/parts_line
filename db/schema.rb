@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_17_134148) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_17_141251) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -51,6 +51,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_17_134148) do
     t.boolean "price_in_usd", default: false
     t.index ["provider_id"], name: "index_delivery_from_counterparties_on_provider_id"
     t.index ["user_id"], name: "index_delivery_from_counterparties_on_user_id"
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.bigint "sale_id", null: false
+    t.boolean "verified", default: false
+    t.boolean "price_in_usd", default: false
+    t.decimal "price", precision: 15, scale: 2
+    t.string "comment"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["sale_id"], name: "index_discounts_on_sale_id"
+    t.index ["user_id"], name: "index_discounts_on_user_id"
   end
 
   create_table "expenditures", force: :cascade do |t|
@@ -311,6 +324,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_17_134148) do
 
   add_foreign_key "delivery_from_counterparties", "providers"
   add_foreign_key "delivery_from_counterparties", "users"
+  add_foreign_key "discounts", "sales"
+  add_foreign_key "discounts", "users"
   add_foreign_key "expenditures", "combination_of_local_products"
   add_foreign_key "expenditures", "delivery_from_counterparties"
   add_foreign_key "local_services", "sale_from_local_services"

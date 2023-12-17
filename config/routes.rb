@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :discounts do
+    post :verify, on: :member
+  end
   resources :product_remaining_inequalities
   resources :transaction_histories
   resources :team_services
