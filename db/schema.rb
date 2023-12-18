@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_17_141251) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_18_095036) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -29,6 +29,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_17_141251) do
     t.integer "status", default: 0
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "currency_conversions", force: :cascade do |t|
+    t.decimal "rate", precision: 9, scale: 2
+    t.boolean "to_uzs", default: true
+    t.bigint "user_id", null: false
+    t.decimal "price_in_uzs", precision: 18, scale: 2
+    t.decimal "price_in_usd", precision: 18, scale: 2
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_currency_conversions_on_user_id"
   end
 
   create_table "currency_rates", force: :cascade do |t|
@@ -322,6 +333,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_17_141251) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "currency_conversions", "users"
   add_foreign_key "delivery_from_counterparties", "providers"
   add_foreign_key "delivery_from_counterparties", "users"
   add_foreign_key "discounts", "sales"

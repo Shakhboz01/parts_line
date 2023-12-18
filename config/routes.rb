@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :currency_conversions
   resources :discounts do
     post :verify, on: :member
   end

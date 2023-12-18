@@ -45,11 +45,12 @@
           Прочие
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <%= link_to 'Настройки курса', currency_rates_path, class: 'dropdown-item' %>
+          <%= link_to 'Конвертация', currency_conversions_path, class: 'dropdown-item' %>
           <%= link_to 'Шорткаты', shortcut_path, class: 'dropdown-item' %>
           <%= link_to 'Cкидки при продаже', discounts_path, class: 'dropdown-item' %>
           <%= link_to 'История пополнений', transaction_histories_path, class: 'dropdown-item' %>
           <%= link_to 'История изменений остатки товара', product_remaining_inequalities_path, class: 'dropdown-item' %>
+          <%= link_to 'Настройки курса', currency_rates_path, class: 'dropdown-item' %>
         </div>
       </li>
     </ul>
