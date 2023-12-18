@@ -11,7 +11,7 @@ class Product < ApplicationRecord
   belongs_to :product_category
   has_many :product_entries
   has_many :product_remaining_inequalities
-  enum unit: %i[ шт кг метр пачка ]
+  enum unit: %i[ шт. кг метр пачка ]
   scope :active, -> { where(:active => true) }
   scope :local, -> { where(:local => true) }
   after_save :process_initial_remaining_change, if: :saved_change_to_initial_remaining?
