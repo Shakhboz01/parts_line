@@ -5,5 +5,12 @@ class OwnersOperation < ApplicationRecord
   scope :price_in_uzs, -> { where('price_in_usd = ?', false) }
   scope :price_in_usd, -> { where('price_in_usd = ?', true) }
   enum operation_type: %i[расход приход]
-  # TOTO: Send individual message to telegram
+
+  private
+
+  def send_notify
+    currency = price_in_usd ? '$' : 'сум'
+    message = "#{operation_type} от руководителя\nСумма: #{price} #{currency}"
+    SendMessage.run(message: message)
+  end
 end

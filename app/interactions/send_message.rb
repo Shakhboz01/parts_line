@@ -2,10 +2,20 @@ require "telegram/bot"
 
 class SendMessage < ActiveInteraction::Base
   string :message
+  string :vhat, default: 'tech'
 
   def execute
     token = ENV["TELEGRAM_TOKEN"]
     bot = Telegram::Bot::Client.new(token)
+    chat_id =
+      case chat
+      when 'tech'
+        ENV["TELEGRAM_CHAT_ID"]
+      when 'warning'
+        ENV["TELEGRAM_WARNING_CHAT_ID"]
+      when 'report'
+        ENV["TELEGRAM_REPORT_CHAT_ID"]
+      end
     begin
       bot.api.send_message(
         chat_id: ENV["TELEGRAM_CHAT_ID"],

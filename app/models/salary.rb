@@ -13,4 +13,14 @@ class Salary < ApplicationRecord
   validates_presence_of :user, if: -> { team.nil? }
   validates_absence_of :user, unless: -> { team.nil? }
   validates_absence_of :team, unless: -> { user.nil? }
+  after_create :send_notify
+
+  private
+
+  def send_notify
+    payment = prepayment ? 'аванс' : 'Зарплата'
+    message =
+      "Оформлено #{payment} на #{user.name}\n" \
+      "Цена: #{price}"
+  end
 end

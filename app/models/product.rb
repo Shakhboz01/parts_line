@@ -26,6 +26,6 @@ class Product < ApplicationRecord
   def process_initial_remaining_change
     return if initial_remaining.positive? && !self.product_entries.count.zero?
 
-    SendMessage.run(message: "Остаток товара(#{name}) = #{initial_remaining}")
+    SendMessage.run(message: "Остаток товара(#{name}) = #{initial_remaining}", chat: 'warning')
   end
 end
