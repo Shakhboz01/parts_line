@@ -17,6 +17,7 @@ class DeliveryFromCounterparty < ApplicationRecord
             all
           end
         }
+  after_save :process_status_change, if: :saved_change_to_status?
 
   def calculate_total_price(enable_to_alter = true)
     total_price = 0
@@ -41,4 +42,21 @@ class DeliveryFromCounterparty < ApplicationRecord
     sell_price
   end
 
+  private
+
+  def process_status_change
+    if closed? && status_before_last_save != 'closed'
+      price_sign = price_in_usd ? '$' : 'сум'
+      message =  "#{user.name.upcase} оформил приход товара от контрагента" \
+        "<b>Контрагент</b>: #{provider.name}\n" \
+        "<b>Тип оплаты</b>: \n" \
+        "<b>Итого цена прихода:</b> #{total_price} #{price_sign}\n" \
+        "<b>Итого цена продажи:</b> #{calculate_sell_price} #{price_sign}\n" \
+        "<b>предполагаемый доход:</b> #{calculate_sell_price - total_price} #{price_sign}\n"
+      message << "&#9888<b>Оплачено:</b> #{total_paid} #{price_sign}\n" if total_price > total_paid
+      message << "<b>Комментарие:</b> #{total_paid}\n" if comment.present?
+      message << "Нажмите <a href=\"#{ENV.fetch('HOST_URL')}/delivery_from_counterparties/#{self.id}\">здесь</a> для просмотра"
+      SendMessage.run(message: message)
+    end
+  end
 end

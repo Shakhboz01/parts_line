@@ -10,7 +10,8 @@ class SendMessage < ActiveInteraction::Base
       bot.api.send_message(
         chat_id: ENV["TELEGRAM_CHAT_ID"],
         text: message,
-        parse_mode: "HTML"
+        parse_mode: "HTML",
+        disable_web_page_preview: 1
       )
 
     rescue => exception
