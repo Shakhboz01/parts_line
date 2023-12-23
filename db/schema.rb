@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_18_142030) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_23_055805) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -60,6 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_18_142030) do
     t.datetime "updated_at", null: false
     t.bigint "user_id", null: false
     t.boolean "price_in_usd", default: false
+    t.boolean "with_image", default: false
     t.index ["provider_id"], name: "index_delivery_from_counterparties_on_provider_id"
     t.index ["user_id"], name: "index_delivery_from_counterparties_on_user_id"
   end
@@ -88,6 +89,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_18_142030) do
     t.bigint "delivery_from_counterparty_id"
     t.boolean "price_in_usd", default: false
     t.string "sale_ids"
+    t.boolean "with_image", default: false
     t.index ["combination_of_local_product_id"], name: "index_expenditures_on_combination_of_local_product_id"
     t.index ["delivery_from_counterparty_id"], name: "index_expenditures_on_delivery_from_counterparty_id"
   end

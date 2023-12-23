@@ -1,7 +1,9 @@
 class Expenditure < ApplicationRecord
   include ProtectEditAfterDay
   include ProtectDestroyAfterDay
+  include SendImage
   attr_accessor :rate
+  attr_accessor :image
 
   belongs_to :combination_of_local_product, optional: true
   belongs_to :delivery_from_counterparty, optional: true
