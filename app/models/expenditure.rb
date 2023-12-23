@@ -39,7 +39,7 @@ class Expenditure < ApplicationRecord
       "<b>Тип оплаты:</b> #{payment_type}\n" \
       "<b>Цена расхода:</b> #{price} #{price_in_usd ? '$' : 'сум'}\n"
 
-    message << "<b>Оплачено:</b> #{total_paid}" if price > total_paid
+    message << "&#9888<b>Оплачено:</b> #{total_paid}" if price > total_paid
     message << "<b>Комментарие:</b> #{comment}" if comment.present?
     SendMessage.run(message: message)
   end
