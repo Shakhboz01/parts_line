@@ -35,7 +35,7 @@ class ExpendituresController < ApplicationController
   # POST /expenditures or /expenditures.json
   def create
     @expenditure = Expenditure.new(expenditure_params)
-
+    @expenditure.user_id = current_user.id
     respond_to do |format|
       if @expenditure.save
         if @expenditure.combination_of_local_product_id.present?

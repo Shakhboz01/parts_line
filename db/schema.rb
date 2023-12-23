@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_23_055805) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_23_070117) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -90,8 +90,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_23_055805) do
     t.boolean "price_in_usd", default: false
     t.string "sale_ids"
     t.boolean "with_image", default: false
+    t.bigint "user_id"
+    t.string "comment"
     t.index ["combination_of_local_product_id"], name: "index_expenditures_on_combination_of_local_product_id"
     t.index ["delivery_from_counterparty_id"], name: "index_expenditures_on_delivery_from_counterparty_id"
+    t.index ["user_id"], name: "index_expenditures_on_user_id"
   end
 
   create_table "local_services", force: :cascade do |t|
@@ -353,6 +356,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_23_055805) do
   add_foreign_key "discounts", "users"
   add_foreign_key "expenditures", "combination_of_local_products"
   add_foreign_key "expenditures", "delivery_from_counterparties"
+  add_foreign_key "expenditures", "users"
   add_foreign_key "local_services", "sale_from_local_services"
   add_foreign_key "local_services", "users"
   add_foreign_key "owners_operations", "users"

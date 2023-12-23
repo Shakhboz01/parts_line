@@ -5,6 +5,7 @@ class Expenditure < ApplicationRecord
   attr_accessor :rate
   attr_accessor :image
 
+  belongs_to :user
   belongs_to :combination_of_local_product, optional: true
   belongs_to :delivery_from_counterparty, optional: true
   has_many :transaction_histories, dependent: :destroy
@@ -16,7 +17,7 @@ class Expenditure < ApplicationRecord
   scope :price_in_usd, -> { where('price_in_usd = ?', true) }
 
   validate :check_if_total_paid_is_not_more_than_price
-  after_create :set_transaction_history
+  after_create :set_transaction_history_and_notify_via_tg
   before_save :set_total_paid
   before_destroy :varify_delivery_from_counterparty_is_not_closed
   scope :unpaid, -> { where("price > total_paid") }
@@ -30,8 +31,17 @@ class Expenditure < ApplicationRecord
 
   private
 
-  def set_transaction_history
+  def set_transaction_history_and_notify_via_tg
     self.transaction_histories.create(price: price)
+    message =
+      "<b>#{user.name.upcase} оформил расход</b>\n" \
+      "<b>Тип расхода:</b> #{expenditure_type}\n" \
+      "<b>Тип оплаты:</b> #{payment_type}\n" \
+      "<b>Цена расхода:</b> #{price} #{price_in_usd ? '$' : 'сум'}\n"
+
+    message << "<b>Оплачено:</b> #{total_paid}" if price > total_paid
+    message << "<b>Комментарие:</b> #{comment}" if comment.present?
+    SendMessage.run(message: message)
   end
 
   def check_if_total_paid_is_not_more_than_price
