@@ -19,6 +19,7 @@ class Sale < ApplicationRecord
             all
           end
         }
+  after_save :process_status_change, if: :saved_change_to_status?
 
   def calculate_total_price(enable_to_alter = true)
     total_price = 0
@@ -34,6 +35,11 @@ class Sale < ApplicationRecord
     total_price
   end
 
+  def total_profit
+    product_sells.sum(:total_profit)
+  end
+
+
   private
 
   def check_discount
@@ -43,4 +49,18 @@ class Sale < ApplicationRecord
     Discount.create(sale_id: self.id, user_id: user_id, comment: comment, price_in_usd: price_in_usd, price: discount_price)
   end
 
+  def process_status_change
+    if closed? && status_before_last_save != 'closed'
+      price_sign = price_in_usd ? '$' : 'сум'
+      message =  "#{user.name.upcase} оформил продажу на контрагента" \
+        "<b>Покупатель</b>: #{buyer.name}\n" \
+        "<b>Тип оплаты</b>: #{payment_type}\n" \
+        "<b>Итого цена продажи:</b> #{total_price} #{price_sign}\n" \
+        "<b>Итого доход от этой продажи:</b> #{total_profit} #{price_sign}\n"
+      message << "&#9888<b>Оплачено:</b> #{total_paid} #{price_sign}\n" if total_price > total_paid
+      message << "<b>Комментарие:</b> #{comment}\n" if comment.present?
+      message << "Нажмите <a href=\"#{ENV.fetch('HOST_URL')}/sales/#{self.id}\">здесь</a> для просмотра"
+      SendMessage.run(message: message)
+    end
+  end
 end
