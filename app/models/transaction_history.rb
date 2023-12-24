@@ -14,20 +14,22 @@ class TransactionHistory < ApplicationRecord
   private
 
   def proccess_increment
-    if !sale.nil? && !sale.transaction_histories.empty?
+    return if first_record
+
+    if !sale.nil?
       sale.increment!(:total_paid, price)
       if price_in_usd != sale.price_in_usd
         self.price_in_usd = !price_in_usd
       end
-    elsif !delivery_from_counterparty.nil? && !delivery_from_counterparty.transaction_histories.empty?
-      delivery_from_counterparty.increment!(:total_paid, price)
+    elsif !delivery_from_counterparty.nil?
+      delivery_from_counterparty.update(total_paid: delivery_from_counterparty.total_paid + price)
       if price_in_usd != delivery_from_counterparty.price_in_usd
         self.price_in_usd = !price_in_usd
       end
-    elsif !expenditure.nil? && !expenditure.transaction_histories.empty?
+    elsif !expenditure.nil?
       expenditure.increment!(:total_paid, price)
       if price_in_usd != expenditure.price_in_usd
-        self.price_in_usd = !price_in_usd
+        self.price_in_usd = expenditure.price_in_usd
       end
     end
   end

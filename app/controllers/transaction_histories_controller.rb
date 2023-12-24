@@ -3,12 +3,19 @@ class TransactionHistoriesController < ApplicationController
 
   # GET /transaction_histories or /transaction_histories.json
   def index
-    @q = TransactionHistory.ransack(params[:q])
+    @special_filter_options = [['', 0], ['От продажи', 1], ['От покупки товаров', 2], ['От расходов', 3]]
+    @q = TransactionHistory.where(first_record: false).ransack(params[:q])
     @transaction_histories = @q.result.order(id: :desc)
-    @transaction_histories =
-      @transaction_histories.where(sale_id: params[:sale_id])
-                            .where(expenditure_id: params[:expenditure_id])
-                            .where(delivery_from_counterparty_id: params[:delivery_from_counterparty_id])
+    unless (id = params.dig(:q_other, :special_filter).to_i).zero?
+      case id
+      when 1
+        @transaction_histories = @transaction_histories.where.not(sale_id: nil)
+      when 2
+        @transaction_histories = @transaction_histories.where.not(delivery_from_counterparty_id: nil)
+      when 3
+        @transaction_histories = @transaction_histories.where.not(expenditure_id: nil)
+      end
+    end
     @transaction_histories_data = @transaction_histories
     @transaction_histories = @transaction_histories.page(params[:page]).per(40)
   end

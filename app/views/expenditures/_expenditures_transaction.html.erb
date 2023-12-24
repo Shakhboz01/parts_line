@@ -1,5 +1,5 @@
 <% if expenditure.total_paid < expenditure.price %>
-  <i type="button" class="fa fa-money-bill-transfer" title=<%= "Пополнить оставщегося" %> style='color: blue; cursor: pointer' data-toggle="modal" data-target="#exampleModal"></i>
+  <i type="button" class="fa fa-money-bill-transfer" title=<%= "Пополнить оставщегося" %> style='color: blue; cursor: pointer' data-toggle="modal" data-target="#expenditureTransactionModal"></i>
 <% end %>
 
 <% if expenditure.transaction_histories.exists? %>
@@ -8,7 +8,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="expenditureTransactionModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
