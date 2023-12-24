@@ -11,10 +11,10 @@ class ProductRemainingInequality < ApplicationRecord
     remaining = amount - (product.product_entries.sum(:amount) - product.product_entries.sum(:amount_sold))
     product.update(initial_remaining: remaining)
     SendMessage.run(
-      message: "#{user.name} edited Product remaining manually\n" \
-               "Product: #{product.name}\n" \
-               "Previous amount: #{previous_amount}\n" \
-               "Now: #{amount}"
+      message: "#{user.name} редактировал Оставшийся товар вручную\n" \
+               "товар: #{product.name}\n" \
+               "Предыдущий остаток: #{previous_amount}\n" \
+               "Сейчас: #{amount}"
     )
   end
 end

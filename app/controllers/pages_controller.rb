@@ -46,4 +46,12 @@ class PagesController < ApplicationController
   def define_sale_destination; end
 
   def shortcuts; end
+
+  def daily_report
+    DailyReport.run
+    respond_to do |format|
+      format.json { render json: {success: true}, status: :ok }
+      format.html { redirect_to request.referrer || root_path }
+    end
+  end
 end

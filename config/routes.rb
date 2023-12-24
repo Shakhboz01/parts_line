@@ -61,6 +61,7 @@ Rails.application.routes.draw do
   root "pages#main_page"
   get "pages#define_sale_destination", to: "pages#define_sale_destination", as: :define_sale_destination
   get "pages#shortcut", to: "pages#shortcut", as: :shortcut
+  get "daily_report", to: "pages#daily_report", as: :daily_report
   devise_for :users, controllers: { sessions: "sessions" }
 
   resources :users do
