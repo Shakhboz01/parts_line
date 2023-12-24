@@ -3,9 +3,14 @@ class PagesController < ApplicationController
     # TODO include discount when calculating a remaining balance
     @buyers = Buyer.all.select { |buyer| buyer.calculate_debt_in_usd > 0 || buyer.calculate_debt_in_uzs > 0 }
     @providers = Provider.all.select { |provider| provider.calculate_debt_in_usd > 0 || provider.calculate_debt_in_uzs > 0 }
-    @delivery_from_counterparties = DeliveryFromCounterparty.unpaid.order(created_at: :desc)
-    @expenditures = Expenditure.unpaid.order(created_at: :desc)
-    @sales = Sale.unpaid.order(created_at: :desc)
+    @delivery_from_counterparties =
+      DeliveryFromCounterparty.where('created_at >= ?', DateTime.current.beginning_of_day)
+                              .or(DeliveryFromCounterparty.unpaid)
+                              .order(created_at: :desc)
+    @expenditures = Expenditure.where('created_at >= ?', DateTime.current.beginning_of_day)
+                               .or(Expenditure.unpaid).order(created_at: :desc)
+    @sales = Sale.where('created_at >= ?', DateTime.current.beginning_of_day)
+                 .or(Sale.unpaid).order(created_at: :desc)
 
     unless params.dig(:q, :created_at_end_of_day_lteq)
       params[:q] ||= {}

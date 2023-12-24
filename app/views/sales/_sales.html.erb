@@ -1,8 +1,8 @@
 <table class="table table-hover table-bordered table-striped">
   <thead>
     <tr>
+      <th>ID</th>
       <% unless defined?(shrink) %>
-        <th>ID</th>
         <td>Проводка<br>закрыто</td>
       <% end %>
       <th>Покупатель</th>
@@ -25,8 +25,8 @@
   <tbody>
     <% sales.each do |sale| %>
       <tr>
+        <td class="<%= detect_danger_row(sale.total_price, sale.total_paid) %>"><%= sale.id %></td>
         <% unless defined?(shrink) %>
-          <td class="<%= detect_danger_row(sale.total_price, sale.total_paid) %>"><%= sale.id %></td>
           <td><%= active_check(sale.closed?) %></td>
         <% end %>
         <td><%= sale.buyer.name %></td>
