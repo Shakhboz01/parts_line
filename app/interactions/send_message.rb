@@ -2,7 +2,7 @@ require "telegram/bot"
 
 class SendMessage < ActiveInteraction::Base
   string :message
-  string :vhat, default: 'tech'
+  string :chat, default: 'tech'
 
   def execute
     token = ENV["TELEGRAM_TOKEN"]

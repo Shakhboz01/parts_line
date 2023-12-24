@@ -1,3 +1,5 @@
+require "telegram/bot"
+
 module SendImage
   extend ActiveSupport::Concern
 

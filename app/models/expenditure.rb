@@ -32,7 +32,8 @@ class Expenditure < ApplicationRecord
   private
 
   def set_transaction_history_and_notify_via_tg
-    self.transaction_histories.create(price: price)
+    self.transaction_histories.create(price: price, first_record: true, user_id: user.id)
+    byebug
     message =
       "<b>#{user.name.upcase} оформил расход</b>\n" \
       "<b>Тип расхода:</b> #{expenditure_type}\n" \
