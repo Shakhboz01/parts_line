@@ -10,7 +10,7 @@
 
     <div class='row'>
       <div class='col-sm-3 col-md-2'>
-        <%= f.association :product, label: 'товар', collection: products.order(:name), include_blank: false %>
+        <%= f.association :product, label: 'товар', collection: products.order('LOWER(name) ASC'), include_blank: false %>
       </div>
       <div class='col-sm-3 col-md-2'>
         <%= f.input :amount, label: 'Количество', input_html: {value: ''} %>
@@ -35,44 +35,47 @@
 
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-document.getElementById('custom-action-button').addEventListener('click', function(e) {
-e.preventDefault();
-var product_id = document.querySelector('#product_sell_product_id').value;
-var amount = document.querySelector('#product_sell_amount').value;
-var customActionURL = '/product_sells/ajax_sell_price_request';
-var data = {
-  product_id: product_id,
-  amount: amount
-};
-var csrfToken = $('meta[name="csrf-token"]').attr('content');
-fetch(customActionURL, {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-    'X-CSRF-Token': csrfToken, // Include the CSRF token in the request headers
-  },
-  body: JSON.stringify(data)
-})
-.then(function(response) {
-  if (response.ok) {
-    return response.text();
-  } else {
-    throw new Error('Error: ' + response.status);
-  }
-})
-.then(function(responseText) {
-  alert(responseText);
-})
-.catch(function(error) {
-  console.error(error);
-});
-});
-});
+  $(document).ready(function() {
 
-$('#manual-price').click(function() {
-$('#price-fields').toggle();
-$('#custom-action-button').toggle();
-$('#manual-price').hide();
-});
+    document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('custom-action-button').addEventListener('click', function(e) {
+    e.preventDefault();
+    var product_id = document.querySelector('#product_sell_product_id').value;
+    var amount = document.querySelector('#product_sell_amount').value;
+    var customActionURL = '/product_sells/ajax_sell_price_request';
+    var data = {
+      product_id: product_id,
+      amount: amount
+    };
+    var csrfToken = $('meta[name="csrf-token"]').attr('content');
+    fetch(customActionURL, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrfToken, // Include the CSRF token in the request headers
+      },
+      body: JSON.stringify(data)
+    })
+    .then(function(response) {
+      if (response.ok) {
+        return response.text();
+      } else {
+        throw new Error('Error: ' + response.status);
+      }
+    })
+    .then(function(responseText) {
+      alert(responseText);
+    })
+    .catch(function(error) {
+      console.error(error);
+    });
+    });
+    });
+
+    $('#manual-price').click(function() {
+    $('#price-fields').toggle();
+    $('#custom-action-button').toggle();
+    $('#manual-price').hide();
+    });
+  })
 </script>

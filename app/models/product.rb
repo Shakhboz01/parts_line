@@ -5,7 +5,6 @@ class Product < ApplicationRecord
 
   validates_uniqueness_of :code
   validates_presence_of :name
-  validates_uniqueness_of :name
   validates_presence_of :unit
   belongs_to :product_category
   has_many :product_entries
@@ -29,6 +28,6 @@ class Product < ApplicationRecord
   def process_initial_remaining_change
     return if initial_remaining.positive? && !self.product_entries.count.zero?
 
-    SendMessage.run(message: "Остаток товара(#{name}) = #{initial_remaining}", chat: 'warning')
+    # SendMessage.run(message: "Остаток товара(#{name}) = #{initial_remaining}", chat: 'warning')
   end
 end
