@@ -3,8 +3,6 @@
 class Product < ApplicationRecord
   include ProtectDestroyable
 
-  validates_presence_of :sell_price
-  validates_presence_of :buy_price
   validates_presence_of :name
   validates_uniqueness_of :name
   validates_presence_of :unit
