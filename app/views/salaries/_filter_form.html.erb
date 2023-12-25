@@ -15,10 +15,6 @@
         <%= f.select :user_id_eq, User.pluck(:name, :id), { include_blank: true }, class: 'form-control' %>
       </div>
       <div class="form-group col-xs-3 col-sm-2">
-        <%= f.label :team_id_eq, 'Бригада:', class: 'control-label' %>
-        <%= f.select :team_id_eq, Team.pluck(:name, :id), { include_blank: true }, class: 'form-control' %>
-      </div>
-      <div class="form-group col-xs-3 col-sm-2">
         <%= f.label :payment_type_eq, 'Тип оплаты:', class: ' form-control' %>
         <%= f.select :payment_type_eq, Salary.payment_types, include_blank: true %>
       </div>
