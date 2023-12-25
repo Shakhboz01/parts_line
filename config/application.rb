@@ -18,6 +18,7 @@ module Rrf
     #
     # config.time_zone = "Central Time (US & Canada)"
     config.time_zone = 'Tashkent'
+    config.assets.enabled = false
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
