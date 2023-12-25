@@ -14,6 +14,7 @@ class ProductsController < ApplicationController
 
   # GET /products/new
   def new
+    @random_code = Product.generate_code
     @product = Product.new(product_category_id: params[:product_category_id])
   end
 
@@ -73,6 +74,6 @@ class ProductsController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def product_params
-    params.require(:product).permit(:name, :local, :price_in_usd, :sell_price, :buy_price, :unit, :product_category_id, :initial_remaining)
+    params.require(:product).permit(:name, :local, :price_in_usd, :sell_price, :buy_price, :unit, :product_category_id, :initial_remaining, :code)
   end
 end
