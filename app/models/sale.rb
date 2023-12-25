@@ -52,7 +52,7 @@ class Sale < ApplicationRecord
   def process_status_change
     if closed? && status_before_last_save != 'closed'
       price_sign = price_in_usd ? '$' : 'сум'
-      message =  "#{user.name.upcase} оформил продажу на контрагента" \
+      message =  "#{user.name.upcase} оформил продажу на контрагента\n" \
         "<b>Покупатель</b>: #{buyer.name}\n" \
         "<b>Тип оплаты</b>: #{payment_type}\n" \
         "<b>Итого цена продажи:</b> #{total_price} #{price_sign}\n" \
