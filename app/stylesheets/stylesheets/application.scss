@@ -1,0 +1,33 @@
+
+// Custom SCSS
+@import "components/buttons";
+@import "components/forms";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+*{
+  margin: 0;
+  padding: 0;
+}
+.flexs {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #f1f1f1;
+}
+
+.product-index{
+  background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('https://rolli.uz/assets/rasm/red.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+}
+.nav-link{
+  color: white;
+}
+
+.roles-bg{
+  background-image: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.6)), url('https://rolli.uz/assets/rasm/img2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}

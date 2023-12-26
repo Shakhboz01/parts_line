@@ -1,0 +1,94 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
+ * vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+ .styled-delete-button{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+ }
+
+ #admin-navbar {
+  padding-left: 0;
+  padding-right: 0;
+  .warn {
+    color: red;
+  }
+}
+.container-fluid {
+  margin: 20px;
+  border: 1px solid #ddd;
+  border-radius: 9px;
+}
+.navbar-nav{
+  float:left;
+  margin:0
+}
+.navbar-default{
+  background:#fff;
+  border:none!important;
+}
+.navbar-default .navbar-nav>li>a{
+  color:#05222A;
+  font-size:1.3em;
+  font-weight:900;
+}
+.navbar-default .navbar-nav>.active>a,.navbar-default .navbar-nav>.active>a:focus,.navbar-default .navbar-nav>.active>a:hover,.navbar-default .navbar-nav>li>a:focus,.navbar-default .navbar-nav>li>a:hover{
+  color:#02B875;
+  background-color:#fff;
+}
+.navbar-default .navbar-nav>li>a,h1,h2,h3,h4,h5,h6{
+  font-family:'Josefin Sans',sans-serif;
+}
+.navbar{
+  min-height:50px;
+  margin-bottom:0;
+  border:1px solid transparent;
+}
+.navbar-default .navbar-nav>.open>a,.navbar-default .navbar-nav>.open>a:focus,.navbar-default .navbar-nav>.open>a:hover{
+  color:#05222A;
+  background-color:#fff;
+}
+ .filter-form {
+  background-color: #f7f7f7;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+
+.filter-form label {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.filter-form input[type="date"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+}
+
+.filter-form .btn {
+  margin-top: 10px;
+  margin-right: 10px;
+}
+
+.cancel-button:hover {
+  text-decoration: underline;
+}
