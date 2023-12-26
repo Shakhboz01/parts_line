@@ -6,7 +6,7 @@ require "rails/all"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-module Rrf
+module PaperApp
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.0
@@ -18,7 +18,6 @@ module Rrf
     #
     # config.time_zone = "Central Time (US & Canada)"
     config.time_zone = 'Tashkent'
-    config.assets.enabled = false
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
