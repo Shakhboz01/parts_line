@@ -56,6 +56,7 @@ gem 'active_interaction'
 gem 'telegram-bot-ruby'
 gem 'figaro'
 gem 'whenever'
+gem 'roo'
 
 # Use Sass to process CSS
 # gem "sassc-rails"

@@ -1,6 +1,9 @@
 # total paid might be null, it means provider paid fully at once
 # ignored service_price
 class ProductEntry < ApplicationRecord
+  attr_accessor :excel_data
+  attr_accessor :product_category_id
+
   belongs_to :combination_of_local_product, optional: true
   belongs_to :delivery_from_counterparty
   has_one :provider, through: :delivery_from_counterparty
