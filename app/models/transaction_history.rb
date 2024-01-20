@@ -1,12 +1,11 @@
 class TransactionHistory < ApplicationRecord
   belongs_to :sale, optional: true
   belongs_to :user
-  belongs_to :sale_from_service, optional: true
-  belongs_to :sale_from_local_service, optional: true
   belongs_to :delivery_from_counterparty, optional: true
   belongs_to :expenditure, optional: true
   validates_presence_of :price
   before_create :proccess_increment
+  before_create :proccess_profit, if: -> { !sale.nil? }
   before_destroy :proccess_decrement
   scope :price_in_uzs, -> { where('price_in_usd = ?', false) }
   scope :price_in_usd, -> { where('price_in_usd = ?', true) }
@@ -43,5 +42,9 @@ class TransactionHistory < ApplicationRecord
     elsif !expenditure.nil?
       expenditure.decrement!(:total_paid, price)
     end
+  end
+
+  def proccess_profit
+    self.estimated_profit = (price * sale.total_profit / sale.total_price)
   end
 end
