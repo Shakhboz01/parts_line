@@ -4,7 +4,7 @@ class SalesController < ApplicationController
   include Pundit::Authorization
   # GET /sales or /sales.json
   def index
-    @q = Sale.ransack(params[:q])
+    @q = Sale.includes(:buyer, :user).ransack(params[:q])
     @sales =
       @q.result.filter_by_total_paid_less_than_price(params.dig(:q_other, :total_paid_less_than_price))
         .order(id: :desc)

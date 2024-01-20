@@ -23,7 +23,7 @@ class PagesController < ApplicationController
 
     @q = TransactionHistory.ransack(params[:q])
     sales = Sale.where('created_at >= ?', params[:q][:created_at_gteq])
-               .where('created_at <= ?', params[:q][:created_at_end_of_day_lteq])
+                .where('created_at <= ?', params[:q][:created_at_end_of_day_lteq])
     @sales_in_usd = sales.price_in_usd
     @sales_in_uzs = sales.price_in_uzs
 
