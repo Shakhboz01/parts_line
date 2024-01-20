@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_05_131616) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_20_130628) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -360,6 +360,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_131616) do
     t.bigint "user_id"
     t.boolean "first_record", default: false
     t.integer "payment_type", default: 0
+    t.decimal "estimated_profit", precision: 17, scale: 2, default: "0.0"
     t.index ["delivery_from_counterparty_id"], name: "index_transaction_histories_on_delivery_from_counterparty_id"
     t.index ["expenditure_id"], name: "index_transaction_histories_on_expenditure_id"
     t.index ["sale_from_local_service_id"], name: "index_transaction_histories_on_sale_from_local_service_id"
