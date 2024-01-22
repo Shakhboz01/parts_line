@@ -101,5 +101,27 @@ class PagesController < ApplicationController
       product_taken_in_usd: product_taken_in_usd,
       difference_in_usd: money_given_in_usd - product_taken_in_usd
     })
+
+    # overall_info
+    transaction_histories = TransactionHistory.ransack(params[:q]).result
+    profit_from_sale = transaction_histories.where.not(sale_id: nil)
+
+    @sales_in_usd = profit_from_sale.price_in_usd.sum(:price)
+    @sales_in_uzs = profit_from_sale.price_in_uzs.sum(:price)
+
+    @profit_from_sale_in_usd = profit_from_sale.price_in_usd.sum(:estimated_profit)
+    @profit_from_sale_in_uzs = profit_from_sale.price_in_uzs.sum(:estimated_profit)
+
+    delivery_from_counterparties = transaction_histories.where.not(delivery_from_counterparty_id: nil)
+    @delivery_from_counterparties_in_usd = delivery_from_counterparties.price_in_usd.sum(:price)
+    @delivery_from_counterparties_in_uzs = delivery_from_counterparties.price_in_uzs.sum(:price)
+
+    expenditures = transaction_histories.where.not(expenditure_id: nil)
+    @expenditures_in_usd = expenditures.price_in_usd.sum(:price)
+    @expenditures_in_uzs = expenditures.price_in_uzs.sum(:price)
+
+    salaries = Salary.ransack(params[:q]).result
+    @prepayment = salaries.where(prepayment: true).sum(:price)
+    @salaries = salaries.where(prepayment: false).sum(:price)
   end
 end

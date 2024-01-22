@@ -5,13 +5,10 @@ class Salary < ApplicationRecord
 
   belongs_to :team, optional: true
   belongs_to :user, optional: true
-  enum payment_type: %i[наличные карта click предоплата перечисление дригие]
+  enum payment_type: %i[наличные карта click перечисление дригие]
   validates :price, presence: true
   validates_presence_of :month
-  validates_presence_of :team, if: -> { user_id.nil? }
-  validates_presence_of :user, if: -> { team.nil? }
-  validates_absence_of :user, unless: -> { team.nil? }
-  validates_absence_of :team, unless: -> { user.nil? }
+  validates_presence_of :user
   after_create :send_notify
 
   private
