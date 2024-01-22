@@ -15,7 +15,7 @@ class Product < ApplicationRecord
   after_save :process_initial_remaining_change, if: :saved_change_to_initial_remaining?
 
   def self.generate_code
-    rand(100_000..999_999).to_s
+    rand(100_00..999_99).to_s
   end
 
   def calculate_product_remaining
@@ -28,6 +28,6 @@ class Product < ApplicationRecord
   def process_initial_remaining_change
     return if initial_remaining.positive? && !self.product_entries.count.zero?
 
-    # SendMessage.run(message: "Остаток товара(#{name}) = #{initial_remaining}", chat: 'warning')
+    SendMessage.run(message: "Остаток товара(#{name}) = #{initial_remaining}", chat: 'warning')
   end
 end
