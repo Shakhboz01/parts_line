@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  before_action :set_product, only: %i[ toggle_active show edit update destroy ]
+  before_action :set_product, only: %i[ toggle_active show edit update destroy calculate_product_remaining]
 
   # GET /products or /products.json
   def index
@@ -64,6 +64,12 @@ class ProductsController < ApplicationController
   def toggle_active
     @product.toggle(:active).save
     redirect_to products_url, notice: "Successfully updated"
+  end
+
+  def calculate_product_remaining
+    calculate_product_remaining = @product.calculate_product_remaining
+
+    render json: { calculate_product_remaining: calculate_product_remaining }
   end
 
   private

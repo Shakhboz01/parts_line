@@ -34,3 +34,11 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  document.querySelector('#sale_total_paid').addEventListener('focus', function(e) {
+    if(document.querySelector('#sale_total_paid').value == null || document.querySelector('#sale_total_paid').value == 0){
+      document.querySelector('#sale_total_paid').value = document.querySelector('#total-price').value
+    }
+  })
+</script>

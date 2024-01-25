@@ -18,6 +18,10 @@ class Product < ApplicationRecord
     rand(100_00..999_99).to_s
   end
 
+  def product_code
+    "#{code} #{name}"
+  end
+
   def calculate_product_remaining
     remaining_from_entries = product_entries.sum(:amount) - product_entries.sum(:amount_sold)
     remaining_from_entries + initial_remaining

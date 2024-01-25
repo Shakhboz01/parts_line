@@ -26,7 +26,7 @@ module ProductSells
         if (amount <= product.initial_remaining) || first_available_entry.nil?
           sell_price = product_sell.sell_price
           buy_price = product.buy_price.zero? ? first_available_entry&.buy_price : product.buy_price
-          return errors.add(:base, "please set buy_price to #{product.name}") if buy_price.nil?
+          buy_price ||= sell_price
 
           if sell_price.zero?
             sell_price = product.sell_price.zero? ? first_available_entry&.sell_price : product.sell_price

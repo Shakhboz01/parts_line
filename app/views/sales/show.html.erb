@@ -1,4 +1,4 @@
-<div class='container'>
+<div class=''>
   <div class="card-header d-flex justify-content-between align-items-center">
     <h3 class="card-title font-weight-bold">Продажа</h3>
   </div>
@@ -29,14 +29,5 @@
     $("input").focus(function() {
       $(this).select();
     });
-  });
-</script>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function() {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('reload')) {
-      location.reload();
-    }
   });
 </script>

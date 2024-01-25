@@ -43,6 +43,7 @@ Rails.application.routes.draw do
   resources :product_categories
   resources :products do
     post :toggle_active, on: :member
+    get :calculate_product_remaining, on: :member
   end
 
   resources :salaries
