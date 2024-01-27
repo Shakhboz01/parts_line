@@ -20,7 +20,6 @@ module ProductEntries
         words = name.split
         code = words[0]
         name = words[1..].join(' ')
-        byebug
         pr = Product.find_by_code(code)
         if pr.nil?
           pr = Product.create(name: name, code: code, unit: 0, product_category_id: product_category_id)
