@@ -1,5 +1,5 @@
 class SalesController < ApplicationController
-  before_action :set_sale, only: %i[ show edit update destroy toggle_status ]
+  before_action :set_sale, only: %i[ show edit update destroy toggle_status generate_pdf]
 
   include Pundit::Authorization
   # GET /sales or /sales.json
@@ -89,6 +89,13 @@ class SalesController < ApplicationController
 
     @sale.update(status: @sale.closed? ? 0 : 1)
     redirect_to request.referrer, notice: 'Successfully updated'
+  end
+
+  def generate_pdf
+    authorize Sale, :access?
+
+    ProductSells::GenerateReceipt.run(sale: @sale)
+    redirect_to sales_path, notice: 'SUCCESS'
   end
 
   private

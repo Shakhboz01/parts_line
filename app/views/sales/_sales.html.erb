@@ -49,6 +49,7 @@
         <% end %>
         <td>
           <%= clink_to 'Посмотреть', sale_path(sale), 'fa-search' %>
+          <%= clink_to 'PDF чек', generate_pdf_sale_path(sale), 'fa-file-pdf', :post %>
           <% if sale.closed? %>
             <%= render 'sales/sale_transaction', sale: sale %>
           <% end %>

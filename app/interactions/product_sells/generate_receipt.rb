@@ -1,7 +1,8 @@
-include ActionView::Helpers
-include ApplicationHelper
 module ProductSells
   class GenerateReceipt < ActiveInteraction::Base
+    include ActionView::Helpers
+    include ApplicationHelper
+
     object :sale
 
     def execute
