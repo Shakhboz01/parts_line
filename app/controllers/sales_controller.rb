@@ -91,8 +91,15 @@ class SalesController < ApplicationController
   def generate_pdf
     authorize Sale, :access?
 
-    ProductSells::GenerateReceipt.run(sale: @sale)
-    redirect_to sales_path, notice: 'SUCCESS'
+    pdf_generator = ProductSells::GenerateReceipt.run(sale: @sale)
+    file_path = pdf_generator.result[:file_path] # Assuming your GenerateReceipt returns the file path
+    filename = pdf_generator.result[:filename]
+    # NOTE I included mime_type.rb to receive pdf
+    respond_to do |format|
+      format.pdf do
+        send_file(file_path, filename: filename, type: 'application/pdf')
+      end
+    end
   end
 
   private

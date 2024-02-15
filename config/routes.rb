@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :sales do
     post :default_create, on: :collection
     post :toggle_status, on: :member
-    post :generate_pdf, on: :member
+    get :generate_pdf, on: :member
   end
   resources :local_services
   resources :sale_from_local_services do
