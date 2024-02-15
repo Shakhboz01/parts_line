@@ -21,21 +21,11 @@ class ProductEntry < ApplicationRecord
   before_destroy :varify_delivery_from_counterparty_is_not_closed
   after_create :update_delivery_currency
   after_create :update_delivery_category
-  after_update :notify_on_remaining_inequality, if: :saved_change_to_amount_sold?
 
   scope :paid_in_uzs, -> { where('paid_in_usd = ?', false) }
   scope :paid_in_usd, -> { where('paid_in_usd = ?', true) }
+
   private
-
-  def notify_on_remaining_inequality
-    return if amount > amount_sold
-
-    SendMessage.run(
-      message: '<b>ERROR</b>\nОстаток товара в минусах\n' \
-                "Товар: #{product.name}\n" \
-                "Остаток: #{product.calculate_product_remaining}\n"
-    )
-  end
 
   def set_currency
     self.paid_in_usd = product.price_in_usd

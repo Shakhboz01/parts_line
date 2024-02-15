@@ -16,7 +16,7 @@ class ProductRemainingInequalitiesController < ApplicationController
     product = Product.find(params[:product_id])
     @product_remaining_inequality = ProductRemainingInequality.new(
       product_id: product.id,
-      previous_amount: product.calculate_product_remaining,
+      previous_amount: product.initial_remaining,
     )
   end
 

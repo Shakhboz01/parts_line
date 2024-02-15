@@ -31,16 +31,11 @@
             <td><%= currency_convert(product.price_in_usd, product.buy_price) %></td>
             <td><%= currency_convert(product.price_in_usd, product.sell_price) %></td>
             <td><%= product.unit %></td>
-            <td><%= product.calculate_product_remaining %></td>
+            <td><%= product.initial_remaining %></td>
             <td><%= strf_datetime(product.created_at) %></td>
             <td>
               <%= clink_to 'История приход товара', product_entries_path(q: {product_id_eq: product.id}), 'fa-search' %>
               <%= clink_to 'Редактировать', edit_product_path(product), 'fa-edit' %>
-              <%= clink_to 'Изменить остаток товара', new_product_remaining_inequality_path(product_id: product.id), 'fa-not-equal' %>
-              <% if product.product_remaining_inequalities.exists? %>
-                <%= clink_to 'показать историю изменений остаток товара', product_remaining_inequalities_path(q: {product_id_eq: product.id}), 'fa-clock-rotate-left' %>
-              <% end %>
-
               <% if product.active %>
                   <%= clink_to 'Деактивировать', toggle_active_product_path(product), 'fa-ban', :post %>
                 <% else %>

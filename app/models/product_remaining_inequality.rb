@@ -7,7 +7,7 @@ class ProductRemainingInequality < ApplicationRecord
   private
 
   def change_product_remaining
-    self.previous_amount = product.calculate_product_remaining
+    self.previous_amount = product.initial_remaining
     remaining = amount - (product.product_entries.sum(:amount) - product.product_entries.sum(:amount_sold))
     product.update(initial_remaining: remaining)
     SendMessage.run(
