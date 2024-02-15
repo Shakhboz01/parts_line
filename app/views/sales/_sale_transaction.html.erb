@@ -1,7 +1,0 @@
-<% if sale.total_paid < sale.total_price %>
-  <%= clink_to 'Пополнить оставщегося сум', new_transaction_history_path(sale_id: sale.id), 'fa-money-bill-transfer' %>
-<% end %>
-
-<% if sale.transaction_histories.exists? %>
-  <%= clink_to 'история пополнений', transaction_histories_path(sale_id: sale.id), 'fa-clock-rotate-left' %>
-<% end %>

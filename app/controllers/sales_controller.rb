@@ -51,10 +51,7 @@ class SalesController < ApplicationController
   # PATCH/PUT /sales/1 or /sales/1.json
   def update
     respond_to do |format|
-      if @sale.update(sale_params.merge(
-          status: sale_params[:status].to_i,
-          total_price: @sale.calculate_total_price(false)
-        ))
+      if @sale.update(sale_params.merge(status: sale_params[:status].to_i))
         format.html { redirect_to sales_url, notice: "Sale was successfully updated." }
         format.json { render :show, status: :ok, location: @sale }
       else
@@ -107,6 +104,9 @@ class SalesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def sale_params
-    params.require(:sale).permit(:total_paid, :payment_type, :buyer_id, :total_price, :comment, :user_id, :status, :discount_price)
+    params.require(:sale).permit(
+      :total_paid, :payment_type, :buyer_id, :total_price, :comment, :user_id, :status,
+      :discount_price, :price_in_usd
+    )
   end
 end

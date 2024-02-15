@@ -1,36 +1,3 @@
-<div class='p-3' style='color: black; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;'>
-  <%= simple_form_for(product_sell) do |f| %>
-    <div class='form-inputs'>
-      <%= f.error_notification %>
-      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-
-      <%= f.collection_select :product_id, products.order('LOWER(name) ASC'), :id, :name, { include_blank: true }, { hidden: true, class: 'form-select form-control' } %><br>
-      <div class='row'>
-        <div class='col-sm-4'>
-          <%= f.input :amount, label: 'Кол.' %>
-        </div>
-        <div class='col-sm-4'>
-          <%= f.input :sell_price, label: 'Цена (1 шт)'%>
-        </div>
-        <div class='col-sm-4 align-self-center'>
-          <%= f.submit "Создать", class: 'btn btn-primary'%>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='col-sm-12'>
-          <%= f.input :product_search, label: 'Искать товара', input_html:{style:'box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;', id: 'product_search_input'} %>
-        </div>
-      </div>
-      <div style='max-height: 450px; overflow: auto' class='row'>
-        <div id='products-list' class='col-sm-12 products'>
-          <%= render 'product_sells/products_list_select' %>
-        </div>
-      </div>
-    </div>
-    <%= f.association :sale, as: :hidden %>
-  <% end %>
-</div>
-
 <script>
   $(document).ready(function() {
     $('.products p').click(function() {
@@ -42,25 +9,6 @@
       document.querySelector('#product_sell_product_id').value = $(this).data('product-id');
       calculateSalePrice();
 		});
-
-    document.querySelector('#product_sell_product_id').addEventListener('change', function(e) {
-      document.querySelector('#product_sell_amount').value = 1;
-      document.querySelector('#product_sell_product_code_id').value = document.querySelector('#product_sell_product_id').value;
-      handleProductChange();
-      calculateSalePrice();
-    })
-
-    document.querySelector('#product_sell_product_code_id').addEventListener('change', function(e) {
-      document.querySelector('#product_sell_amount').value = 1;
-      document.querySelector('#product_sell_product_id').value = document.querySelector('#product_sell_product_code_id').value;
-      handleProductChange();
-      calculateSalePrice();
-    })
-
-    document.querySelector('#product_sell_amount').addEventListener('change', function(e) {
-      e.preventDefault();
-      calculateSalePrice()
-    });
 
     function calculateSalePrice(){
       var product_id = document.querySelector('#product_sell_product_id').value;
@@ -96,20 +44,39 @@
         });
       }
     }
-
-    function handleProductChange() {
-      var productSelect = document.querySelector("#product_sell_product_id");
-      var initialRemainingInput = document.querySelector("#product_sell_initial_remaining");
-
-      if (productSelect) {
-        var productId = productSelect.value;
-        fetch('/products/' + productId + '/calculate_product_remaining')
-          .then(response => response.json())
-          .then(data => {
-            initialRemainingInput.value = data.calculate_product_remaining;
-          })
-          .catch(error => console.error('Error:', error));
-      }
-    }
   })
 </script>
+
+
+<div class='p-3' style='color: black; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;'>
+  <%= simple_form_for(product_sell) do |f| %>
+    <div class='form-inputs'>
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+      <%= f.collection_select :product_id, products.order('LOWER(name) ASC'), :id, :name, { include_blank: true }, { hidden: true, class: 'form-select form-control' } %><br>
+      <div class='row'>
+        <div class='col-sm-4'>
+          <%= f.input :amount, label: 'Кол.' %>
+        </div>
+        <div class='col-sm-4'>
+          <%= f.input :sell_price, label: 'Цена (1 шт)'%>
+        </div>
+        <div class='col-sm-4 align-self-center'>
+          <%= f.submit "Создать", class: 'btn btn-primary'%>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-sm-12'>
+          <%= f.input :product_search, label: 'Искать товара', input_html:{style:'box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;', id: 'product_search_input'} %>
+        </div>
+      </div>
+      <div style='max-height: 450px; overflow: auto' class='row'>
+        <div id='products-list' class='col-sm-12 products'>
+          <%= render 'product_sells/products_list_select' %>
+        </div>
+      </div>
+    </div>
+    <%= f.association :sale, as: :hidden %>
+  <% end %>
+</div>

@@ -1,5 +1,4 @@
 class Sale < ApplicationRecord
-  include HandleTransactionHistory
   attr_accessor :discount_price
   belongs_to :buyer
   belongs_to :user
@@ -9,6 +8,7 @@ class Sale < ApplicationRecord
   has_one :discount
   has_many :transaction_histories, dependent: :destroy
   before_update :check_discount
+  before_update :update_product_sales_currencies
   scope :unpaid, -> { where("total_price > total_paid") }
   scope :price_in_uzs, -> { where('price_in_usd = ?', false) }
   scope :price_in_usd, -> { where('price_in_usd = ?', true) }
@@ -20,24 +20,6 @@ class Sale < ApplicationRecord
           end
         }
   after_save :process_status_change, if: :saved_change_to_status?
-
-  def calculate_total_price(enable_to_alter = true)
-    total_price = 0
-    self.product_sells.each do |product_sell|
-      total_price += product_sell.amount * product_sell.sell_price
-    end
-
-    if enable_to_alter
-      self.total_price = total_price unless closed?
-    end
-
-    total_price
-  end
-
-  def total_profit
-    product_sells.sum(:total_profit)
-  end
-
 
   private
 
@@ -55,8 +37,7 @@ class Sale < ApplicationRecord
         message =  "#{user.name.upcase} оформил продажу на контрагента\n" \
           "<b>Покупатель</b>: #{buyer.name}\n" \
           "<b>Тип оплаты</b>: #{payment_type}\n" \
-          "<b>Итого цена продажи:</b> #{total_price} #{price_sign}\n" \
-          "<b>Итого доход от этой продажи:</b> #{total_profit} #{price_sign}\n"
+          "<b>Итого цена продажи:</b> #{total_price} #{price_sign}\n"
         message << "&#9888<b>Оплачено:</b> #{total_paid} #{price_sign}\n" if total_price > total_paid
         message << "<b>Комментарие:</b> #{comment}\n" if comment.present?
         message << "Нажмите <a href=\"https://#{ENV.fetch('HOST_URL')}/sales/#{self.id}\">здесь</a> для просмотра"
@@ -65,5 +46,13 @@ class Sale < ApplicationRecord
         self.enable_to_send_sms = false
       end
     end
+  end
+
+  def update_product_sales_currencies
+    product_sells.each do |ps|
+      ps.update(price_in_usd: price_in_usd)
+    end
+
+    self.total_price = product_sells.sum(('sell_price * amount'))
   end
 end

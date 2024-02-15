@@ -12,13 +12,6 @@
     color: white
   }
 </style>
-
-<% @products.each do |product| %>
-  <p data-product-name="<%= product.name %>" data-product-id="<%= product.id %>" class='product_list'>
-    <%= product.name %>
-  </p>
-<% end %>
-
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     const productSearchInput = document.getElementById('product_search_input');
@@ -39,3 +32,9 @@
     });
   });
 </script>
+
+<% @products.each do |product| %>
+  <p data-product-name="<%= product.name %>" data-product-id="<%= product.id %>" class='product_list'>
+    <%= product.name %>
+  </p>
+<% end %>
