@@ -67,9 +67,7 @@ class ProductsController < ApplicationController
   end
 
   def calculate_product_remaining
-    calculate_product_remaining = @product.calculate_product_remaining
-
-    render json: { calculate_product_remaining: calculate_product_remaining }
+    render json: { calculate_product_remaining: @product.initial_remaining }
   end
 
   private

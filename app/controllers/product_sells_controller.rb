@@ -1,5 +1,6 @@
 class ProductSellsController < ApplicationController
   before_action :set_product_sell, only: %i[ show edit update destroy ]
+  skip_before_action :verify_authenticity_token, only: %i[filter_products]
 
   # GET /product_sells or /product_sells.json
   def index
@@ -67,17 +68,11 @@ class ProductSellsController < ApplicationController
 
   def ajax_sell_price_request
     return render json: ("Please fill forms") if product_sell_params[:product_id].empty? || product_sell_params[:amount].to_i.zero?
-    message = ""
-    product_sell = ProductSell.new(
-      product_id: product_sell_params[:product_id],
-      amount: product_sell_params[:amount],
-    )
-    response = ProductSells::CalculateSellAndBuyPrice.run(product_sell: product_sell)
-    render json: if response.valid?
-             response.result[:average_prices][:average_sell_price].to_f.round(2)
-           else
-             response.errors.messages.values.flatten[0]
-           end
+
+    rate = CurrencyRate.last.rate
+    product = Product.find(params[:product_id])
+    sell_price = product.price_in_usd ? product.sell_price * rate : product.sell_price
+    render json: sell_price.to_i
   end
 
   private
@@ -91,7 +86,7 @@ class ProductSellsController < ApplicationController
   def product_sell_params
     params.require(:product_sell).permit(
       :sale_from_local_service_id, :sale_id, :combination_of_local_product_id,
-      :sell_price, :product_id, :total_profit, :amount, :payment_type, :sale_from_service_id
+      :sell_price, :product_id, :total_profit, :amount, :payment_type, :sale_from_service_id, :product_search
     )
   end
 end

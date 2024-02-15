@@ -4,6 +4,7 @@
 class ProductSell < ApplicationRecord
   attr_accessor :initial_remaining
   attr_accessor :product_code_id
+  attr_accessor :product_search
 
   belongs_to :combination_of_local_product, optional: true
   belongs_to :sale_from_local_service, optional: true
