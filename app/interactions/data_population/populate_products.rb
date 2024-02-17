@@ -10,34 +10,19 @@ module DataPopulation
     private
 
     def create_products(data)
-      product_category = ProductCategory.find_or_create_by(name: data['Склад'])
+      product_category = ProductCategory.find_or_create_by(name: data['Категория'])
       name = data['Номенклатура']
       code = data['Код товара']
       initial_remaining = data['Остаток организации']
-      price_in_usd = true
+      price_in_usd = data['Остаток организации']
+      sell_price = data['Цена отпуск.']
       buy_price =
-        if data['Цена закупки'].present?
-          data['Цена закупки']
-        elsif data['Вал. цена закупки']
-          data['Вал. цена закупки']
-        elsif data['Цена отпуск.'].present?
+        if data['Цена отпуск.'].present?
           data['Цена отпуск.'] - percent_of(data['Цена отпуск.'])
         else
           0.0
         end
 
-      sell_price =
-        if data['Цена отпуск.'].present?
-        data['Цена отпуск.']
-        elsif data['Цена закупки'].present?
-        percent_of(data['Цена закупки']) + data['Цена закупки']
-        elsif data['Вал. цена закупки'].present?
-        percent_of(data['Вал. цена закупки']) + data['Вал. цена закупки']
-        else
-        0
-        end
-
-      price_in_usd = false if buy_price > 2000
       pr = Product.create(
         name: name,
         code: code,
