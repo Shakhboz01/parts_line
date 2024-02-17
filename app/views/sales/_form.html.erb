@@ -11,8 +11,16 @@
     <div class='form-inputs'>
       <%= f.error_notification %>
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-      <%= f.label :price_in_usd, 'договор в $' %>
-      <%= f.input :price_in_usd, label: false %>
+      <div class='row'>
+        <div class='col-sm-5'>
+          <%= f.label :price_in_usd, 'цена в $' %>
+          <%= f.input :price_in_usd, label: false %>
+        </div>
+        <div class='col-sm-7'>
+          <% not_disabled = sale.persisted? && sale.product_sells.empty? %>
+          <%= f.input :total_price, label: not_disabled ? 'итого договор' : false, input_html: { hidden: !not_disabled } %>
+        </div>
+      </div>
       <%= f.input :total_paid, label: 'Итого оплачено' %>
       <%= f.association :buyer, label: 'Покупатель', collection: Buyer.active.order(weight: :desc).order(name: :asc), include_blank: false %>
       <%= f.input :payment_type, label: 'Тип оплаты', collection: Sale.payment_types.keys.map { |unit| [Sale.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
