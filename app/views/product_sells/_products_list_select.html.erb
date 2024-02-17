@@ -7,13 +7,18 @@
     border-radius: 10px;
   }
 
+  .product_list:hover {
+    background: blue;
+    color: white;
+  }
+
   .active {
     background: blue;
     color: white
   }
 </style>
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  $(document).ready(function() {
     const productSearchInput = document.getElementById('product_search_input');
     const products = document.querySelectorAll('.product_list');
 

@@ -1,5 +1,19 @@
+<style>
+
+/* Enlarge the down and up buttons */
+#product_sell_amount[type="number"]::-webkit-inner-spin-button {
+  height: 50px; /* Adjust the height as needed */
+  width: 55px; /* Adjust the width as needed */
+}
+
+#product_sell_amount[type="number"]::-webkit-outer-spin-button {
+  height: 50px; /* Adjust the height as needed */
+  width: 55px; /* Adjust the width as needed */
+}
+</style>
 <script>
   $(document).ready(function() {
+    $("#product_search_input").focus();
     $('.products p').click(function() {
       $('.products p').removeClass('active');
       $(this).addClass('active');
@@ -8,6 +22,7 @@
       h1Element.textContent = selectedProductText;
       document.querySelector('#product_sell_product_id').value = $(this).data('product-id');
       calculateSalePrice();
+
 		});
 
     function calculateSalePrice(){
@@ -49,7 +64,7 @@
 
 
 <div class='p-3' style='color: black; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;'>
-  <%= simple_form_for(product_sell) do |f| %>
+  <%= simple_form_for(product_sell, html: {id: 'product_sell_form'}) do |f| %>
     <div class='form-inputs'>
       <%= f.error_notification %>
       <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
@@ -63,20 +78,24 @@
           <%= f.input :sell_price, label: 'Цена (1 шт)'%>
         </div>
         <div class='col-sm-4 align-self-center'>
-          <%= f.submit "Создать", class: 'btn btn-primary'%>
-        </div>
-      </div>
-      <div class='row'>
-        <div class='col-sm-12'>
-          <%= f.input :product_search, label: 'Искать товара', input_html:{style:'box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;', id: 'product_search_input'} %>
-        </div>
-      </div>
-      <div style='max-height: 450px; overflow: auto' class='row'>
-        <div id='products-list' class='col-sm-12 products'>
-          <%= render 'product_sells/products_list_select' %>
+          <%= f.submit "Добавить &#x1F449;".html_safe, class: 'btn btn-primary' %>
         </div>
       </div>
     </div>
     <%= f.association :sale, as: :hidden %>
   <% end %>
+
+  <div class='row'>
+    <div class='col-sm-12'>
+      <div class="form-group decimal required product_sell_amount">
+        <label class="control-label decimal required" for="product_sell_amount">Искать товара:</label>
+        <input class="form-control text required" type="text" id="product_search_input" style='box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;'/>
+      </div>
+    </div>
+  </div>
+  <div style='max-height: 650px; overflow: auto' class='row'>
+    <div id='products-list' class='col-sm-12 products'>
+      <%= render 'product_sells/products_list_select' %>
+    </div>
+  </div>
 </div>
