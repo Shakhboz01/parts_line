@@ -32,6 +32,8 @@ class ProductEntry < ApplicationRecord
   end
 
   def set_price_in_percentage
+    return if new_record? && !price_in_percentage.nil?
+
     price_in_usd = product.price_in_usd
     product_sell_price = product.sell_price
     if price_in_usd && !paid_in_usd
