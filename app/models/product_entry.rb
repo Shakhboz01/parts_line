@@ -16,8 +16,10 @@ class ProductEntry < ApplicationRecord
 
   before_create :set_currency
   before_create :proccess_increment
+  before_create :set_price_in_percentage
   before_destroy :proccess_decrement
   before_create :update_delivery_currency
+  before_update :set_price_in_percentage
   after_create :update_delivery_category
 
   scope :paid_in_uzs, -> { where('paid_in_usd = ?', false) }
@@ -29,6 +31,19 @@ class ProductEntry < ApplicationRecord
     self.paid_in_usd = product.price_in_usd
   end
 
+  def set_price_in_percentage
+    price_in_usd = product.price_in_usd
+    product_sell_price = product.sell_price
+    if price_in_usd && !paid_in_usd
+      product_buy_price = buy_price / rate
+    elsif !price_in_usd && paid_in_usd
+      product_buy_price = buy_price * rate
+    else
+      product_buy_price = buy_price
+    end
+
+    self.price_in_percentage = (product_sell_price * 100 / buy_price) - 100
+  end
 
   def proccess_decrement
     delivery_from_counterparty.decrement!(:total_price, (buy_price * amount))

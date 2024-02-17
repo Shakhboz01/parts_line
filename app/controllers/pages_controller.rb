@@ -103,25 +103,31 @@ class PagesController < ApplicationController
     })
 
     # overall_info
-    transaction_histories = TransactionHistory.ransack(params[:q]).result
-    profit_from_sale = transaction_histories.where.not(sale_id: nil)
+    product_sells = ProductSell.ransack(params[:q]).result
+    sales = Sale.ransack(params[:q]).result
+    delivery_from_counterparties = DeliveryFromCounterparty.ransack(params[:q]).result
+    expenditures = Expenditure.ransack(params[:q]).result
+    salaries = Salary.ransack(params[:q]).result
+    product_sells = ProductSell.ransack(params[:q]).result
 
-    @sales_in_usd = profit_from_sale.price_in_usd.sum(:price)
-    @sales_in_uzs = profit_from_sale.price_in_uzs.sum(:price)
+    @sales_in_usd = sales.price_in_usd.sum(:total_paid)
+    @sales_in_uzs = sales.price_in_uzs.sum(:total_paid)
 
-    @profit_from_sale_in_usd = profit_from_sale.price_in_usd.sum(:estimated_profit)
-    @profit_from_sale_in_uzs = profit_from_sale.price_in_uzs.sum(:estimated_profit)
+    average_price_in_percentage_in_usd = product_sells.price_in_usd.average(:price_in_percentage) || 7
+    average_price_in_percentage_in_uzs = product_sells.price_in_uzs.average(:price_in_percentage) || 7
+    @profit_from_sale_in_usd =  (@sales_in_usd  * product_sells.price_in_usd.average(:price_in_percentage) / 100).to_f
+    @profit_from_sale_in_uzs = (@sales_in_uzs  * product_sells.price_in_uzs.average(:price_in_percentage) / 100).to_f
 
-    delivery_from_counterparties = transaction_histories.where.not(delivery_from_counterparty_id: nil)
-    @delivery_from_counterparties_in_usd = delivery_from_counterparties.price_in_usd.sum(:price)
-    @delivery_from_counterparties_in_uzs = delivery_from_counterparties.price_in_uzs.sum(:price)
+    @delivery_from_counterparties_in_usd = delivery_from_counterparties.price_in_usd.sum(:total_paid)
+    @delivery_from_counterparties_in_uzs = delivery_from_counterparties.price_in_uzs.sum(:total_paid)
 
-    expenditures = transaction_histories.where.not(expenditure_id: nil)
     @expenditures_in_usd = expenditures.price_in_usd.sum(:price)
     @expenditures_in_uzs = expenditures.price_in_uzs.sum(:price)
 
-    salaries = Salary.ransack(params[:q]).result
     @prepayment = salaries.where(prepayment: true).sum(:price)
     @salaries = salaries.where(prepayment: false).sum(:price)
+
+    @overall_income_in_usd = @profit_from_sale_in_usd - (@expenditures_in_usd + @delivery_from_counterparties_in_usd)
+    @overall_income_in_uzs = @profit_from_sale_in_uzs - (@prepayment + @salaries + @expenditures_in_uzs + @delivery_from_counterparties_in_uzs)
   end
 end

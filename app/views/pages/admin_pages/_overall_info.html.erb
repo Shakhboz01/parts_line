@@ -39,6 +39,11 @@
         <td><%= num_to_usd @expenditures_in_uzs %></td>
         <td><%= number_to_currency @expenditures_in_usd %></td>
       </tr>
+      <tr>
+        <td style='color: green'>Остаток</td>
+        <td><%= num_to_usd @overall_income_in_uzs %></td>
+        <td><%= number_to_currency @overall_income_in_usd %></td>
+      </tr>
     </tbody>
   </table>
 </div>
