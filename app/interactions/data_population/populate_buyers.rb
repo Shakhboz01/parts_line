@@ -11,34 +11,13 @@ module DataPopulation
 
     def create_buyers(data)
       buyer =
-        Buyer.find_or_create_by(
+        Buyer.create(
           name: data['buyer_name'],
           phone_number: data['phone_number'],
-          active: true
+          active: true,
+          debt_in_usd: data['in_usd'].to_f,
+          debt_in_uzs: data['in_uzs'].to_f
         )
-      if !data['in_uzs'].nil?
-        sale = Sale.create!(
-          buyer: buyer, user_id: User.first.id, price_in_usd: false
-        )
-
-        sale.update(
-          total_price: data['in_uzs'],
-          status: :closed,
-          total_paid: 0
-        )
-      end
-
-      if !data['in_usd'].nil?
-        sale = Sale.create!(
-          buyer: buyer, user_id: User.first.id, price_in_usd: true
-        )
-
-        sale.update(
-          total_price: data['in_usd'],
-          status: :closed,
-          total_paid: 0
-        )
-      end
     end
   end
 end

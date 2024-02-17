@@ -75,7 +75,7 @@ class SalesController < ApplicationController
     buyer = Buyer.first
     last_one = Sale.last
     if !last_one.nil? && last_one.total_price == 0 && last_one.total_paid == 0 && !last_one.closed?
-      last_one.update(created_at:DateTime.current)
+      last_one.update(created_at: DateTime.current)
       redirect_to sale_url(last_one), notice: "Теперь добавьте продажу товаров"
     else
       sfs = Sale.new(buyer: buyer, user: current_user)

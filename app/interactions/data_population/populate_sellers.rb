@@ -11,15 +11,13 @@ module DataPopulation
 
     def create_seller(data)
       provider =
-        Provider.find_or_create_by(
+        Provider.create(
           name: data['seller_name'],
           phone_number: data['phone_number'],
-          active: true
+          active: true,
+          debt_in_usd: data['in_usd'].to_f,
+          debt_in_uzs: data['in_uzs'].to_f
         )
-      delivery_from_counterparty = DeliveryFromCounterparty.create!(
-        provider: provider, user_id: User.first.id, price_in_usd: true,
-        total_price: data['in_usd'], status: :closed, total_paid: 0
-      )
     end
   end
 end

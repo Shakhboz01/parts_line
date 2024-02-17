@@ -108,15 +108,15 @@ class PagesController < ApplicationController
     delivery_from_counterparties = DeliveryFromCounterparty.ransack(params[:q]).result
     expenditures = Expenditure.ransack(params[:q]).result
     salaries = Salary.ransack(params[:q]).result
-    product_sells = ProductSell.ransack(params[:q]).result
+    product_entries = ProductEntry.ransack(params[:q]).result
 
     @sales_in_usd = sales.price_in_usd.sum(:total_paid)
     @sales_in_uzs = sales.price_in_uzs.sum(:total_paid)
 
-    average_price_in_percentage_in_usd = product_sells.price_in_usd.average(:price_in_percentage) || 7
-    average_price_in_percentage_in_uzs = product_sells.price_in_uzs.average(:price_in_percentage) || 7
-    @profit_from_sale_in_usd =  (@sales_in_usd  * product_sells.price_in_usd.average(:price_in_percentage) / 100).to_f
-    @profit_from_sale_in_uzs = (@sales_in_uzs  * product_sells.price_in_uzs.average(:price_in_percentage) / 100).to_f
+    average_price_in_percentage_in_usd = product_entries.paid_in_usd.average(:price_in_percentage) || 7
+    average_price_in_percentage_in_uzs = product_entries.paid_in_uzs.average(:price_in_percentage) || 7
+    @profit_from_sale_in_usd =  (@sales_in_usd  * average_price_in_percentage_in_usd / 100).to_f
+    @profit_from_sale_in_uzs = (@sales_in_uzs  * average_price_in_percentage_in_uzs / 100).to_f
 
     @delivery_from_counterparties_in_usd = delivery_from_counterparties.price_in_usd.sum(:total_paid)
     @delivery_from_counterparties_in_uzs = delivery_from_counterparties.price_in_uzs.sum(:total_paid)

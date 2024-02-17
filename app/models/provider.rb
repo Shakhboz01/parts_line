@@ -1,9 +1,6 @@
 class Provider < ApplicationRecord
   include ProtectDestroyable
 
-  attr_accessor :debt_in_usd
-  attr_accessor :debt_in_uzs
-
   has_many :delivery_from_counterparties
   validates_presence_of :name
   validates_uniqueness_of :name
@@ -26,7 +23,7 @@ class Provider < ApplicationRecord
   end
 
   def set_debt
-    unless debt_in_usd.empty?
+    unless debt_in_usd.nil?
       DeliveryFromCounterparty.create(
         user_id: User.first.id, status: 1,
         payment_type: 0, total_price: debt_in_usd.to_f,
@@ -35,7 +32,7 @@ class Provider < ApplicationRecord
       )
     end
 
-    unless debt_in_uzs.empty?
+    unless debt_in_uzs.nil?
       DeliveryFromCounterparty.create(
         user_id: User.first.id, status: 1,
         payment_type: 0, total_price: debt_in_uzs.to_f,
