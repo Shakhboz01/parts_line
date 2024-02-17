@@ -1,7 +1,0 @@
-<% if delivery_from_counterparty.total_paid < delivery_from_counterparty.total_price %>
-  <%= clink_to 'Пополнить оставщегося сум', new_transaction_history_path(delivery_from_counterparty_id: delivery_from_counterparty.id), 'fa-money-bill-transfer' %>
-<% end %>
-
-<% if delivery_from_counterparty.transaction_histories.exists? %>
-  <%= clink_to 'история пополнений', transaction_histories_path(delivery_from_counterparty_id: delivery_from_counterparty.id), 'fa-clock-rotate-left' %>
-<% end %>

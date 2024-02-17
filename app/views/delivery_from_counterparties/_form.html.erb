@@ -1,38 +1,38 @@
+<script>
+  $(document).ready(function() {
+    document.querySelector('#delivery_from_counterparty_total_paid').addEventListener('focus', function(e) {
+      console.log(' it is focused')
+      if(document.querySelector('#delivery_from_counterparty_total_paid').value == null || document.querySelector('#delivery_from_counterparty_total_paid').value == 0){
+        document.querySelector('#delivery_from_counterparty_total_paid').value = document.querySelector('#delivery_from_counterparty_total_price').value
+      }
+    })
+  })
+</script>
+
+
 <div class='card shadow-lg p-2'>
   <%= simple_form_for(delivery_from_counterparty) do |f| %>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
     <%= f.input :status, as: :hidden, input_html: { value: 1 } %>
 
-    <div class="row">
-      <div class='col-sm-3 col-md-2'>
-        <%= f.input :total_price, label: 'Итого цена', disabled: true %>
-      </div>
-      <div class='col-sm-3 col-md-2'>
-        <%= f.input :total_paid, label: 'Итого оплачено' %>
-      </div>
-      <div class='col-sm-3 col-md-2'>
-        <%= f.association :provider, label: 'Поставщик', collection: Provider.active.order(weight: :desc).order(name: :asc), include_blank: false %>
-      </div>
-      <div class='col-sm-3 col-md-2'>
-        <%= f.input :payment_type, label: 'Тип оплаты', collection: DeliveryFromCounterparty.payment_types.keys.map { |unit| [DeliveryFromCounterparty.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
-      </div>
-      <% if delivery_from_counterparty.persisted? && delivery_from_counterparty.product_entries.empty? %>
-        <div class='col-sm-3 col-md-2'>
-          <%= f.input :price_in_usd, label: 'договор в $' %>
+    <div class="form-inputs">
+      <div class='row'>
+        <div class='col-sm-5'>
+          <%= f.label :price_in_usd, 'цена в $' %>
+          <%= f.input :price_in_usd, label: false %>
         </div>
-        <div class='col-sm-3 col-md-2'>
-          <%= f.association :product_category, label: 'Категория', collection: ProductCategory.all, include_blank: false %>
-        </div>
-      <% end %>
-      <div class='col-sm-3 col-md-2'>
-        <%= f.input :comment, label: 'Комментарии' %>
-      </div>
-      <div class='col-sm-3 col-md-2 align-self-center'>
-        <div class="form-actions">
-          <%= f.button :submit, 'Закрыть проводку' %>
+        <div class='col-sm-7'>
+          <% not_disabled = delivery_from_counterparty.persisted? && delivery_from_counterparty.product_entries.empty? %>
+          <%= f.input :total_price, label: 'итого договор', input_html: { disabled: !not_disabled } %>
         </div>
       </div>
+      <%= f.input :total_paid, label: 'Итого оплачено' %>
+      <%= f.association :provider, label: 'Поставщик', collection: Provider.active.order(weight: :desc).order(name: :asc), include_blank: false %>
+      <%= f.input :payment_type, label: 'Тип оплаты', collection: DeliveryFromCounterparty.payment_types.keys.map { |unit| [DeliveryFromCounterparty.human_attribute_name("unit.#{unit}"), unit] }, include_blank: false %>
+      <%= f.association :product_category, label: 'Категория', collection: ProductCategory.all, include_blank: false %>
+      <%= f.input :comment, label: 'Комментарии' %>
+      <%= f.button :submit, 'Закрыть проводку' %>
     </div>
   <% end %>
 </div>

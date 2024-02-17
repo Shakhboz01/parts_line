@@ -12,14 +12,12 @@ class ProductEntry < ApplicationRecord
   belongs_to :storage
   validates :amount, comparison: { greater_than: 0 }
   validates :sell_price, :buy_price, comparison: { greater_than_or_equal_to: 0 }
-  validates :sell_price, comparison: { greater_than_or_equal_to: :buy_price }, if: -> { combination_of_local_product_id.nil? }
   validates_presence_of :buy_price, unless: -> { local_entry }
 
-  before_validation :varify_delivery_from_counterparty_is_not_closed
   before_create :set_currency
-  before_update :amount_sold_is_not_greater_than_amount
-  before_destroy :varify_delivery_from_counterparty_is_not_closed
-  after_create :update_delivery_currency
+  before_create :proccess_increment
+  before_destroy :proccess_decrement
+  before_create :update_delivery_currency
   after_create :update_delivery_category
 
   scope :paid_in_uzs, -> { where('paid_in_usd = ?', false) }
@@ -31,13 +29,15 @@ class ProductEntry < ApplicationRecord
     self.paid_in_usd = product.price_in_usd
   end
 
-  def amount_sold_is_not_greater_than_amount
-    return errors.add(:base, "amount sold cannot be greater than amount") if amount_sold > amount
+
+  def proccess_decrement
+    delivery_from_counterparty.decrement!(:total_price, (buy_price * amount))
+    product.decrement!(:initial_remaining, amount)
   end
 
-  def varify_delivery_from_counterparty_is_not_closed
-    throw(:abort) if delivery_from_counterparty.closed? && sell_price == sell_price_before_last_save && amount >= amount_sold
-    delivery_from_counterparty.decrement!(:total_price, buy_price)
+  def proccess_increment
+    delivery_from_counterparty.increment!(:total_price, (amount * buy_price))
+    product.increment!(:initial_remaining, amount)
   end
 
   def update_delivery_currency
@@ -50,5 +50,16 @@ class ProductEntry < ApplicationRecord
     return if delivery_from_counterparty&.product_category_id == product.product_category_id
 
     delivery_from_counterparty.update(product_category_id: product.product_category_id)
+  end
+
+  def change_buy_price
+    return if paid_in_usd == paid_in_usd_was
+
+    rate = CurrencyRate.last.rate
+    if paid_in_usd_was == false && paid_in_usd == true
+      self.buy_price = buy_price / rate
+    elsif paid_in_usd_was == true && paid_in_usd == false
+      self.buy_price = buy_price * rate
+    end
   end
 end

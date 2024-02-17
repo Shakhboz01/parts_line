@@ -1,49 +1,3 @@
-<%# do nor show provider if local entry %>
-<%# removed service price %>
-<div class='shadow card shadow-lg' style='color: black; margin: 5px'>
-  <%= simple_form_for(product_entry) do |f| %>
-    <%= f.error_notification %>
-    <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-    <%= f.association :delivery_from_counterparty, as: :hidden %>
-    <%= f.input :return, as: :hidden %>
-    <%= f.input :amount_sold, as: :hidden %>
-    <%= f.input :local_entry, as: :hidden %>
-
-    <div class="row">
-      <div class='col-sm-2 excel' style='display:none'>
-        <%= f.input :excel_data, label: 'Excel import', as: :file, input_html: { accept: '.xlsx, .xls' } %>
-      </div>
-      <div class='col-sm-2 piece-entry'>
-        <%= f.association :product, label: 'Товар', collection: products.order(:name), include_blank: false %>
-      </div>
-      <div class='col-sm-1'>
-        <%= f.association :storage, label: 'Склад', collection: Storage.pluck(:name, :id), selected: defined?(storage) ? storage : nil, include_blank: false %>
-      </div>
-      <div class='col-sm-1 piece-entry'>
-        <%= f.input :amount, label: 'количество', id: 'inputs' %>
-      </div>
-      <div class='col-sm-2 piece-entry'>
-        <%= f.input :buy_price, label: 'Цена прихода', input_html: {id: 'product_entry_buy_price'} %>
-      </div>
-      <div class='col-sm-2 piece-entry'>
-        <%= f.input :sell_price, label: 'Цена продажи', input_html: {id: 'product_entry_sell_price'} %>
-      </div>
-      <div class='col-sm-1 excel' style='display: none'>
-        <%= f.input :product_category_id, label: 'Категория', collection: ProductCategory.pluck(:name, :id), include_blank: false %>
-      </div>
-      <div class='col-sm-2 d-flex align-items-center'>
-        <%= f.input :price_in_percentage, label: 'продажа в %', input_html: {id: 'product_entry_price_in_percentage', value: defined?(price_in_percentage) ? price_in_percentage : 0} %>
-        <i title='Excel import' class="fa-solid fa-arrows-rotate" id='refresh' style='cursor: pointer; margin-left: 10px; color: blue'></i>
-      </div>
-      <div class='col-sm-2 align-self-center'>
-        <div class="form-actions">
-          <%= f.button :submit, 'Создать', class: 'btn btn-warning' %>
-        </div>
-      </div>
-    </div>
-  <% end %>
-</div>
-
 <script>
   $(document).ready(function() {
     $("input").focus(function() {
@@ -53,5 +7,96 @@
       $('.piece-entry').toggle()
       $('.excel').toggle()
     })
+
+    document.getElementById('product_entry_product_id').addEventListener('change', function(event) {
+      calculateBuyPrice()
+    })
+
+    function calculateBuyPrice(){
+      console.log('changed')
+      var product_id = document.querySelector('#product_entry_product_id').value;
+      var buy_price = document.querySelector('#product_entry_buy_price').value;
+      var amount = document.querySelector('#product_entry_amount').value;
+      var customActionURL = '/product_sells/ajax_sell_price_request';
+      var data = {
+        product_id: product_id,
+        amount: amount,
+        buy_price: true
+      };
+      var csrfToken = $('meta[name="csrf-token"]').attr('content');
+      if(buy_price != 0 || buy_price != null){
+        fetch(customActionURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': csrfToken, // Include the CSRF token in the request headers
+          },
+          body: JSON.stringify(data)
+        })
+        .then(function(response) {
+          if (response.ok) {
+            return response.text();
+          } else {
+            throw new Error('Error: ' + response.status);
+          }
+        })
+        .then(function(responseText) {
+          document.querySelector('#product_entry_buy_price').value = responseText;
+        })
+        .catch(function(error) {
+          console.error(error);
+        });
+      }
+    }
   });
 </script>
+
+<%# do nor show provider if local entry %>
+<%# removed service price %>
+<div class='p-3' style='color: black; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;'>
+  <%= simple_form_for(product_entry) do |f| %>
+    <div class='form-inputs'>
+      <%= f.error_notification %>
+      <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+      <%= f.association :delivery_from_counterparty, as: :hidden %>
+      <%= f.input :return, as: :hidden %>
+      <%= f.input :amount_sold, as: :hidden %>
+      <%= f.input :local_entry, as: :hidden %>
+      <%= f.input :sell_price, label: false, as: :hidden, input_html: {id: 'product_entry_sell_price'} %>
+
+      <div class='excel' style='display:none'>
+        <%= f.input :excel_data, label: false, as: :file, input_html: { accept: '.xlsx, .xls', placeholder: 'excel import' } %>
+      </div>
+      <div class='piece-entry'>
+        <%= f.association :product, label: 'Выберите товар', collection: products.order(:name), include_blank: false %>
+      </div>
+      <div class='row'>
+        <div class='piece-entry col-sm-5'>
+          <%= f.input :amount, label: 'количество (шт.)', input_html: {value: 1} %>
+        </div>
+        <div class='piece-entry col-sm-7'>
+          <%= f.input :buy_price, label: 'Цена прихода', input_html: {id: 'product_entry_buy_price'} %>
+        </div>
+      </div>
+      <div class='excel' style='display:none'>
+        <%= f.input :price_in_percentage, label: 'Цена продажи в %', input_html: {id: 'product_entry_price_in_percentage', value: defined?(price_in_percentage) ? price_in_percentage : 0} %>
+      </div>
+      <div class='row'>
+        <div class='col-sm-5'>
+          <%= f.association :storage, label: 'Склад', collection: Storage.pluck(:name, :id), selected: defined?(storage) ? storage : nil, include_blank: false %>
+        </div>
+        <div class='col-sm-7'>
+          <%= f.input :product_category_id, label: 'Категория', collection: ProductCategory.pluck(:name, :id), include_blank: false %>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='col-sm-5'>
+          <i title='Excel import' class="fa-solid fa-arrows-rotate" id='refresh' style='cursor: pointer; margin-left: 10px; color: blue'></i>
+        </div>
+        <div class='col-sm-7'>
+          <%= f.button :submit, 'Создать', class: 'btn btn-warning' %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

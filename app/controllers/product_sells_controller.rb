@@ -71,8 +71,12 @@ class ProductSellsController < ApplicationController
 
     rate = CurrencyRate.last.rate
     product = Product.find(params[:product_id])
-    sell_price = product.price_in_usd ? product.sell_price * rate : product.sell_price
-    render json: sell_price.to_i
+    price = product.price_in_usd ? product.sell_price * rate : product.sell_price
+
+    if params.dig(:buy_price)
+      price = product.buy_price
+    end
+    render json: price.to_i
   end
 
   private

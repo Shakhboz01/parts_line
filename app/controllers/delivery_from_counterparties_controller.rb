@@ -22,11 +22,7 @@ class DeliveryFromCounterpartiesController < ApplicationController
     @storage = @delivery_from_counterparty.product_entries&.last&.storage_id
     @product_entry = ProductEntry.new(delivery_from_counterparty_id: @delivery_from_counterparty.id)
     @price_in_percentage = 0
-    @products = Product.active.order(:name)
-    if (product_entries = @delivery_from_counterparty.product_entries).exists?
-      @price_in_percentage = product_entries.last.price_in_percentage
-      @products = @products.where(product_category_id: product_entries.last.product.product_category_id).order(:name)
-    end
+    @products = Product.active.order('LOWER(name) ASC')
   end
 
   # GET /delivery_from_counterparties/new
@@ -60,10 +56,7 @@ class DeliveryFromCounterpartiesController < ApplicationController
   # PATCH/PUT /delivery_from_counterparties/1 or /delivery_from_counterparties/1.json
   def update
     respond_to do |format|
-      if @delivery_from_counterparty.update(delivery_from_counterparty_params.merge(
-          status: delivery_from_counterparty_params[:status].to_i,
-          total_price: @delivery_from_counterparty.calculate_total_price(false)
-         ))
+      if @delivery_from_counterparty.update(delivery_from_counterparty_params.merge(status: delivery_from_counterparty_params[:status].to_i))
         format.html { redirect_to delivery_from_counterparties_url, notice: "Delivery from counterparty was successfully updated." }
         format.json { render :show, status: :ok, location: @delivery_from_counterparty }
       else
@@ -109,6 +102,6 @@ class DeliveryFromCounterpartiesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def delivery_from_counterparty_params
-    params.require(:delivery_from_counterparty).permit(:total_price, :status, :total_paid, :payment_type, :comment, :provider_id, :product_category)
+    params.require(:delivery_from_counterparty).permit(:total_price, :status, :total_paid, :payment_type, :comment, :provider_id, :product_category, :price_in_usd)
   end
 end

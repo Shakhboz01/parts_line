@@ -1,3 +1,11 @@
+<script>
+  document.querySelector('#sale_total_paid').addEventListener('focus', function(e) {
+    if(document.querySelector('#sale_total_paid').value == null || document.querySelector('#sale_total_paid').value == 0){
+      document.querySelector('#sale_total_paid').value = document.querySelector('#total-price').value
+    }
+  })
+</script>
+
 <div class='p-3' style='color: black; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;'>
   <%= simple_form_for(sale) do |f| %>
     <div class='form-inputs'>
@@ -15,11 +23,3 @@
     <%= f.input :total_price, as: :hidden, label: false, disabled: true, input_html: {id: 'total-price'} %>
   <% end %>
 </div>
-
-<script>
-  document.querySelector('#sale_total_paid').addEventListener('focus', function(e) {
-    if(document.querySelector('#sale_total_paid').value == null || document.querySelector('#sale_total_paid').value == 0){
-      document.querySelector('#sale_total_paid').value = document.querySelector('#total-price').value
-    }
-  })
-</script>
