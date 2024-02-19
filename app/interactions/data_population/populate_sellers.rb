@@ -14,9 +14,7 @@ module DataPopulation
         Provider.create(
           name: data['seller_name'],
           phone_number: data['phone_number'],
-          active: true,
-          debt_in_usd: data['in_usd'].to_f,
-          debt_in_uzs: data['in_uzs'].to_f
+          active: true
         )
     end
   end
