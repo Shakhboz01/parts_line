@@ -75,11 +75,6 @@ module ProductSells
       )
 
       r.render
-      downloads_directory = File.join(Dir.home, "Downloads")
-      filename = "чек-#{sale.id}-#{DateTime.current.to_i}.pdf"
-      file_path = File.join(downloads_directory, filename)
-      r.render_file(file_path)
-      { filename: filename, file_path: file_path }
     end
   end
 end
